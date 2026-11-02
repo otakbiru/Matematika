@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Interaktif: Fungsi Komposisi (Matematika SMA)</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX CSS & JS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar & Utilities */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.5rem 0;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: #6366f1; box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            50% { border-color: #4f46e5; box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
+        }
+        .machine-active {
+            animation: pulse-border 1.5s infinite;
+        }
+        .step-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
+
+    <!-- Top Progress & Mobile Header -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white font-bold shadow-md shadow-indigo-200">
+                    <span class="font-display text-lg">f∘g</span>
+                </div>
+                <div>
+                    <h1 class="font-display font-bold text-slate-900 text-base sm:text-lg leading-tight">Matematika Eksploratif</h1>
+                    <p class="text-xs text-slate-500 hidden sm:block">Bab Fungsi Komposisi • Kelas XI SMA</p>
+                </div>
+            </div>
+
+            <!-- Quick Jump Desktop -->
+            <div class="hidden md:flex items-center gap-2 text-xs font-medium text-slate-600">
+                <a href="#masalah-awal" class="px-3 py-1.5 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition">1. Masalah Pemicu</a>
+                <a href="#simulasi-mesin" class="px-3 py-1.5 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition">2. Simulasi Mesin</a>
+                <a href="#konsep-formal" class="px-3 py-1.5 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition">3. Konsep & Syarat</a>
+                <a href="#contoh-soal" class="px-3 py-1.5 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition">4. Contoh Soal</a>
+                <a href="#resolusi" class="px-3 py-1.5 rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 transition font-semibold">5. Solusi Masalah</a>
+                <a href="#kuis" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition shadow-sm">Latihan Kuis</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1 text-sm">
+            <a href="#masalah-awal" class="mobile-link block px-3 py-2 rounded-lg hover:bg-slate-100 font-medium text-amber-700"><i class="fa-solid fa-lightbulb w-6"></i> Masalah Kontekstual Awal</a>
+            <a href="#tahap-1" class="mobile-link block px-3 py-2 rounded-lg hover:bg-slate-100"><i class="fa-solid fa-cube w-6 text-indigo-600"></i> Tahap 1: Mengingat Fungsi</a>
+            <a href="#simulasi-mesin" class="mobile-link block px-3 py-2 rounded-lg hover:bg-slate-100"><i class="fa-solid fa-gears w-6 text-indigo-600"></i> Tahap 2: Intuisi & Simulasi Mesin</a>
+            <a href="#konsep-formal" class="mobile-link block px-3 py-2 rounded-lg hover:bg-slate-100"><i class="fa-solid fa-book-open w-6 text-indigo-600"></i> Tahap 3: Definisi & Notasi</a>
+            <a href="#syarat-komposisi" class="mobile-link block px-3 py-2 rounded-lg hover:bg-slate-100"><i class="fa-solid fa-diagram-project w-6 text-indigo-600"></i> Tahap 4: Syarat Komposisi</a>
+            <a href="#contoh-soal" class="mobile-link block px-3 py-2 rounded-lg hover:bg-slate-100"><i class="fa-solid fa-layer-group w-6 text-indigo-600"></i> Tahap 5: Contoh Soal Bertingkat</a>
+            <a href="#sifat-komposisi" class="mobile-link block px-3 py-2 rounded-lg hover:bg-slate-100"><i class="fa-solid fa-scale-balanced w-6 text-indigo-600"></i> Tahap 6: Sifat-Sifat Komposisi</a>
+            <a href="#resolusi" class="mobile-link block px-3 py-2 rounded-lg hover:bg-slate-100 font-medium text-emerald-700"><i class="fa-solid fa-check-double w-6"></i> Tahap 7: Penyelesaian Masalah Awal</a>
+            <a href="#kuis" class="mobile-link block px-3 py-2 rounded-lg bg-indigo-50 text-indigo-700 font-semibold"><i class="fa-solid fa-pen-to-square w-6"></i> Tahap 8: Latihan Interaktif</a>
+        </div>
+    </header>
+
+    <!-- Main Container with Sidebar -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- Left Sidebar (Sticky Navigation on Large Screens) -->
+        <aside class="hidden lg:block w-72 flex-shrink-0">
+            <div class="sticky top-24 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+                <h2 class="font-display font-bold text-slate-900 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-route text-indigo-600"></i> Alur Pembelajaran
+                </h2>
+                <nav class="space-y-1.5 text-sm">
+                    <a href="#masalah-awal" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl bg-amber-50/80 text-amber-900 font-medium hover:bg-amber-100 transition">
+                        <span class="w-6 h-6 rounded-lg bg-amber-500 text-white flex items-center justify-center text-xs font-bold">?</span>
+                        <span>Masalah Pemicu</span>
+                    </a>
+                    <a href="#tahap-1" class="nav-item flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+                        <span class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold">1</span>
+                        <span>Analogi Mesin Tunggal</span>
+                    </a>
+                    <a href="#simulasi-mesin" class="nav-item flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+                        <span class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold">2</span>
+                        <span>Dua Mesin Berurutan</span>
+                    </a>
+                    <a href="#konsep-formal" class="nav-item flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+                        <span class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold">3</span>
+                        <span>Definisi & Notasi $(\circ)$</span>
+                    </a>
+                    <a href="#syarat-komposisi" class="nav-item flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+                        <span class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold">4</span>
+                        <span>Syarat Komposisi</span>
+                    </a>
+                    <a href="#contoh-soal" class="nav-item flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+                        <span class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold">5</span>
+                        <span>Contoh Soal Bertingkat</span>
+                    </a>
+                    <a href="#sifat-komposisi" class="nav-item flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition">
+                        <span class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold">6</span>
+                        <span>Sifat-Sifat Komposisi</span>
+                    </a>
+                    <a href="#resolusi" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl bg-emerald-50/80 text-emerald-900 font-medium hover:bg-emerald-100 transition">
+                        <span class="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs font-bold">✓</span>
+                        <span>Resolusi Masalah Awal</span>
+                    </a>
+                    <a href="#kuis" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl bg-indigo-50 text-indigo-700 font-semibold hover:bg-indigo-100 transition">
+                        <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs font-bold"><i class="fa-solid fa-star text-[10px]"></i></span>
+                        <span>Uji Pemahaman</span>
+                    </a>
+                </nav>
+
+                <div class="mt-6 pt-5 border-t border-slate-100">
+                    <div class="bg-slate-50 rounded-xl p-3.5 text-xs text-slate-600 space-y-1.5">
+                        <div class="font-semibold text-slate-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-info text-indigo-600"></i> Tips Belajar:
+                        </div>
+                        <p class="leading-relaxed">Ikuti materi secara berurutan dari atas ke bawah. Cobalah mengubah angka pada setiap kotak simulasi interaktif!</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 space-y-12 min-w-0">
+
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-indigo-900 via-indigo-800 to-violet-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-indigo-100 text-xs font-semibold backdrop-blur-sm">
+                        <i class="fa-solid fa-graduation-cap"></i> Modul Interaktif Matematika SMA
+                    </span>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                        Memahami Fungsi Komposisi dari Nol
+                    </h2>
+                    <p class="text-indigo-100 text-sm sm:text-base leading-relaxed">
+                        Pernahkah kamu berpikir bagaimana dua proses berurutan di dunia nyata dapat digabungkan menjadi satu formula otomatis? Mari kita bangun intuisinya secara perlahan!
+                    </p>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 BAGIAN 1: MASALAH KONTEKSTUAL AWAL (HOOK)
+                 ========================================== -->
+            <section id="masalah-awal" class="scroll-mt-24 bg-white rounded-3xl border-2 border-amber-200 shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-4 text-white flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-industry"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider font-semibold text-amber-100">Studi Kasus Pembuka</span>
+                            <h3 class="font-display font-bold text-lg sm:text-xl">Masalah di Pabrik Kertas "Nusantara Pulp"</h3>
+                        </div>
+                    </div>
+                    <span class="hidden sm:inline-block px-3 py-1 rounded-full bg-amber-900/30 text-xs font-medium">Tantangan Awal</span>
+                </div>
+
+                <div class="p-6 sm:p-8 space-y-6">
+                    <p class="text-slate-700 leading-relaxed">
+                        Sebuah pabrik kertas mengolah bahan mentah berupa <strong>kayu gelondongan</strong> menjadi <strong>kertas cetak siap jual</strong> melalui <strong>dua tahap mesin produksi</strong> yang bekerja secara berurutan:
+                    </p>
+
+                    <!-- Visualisasi Alur Pabrik -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Input -->
+                        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 flex flex-col justify-between">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-1 rounded-md">Bahan Mentah</span>
+                                <h4 class="font-display font-bold text-slate-900 text-lg mt-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-tree text-amber-700"></i> Kayu Gelondongan ($x$)
+                                </h4>
+                                <p class="text-sm text-slate-600 mt-2">
+                                    Pabrik memasukkan kayu gelondongan sebanyak $x$ ton ke dalam mesin pengolahan tahap pertama.
+                                </p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-amber-200/60 text-xs font-medium text-amber-900">
+                                Satuan Input: <strong>$x$ ton kayu</strong>
+                            </div>
+                        </div>
+
+                        <!-- Tahap 1 -->
+                        <div class="bg-blue-50/70 border border-blue-200 rounded-2xl p-5 flex flex-col justify-between">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100 px-2.5 py-1 rounded-md">Mesin Tahap 1: Penggilingan</span>
+                                <h4 class="font-display font-bold text-slate-900 text-lg mt-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-water text-blue-600"></i> Kayu $\rightarrow$ Bubur Kertas ($m$)
+                                </h4>
+                                <p class="text-sm text-slate-600 mt-2">
+                                    Kayu diolah menjadi bubur kertas (<em>pulp</em>). Karena adanya penyusutan serat sebesar $20\%$ dan sisa residu tetap $1\text{ ton}$, berat bubur kertas ($m$) mengikuti rumus:
+                                </p>
+                            </div>
+                            <div class="mt-4 bg-white rounded-xl p-3 border border-blue-200 text-center">
+                                $$m = g(x) = 0,8x - 1$$
+                                <span class="text-[11px] text-slate-500">(dalam satuan ton bubur kertas)</span>
+                            </div>
+                        </div>
+
+                        <!-- Tahap 2 -->
+                        <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-5 flex flex-col justify-between">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-md">Mesin Tahap 2: Pencetakan</span>
+                                <h4 class="font-display font-bold text-slate-900 text-lg mt-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-file-lines text-emerald-600"></i> Bubur Kertas $\rightarrow$ Rim Kertas
+                                </h4>
+                                <p class="text-sm text-slate-600 mt-2">
+                                    Bubur kertas seberat $m$ ton langsung dimasukkan ke mesin pencetak. Setiap ton bubur kertas menghasilkan $500\text{ rim}$ kertas ditambah bonus daur ulang $100\text{ rim}$:
+                                </p>
+                            </div>
+                            <div class="mt-4 bg-white rounded-xl p-3 border border-emerald-200 text-center">
+                                $$K = f(m) = 500m + 100$$
+                                <span class="text-[11px] text-slate-500">(dalam satuan rim kertas siap jual)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pertanyaan Pemicu -->
+                    <div class="bg-slate-900 text-white rounded-2xl p-6 space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex-shrink-0 flex items-center justify-center font-bold text-lg mt-0.5">
+                                <i class="fa-solid fa-question"></i>
+                            </div>
+                            <div class="space-y-2">
+                                <h4 class="font-display font-bold text-lg text-amber-400">Pertanyaan Pemicu untuk Kita Pikirkan:</h4>
+                                <p class="text-sm sm:text-base text-slate-200 leading-relaxed">
+                                    Hari ini gudang menerima kiriman <strong>$20\text{ ton}$ kayu gelondongan</strong>. Manajer pabrik tidak peduli berapa ton bubur kertas di tengah proses; ia hanya ingin sebuah <strong>"Rumus Tunggal Langsung"</strong> agar setiap kali memasukkan berat kayu ($x$), komputer langsung memunculkan jumlah rim kertas akhir tanpa harus menghitung dua kali.
+                                </p>
+                                <p class="text-sm font-semibold text-amber-300">
+                                    "Bagaimana cara menggabungkan rumus mesin pertama $g(x)$ dan mesin kedua $f(m)$ menjadi satu rumus utuh? Dan berapa rim kertas yang dihasilkan dari $20\text{ ton}$ kayu tersebut?"
+                                </p>
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-400">
+                            <span><i class="fa-solid fa-hourglass-half mr-1.5 text-amber-400"></i> Simpan pertanyaan ini! Kita akan menyelesaikannya dengan sangat mudah di <strong>Tahap 7</strong> setelah menguasai konsep Fungsi Komposisi.</span>
+                            <a href="#tahap-1" class="text-amber-400 hover:underline font-semibold whitespace-nowrap">Mulai Pelajari Konsepnya <i class="fa-solid fa-arrow-down ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAHAP 1: MENGINGAT KEMBALI KONSEP FUNGSI
+                 ========================================== -->
+            <section id="tahap-1" class="scroll-mt-24 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 font-display font-bold flex items-center justify-center">1</span>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Tahap 1 • Pondasi Dasar</span>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-slate-900">Mengingat Kembali: Fungsi sebagai "Mesin Pengolah"</h3>
+                    </div>
+                </div>
+
+                <p class="text-slate-600 leading-relaxed">
+                    Sebelum menggabungkan dua fungsi, mari kita segarkan ingatan kita tentang <strong>satu fungsi tunggal</strong>. Dalam matematika, fungsi $f(x)$ dapat dibayangkan seperti sebuah <strong>mesin pemroses</strong>: kamu memasukkan sebuah bahan baku (input $x$), mesin melakukan instruksi perhitungan tertentu, lalu mengeluarkan hasil olahan (output $f(x)$).
+                </p>
+
+                <!-- Ilustrasi Mesin Tunggal -->
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+                        <!-- Input Box -->
+                        <div class="bg-white border-2 border-slate-300 rounded-2xl p-4 w-full md:w-48 text-center shadow-sm">
+                            <span class="text-xs font-semibold text-slate-400 uppercase">Input (Domain)</span>
+                            <div class="text-2xl font-bold text-slate-800 my-1">$$x$$</div>
+                            <p class="text-xs text-slate-500">Misal kita masukkan $x = 4$</p>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div class="text-indigo-500 text-2xl rotate-90 md:rotate-0">
+                            <i class="fa-solid fa-circle-arrow-right"></i>
+                        </div>
+
+                        <!-- Machine Box -->
+                        <div class="bg-gradient-to-br from-indigo-600 to-violet-700 text-white rounded-2xl p-5 w-full md:w-64 text-center shadow-lg relative">
+                            <div class="text-xs font-semibold uppercase tracking-wider text-indigo-200 mb-1">
+                                <i class="fa-solid fa-gear fa-spin mr-1"></i> Mesin Fungsi $f$
+                            </div>
+                            <div class="text-lg font-bold bg-white/10 rounded-xl py-2 px-3 my-2 backdrop-blur-sm">
+                                $$f(x) = 2x + 3$$
+                            </div>
+                            <p class="text-xs text-indigo-100 italic">"Kalikan input dengan 2, lalu tambah 3"</p>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div class="text-indigo-500 text-2xl rotate-90 md:rotate-0">
+                            <i class="fa-solid fa-circle-arrow-right"></i>
+                        </div>
+
+                        <!-- Output Box -->
+                        <div class="bg-emerald-50 border-2 border-emerald-400 rounded-2xl p-4 w-full md:w-52 text-center shadow-sm">
+                            <span class="text-xs font-semibold text-emerald-700 uppercase">Output (Range)</span>
+                            <div class="text-lg font-bold text-emerald-900 my-1">$$f(4) = 2(4) + 3 = 11$$</div>
+                            <p class="text-xs text-emerald-700">Hasil keluarannya adalah $11$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50/70 border-l-4 border-indigo-600 p-4 rounded-r-xl text-sm text-slate-700">
+                    <strong>Kunci Penting:</strong> Apapun yang berada di dalam tanda kurung pada $f(\text{sesuatu})$, maka semua huruf $x$ pada rumus $f(x)$ wajib diganti (disubstitusikan) dengan $\text{sesuatu}$ tersebut!
+                    <ul class="mt-2 space-y-1 list-disc list-inside text-slate-600">
+                        <li>Jika $f(x) = 2x + 3$, maka $f(\color{red}{5}) = 2(\color{red}{5}) + 3 = 13$.</li>
+                        <li>Jika dimasukkan kotak $\square$, maka $f(\color{blue}{\square}) = 2(\color{blue}{\square}) + 3$.</li>
+                        <li>Jika dimasukkan ekspresi lain seperti $g(x)$, maka $f(\color{teal}{g(x)}) = 2(\color{teal}{g(x)}) + 3$. Inilah cikal bakal <strong>Fungsi Komposisi</strong>!</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAHAP 2: INTUISI KOMPOSISI & SIMULASI MESIN
+                 ========================================== -->
+            <section id="simulasi-mesin" class="scroll-mt-24 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-8">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 font-display font-bold flex items-center justify-center">2</span>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Tahap 2 • Membangun Intuisi</span>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-slate-900">Bagaimana Jika Dua Mesin Disambung Berurutan?</h3>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-slate-600 leading-relaxed">
+                    <p>
+                        Sekarang bayangkan kita memiliki dua mesin fungsi: <strong>Mesin Pertama $g$</strong> dengan rumus $g(x) = x + 2$, dan <strong>Mesin Kedua $f$</strong> dengan rumus $f(x) = 3x$. Kita menyambungkan pipa keluaran Mesin $g$ langsung ke mulut input Mesin $f$.
+                    </p>
+                </div>
+
+                <!-- Perbandingan Angka Konkret vs Variabel Abstrak -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Langkah Konkret (Dengan Angka) -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold">Langkah A: Uji dengan Angka Konkret ($x = 3$)</span>
+                        </div>
+                        <ol class="space-y-3 text-sm text-slate-700 pt-2">
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-5 h-5 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                                <div>Masukkan angka $x = 3$ ke Mesin Pertama $g(x) = x + 2$:
+                                    <div class="bg-white p-2 rounded-lg border border-slate-200 mt-1 text-center font-medium">
+                                        $$g(3) = 3 + 2 = 5$$
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-5 h-5 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                                <div>Angka $5$ (keluaran dari $g$) langsung masuk ke Mesin Kedua $f(x) = 3x$:
+                                    <div class="bg-white p-2 rounded-lg border border-slate-200 mt-1 text-center font-medium">
+                                        $$f(g(3)) = f(5) = 3(5) = 15$$
+                                    </div>
+                                </div>
+                            </li>
+                        </ol>
+                        <p class="text-xs text-slate-500 pt-1">Jadi, input awal $3$ setelah melewati dua mesin menghasilkan output akhir $15$.</p>
+                    </div>
+
+                    <!-- Langkah Abstrak (Dengan Variabel x) -->
+                    <div class="bg-indigo-50/50 rounded-2xl p-5 border border-indigo-200 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold">Langkah B: Generalisasi dengan Variabel ($x$)</span>
+                        </div>
+                        <ol class="space-y-3 text-sm text-slate-700 pt-2">
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-5 h-5 rounded-full bg-indigo-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                                <div>Masukkan variabel $x$ ke Mesin Pertama $g$:
+                                    <div class="bg-white p-2 rounded-lg border border-indigo-100 mt-1 text-center font-medium">
+                                        $$\text{Output Mesin 1} = g(x) = x + 2$$
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="w-5 h-5 rounded-full bg-indigo-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                                <div>Masukkan seluruh paket $g(x)$ tadi ke dalam Mesin Kedua $f(x) = 3x$:
+                                    <div class="bg-white p-2 rounded-lg border border-indigo-100 mt-1 text-center font-medium">
+                                        $$f(g(x)) = f(x + 2) = 3(x + 2) = 3x + 6$$
+                                    </div>
+                                </div>
+                            </li>
+                        </ol>
+                        <p class="text-xs text-indigo-800 pt-1 font-medium">Coba cek rumus gabungan $3x + 6$ dengan $x = 3$: hasilnya $3(3) + 6 = 15$. Sama persis!</p>
+                    </div>
+                </div>
+
+                <!-- LABORATORIUM SIMULASI MESIN KOMPOSISI INTERAKTIF -->
+                <div class="bg-gradient-to-b from-slate-900 to-slate-800 rounded-3xl p-6 sm:p-8 text-white shadow-xl space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-700 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-flask"></i> Laboratorium Virtual Interaktif
+                            </span>
+                            <h4 class="font-display font-bold text-xl mt-1">Simulator Mesin Fungsi Komposisi $f(g(x))$</h4>
+                        </div>
+                        <!-- Preset Selector -->
+                        <div class="flex items-center gap-2 text-xs">
+                            <label for="machinePreset" class="text-slate-300 font-medium">Pilih Pasangan Mesin:</label>
+                            <select id="machinePreset" class="bg-slate-700 text-white border border-slate-600 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="0">Paket 1: g(x) = x + 2  dan  f(x) = 3x</option>
+                                <option value="1">Paket 2: g(x) = 2x - 1  dan  f(x) = x²</option>
+                                <option value="2">Paket 3: g(x) = x² + 1  dan  f(x) = 2x + 5</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Controls Input X -->
+                    <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <label for="simInputX" class="text-sm font-medium text-slate-200">Masukkan Nilai Input Awal ($x$):</label>
+                            <div class="flex items-center gap-2">
+                                <button id="btnDecX" class="w-9 h-9 rounded-xl bg-slate-700 hover:bg-slate-600 flex items-center justify-center font-bold transition">-</button>
+                                <input id="simInputX" type="number" value="3" min="-50" max="50" class="w-20 text-center bg-slate-900 border border-indigo-500 rounded-xl py-1.5 text-lg font-bold text-amber-400 focus:outline-none">
+                                <button id="btnIncX" class="w-9 h-9 rounded-xl bg-slate-700 hover:bg-slate-600 flex items-center justify-center font-bold transition">+</button>
+                            </div>
+                        </div>
+                        <button id="btnRunSim" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm flex items-center gap-2 shadow-lg shadow-indigo-900/50 transition cursor-pointer">
+                            <i class="fa-solid fa-play"></i> Jalankan Animasi Proses
+                        </button>
+                    </div>
+
+                    <!-- Pipeline Diagram -->
+                    <div class="grid grid-cols-1 lg:grid-cols-7 gap-3 items-center pt-2">
+                        <!-- Step 1: Input x -->
+                        <div id="simBoxInput" class="lg:col-span-1 bg-slate-800 border-2 border-slate-600 rounded-2xl p-4 text-center step-transition">
+                            <span class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">Input Awal</span>
+                            <div id="simDisplayX" class="text-2xl font-extrabold text-amber-400 my-2">x = 3</div>
+                            <span class="text-[11px] text-slate-400">Masuk ke $g$</span>
+                        </div>
+
+                        <!-- Arrow 1 -->
+                        <div class="hidden lg:flex justify-center text-slate-500 text-xl">
+                            <i id="simArrow1" class="fa-solid fa-arrow-right step-transition"></i>
+                        </div>
+
+                        <!-- Step 2: Machine g(x) -->
+                        <div id="simBoxG" class="lg:col-span-2 bg-blue-950/60 border-2 border-blue-500/50 rounded-2xl p-4 text-center step-transition">
+                            <div class="flex items-center justify-center gap-1.5 text-xs font-bold text-blue-300 uppercase">
+                                <i class="fa-solid fa-cog"></i> Mesin Pertama: $g(x)$
+                            </div>
+                            <div id="simFormulaG" class="text-sm font-semibold text-white bg-blue-900/50 rounded-lg py-1 px-2 my-2"></div>
+                            <div id="simCalcG" class="text-xs text-blue-200 my-1"></div>
+                            <div class="mt-2 pt-2 border-t border-blue-800/60 text-sm font-bold text-amber-300" id="simOutG"></div>
+                        </div>
+
+                        <!-- Arrow 2 -->
+                        <div class="hidden lg:flex justify-center text-slate-500 text-xl">
+                            <i id="simArrow2" class="fa-solid fa-arrow-right step-transition"></i>
+                        </div>
+
+                        <!-- Step 3: Machine f(g(x)) -->
+                        <div id="simBoxF" class="lg:col-span-2 bg-violet-950/60 border-2 border-violet-500/50 rounded-2xl p-4 text-center step-transition">
+                            <div class="flex items-center justify-center gap-1.5 text-xs font-bold text-violet-300 uppercase">
+                                <i class="fa-solid fa-cogs"></i> Mesin Kedua: $f(g(x))$
+                            </div>
+                            <div id="simFormulaF" class="text-sm font-semibold text-white bg-violet-900/50 rounded-lg py-1 px-2 my-2"></div>
+                            <div id="simCalcF" class="text-xs text-violet-200 my-1"></div>
+                            <div class="mt-2 pt-2 border-t border-violet-800/60 text-sm font-bold text-emerald-300" id="simOutF"></div>
+                        </div>
+                    </div>
+
+                    <!-- Direct Composition Summary Box -->
+                    <div class="bg-emerald-950/50 border border-emerald-500/40 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="space-y-1 text-center sm:text-left">
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                                <i class="fa-solid fa-bolt mr-1"></i> Mesin Komposisi Gabungan Langsung $(f \circ g)(x)$
+                            </span>
+                            <p class="text-xs text-slate-300">Jika kedua mesin di atas dilebur menjadi satu mesin tunggal, rumusnya adalah:</p>
+                        </div>
+                        <div id="simCombinedFormula" class="bg-slate-900/90 border border-emerald-500/50 px-5 py-2.5 rounded-xl text-sm sm:text-base font-bold text-emerald-300">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAHAP 3: DEFINISI FORMAL & NOTASI
+                 ========================================== -->
+            <section id="konsep-formal" class="scroll-mt-24 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 font-display font-bold flex items-center justify-center">3</span>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Tahap 3 • Konsep Formal</span>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-slate-900">Definisi & Notasi Bundaran $(\circ)$</h3>
+                    </div>
+                </div>
+
+                <p class="text-slate-600 leading-relaxed">
+                    Setelah melihat cara kerja dua mesin berurutan di atas, para matematikawan membuat simbol khusus agar kita tidak perlu terus-menerus menggambar mesin. Penggabungan operasi dua fungsi secara berurutan disebut <strong>Komposisi Fungsi</strong> dan dilambangkan dengan simbol bundaran kecil <strong>"$\circ$"</strong> (dibaca: <em>"bundaran"</em> atau <em>"komposisi"</em>).
+                </p>
+
+                <!-- Dua Kotak Definisi -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- (f o g)(x) -->
+                    <div class="bg-indigo-50/60 border-2 border-indigo-200 rounded-2xl p-6 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-lg bg-indigo-600 text-white text-xs font-bold">Notasi 1</span>
+                            <span class="text-xs font-semibold text-indigo-700">Dibaca: "$f$ bundaran $g$"</span>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 border border-indigo-100 text-center shadow-sm">
+                            $$(f \circ g)(x) = f(g(x))$$
+                        </div>
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Artinya: Input $x$ diproses oleh <strong>fungsi $g$ terlebih dahulu</strong>, kemudian hasilnya dimasukkan ke dalam <strong>fungsi $f$</strong>.
+                        </p>
+                    </div>
+
+                    <!-- (g o f)(x) -->
+                    <div class="bg-violet-50/60 border-2 border-violet-200 rounded-2xl p-6 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-lg bg-violet-600 text-white text-xs font-bold">Notasi 2</span>
+                            <span class="text-xs font-semibold text-violet-700">Dibaca: "$g$ bundaran $f$"</span>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 border border-violet-100 text-center shadow-sm">
+                            $$(g \circ f)(x) = g(f(x))$$
+                        </div>
+                        <p class="text-sm text-slate-700 leading-relaxed">
+                            Artinya: Input $x$ diproses oleh <strong>fungsi $f$ terlebih dahulu</strong>, kemudian hasilnya dimasukkan ke dalam <strong>fungsi $g$</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Kotak Peringatan Urutan Kerja -->
+                <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-600 text-white flex items-center justify-center flex-shrink-0 text-xl shadow-md">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h4 class="font-display font-bold text-rose-950 text-base sm:text-lg">
+                            AWAS TERBALIK! Perhatikan Urutan Kerjanya (Dari Kanan ke Kiri / Dalam ke Luar)
+                        </h4>
+                        <p class="text-sm text-rose-900 leading-relaxed">
+                            Kesalahan paling sering dilakukan siswa adalah mengerjakan fungsi yang ditulis di sebelah kiri terlebih dahulu. Padahal pada penulisan $(f \circ g)(x)$, fungsi yang <strong>posisinya paling dekat dengan $x$ (yaitu $g$ di sebelah kanan)</strong> adalah fungsi yang bekerja <strong>pertama kali</strong>!
+                        </p>
+                        <div class="bg-white/90 rounded-xl p-3 border border-rose-200 text-xs sm:text-sm text-slate-800 font-medium">
+                            💡 <strong>Jembatan Keledai:</strong> Bayangkan $x$ adalah seorang tamu. Saat penulisan $(f \circ g)(x)$, pintu terdekat dari $x$ adalah $g$. Jadi tamu $x$ pasti masuk ke ruangan $g$ dulu, baru ke ruangan $f$!
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAHAP 4: SYARAT TERBENTUKNYA KOMPOSISI
+                 ========================================== -->
+            <section id="syarat-komposisi" class="scroll-mt-24 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 font-display font-bold flex items-center justify-center">4</span>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Tahap 4 • Syarat Keberadaan</span>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-slate-900">Apakah Semua Fungsi Bisa Dikomposisikan?</h3>
+                    </div>
+                </div>
+
+                <p class="text-slate-600 leading-relaxed">
+                    Kembali ke analogi pabrik: bayangkan jika <strong>Mesin Pertama ($g$)</strong> mengeluarkan hasil berupa <em>"Batu Bata"</em>, tetapi <strong>Mesin Kedua ($f$)</strong> hanya bisa menerima input berupa <em>"Cairan"</em>. Tentu Mesin Kedua akan macet dan komposisi tidak bisa berjalan!
+                </p>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-6">
+                    <div class="text-center max-w-2xl mx-auto space-y-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full">Syarat Mutlak $(f \circ g)(x)$ Terdefinisi</span>
+                        <p class="text-sm text-slate-700 pt-1">
+                            Agar fungsi komposisi $(f \circ g)(x) = f(g(x))$ dapat terbentuk, maka <strong>Daerah Hasil (Range) dari fungsi pertama ($g$)</strong> harus memiliki irisan (minimal ada anggota yang cocok) dengan <strong>Daerah Asal (Domain) dari fungsi kedua ($f$)</strong>:
+                        </p>
+                        <div class="bg-white border-2 border-indigo-200 rounded-xl py-3 px-6 inline-block shadow-sm my-2">
+                            $$R_g \cap D_f \neq \emptyset$$
+                        </div>
+                        <p class="text-xs text-slate-500">
+                            Keterangan: $R_g =$ Range (daerah hasil) fungsi $g$, $D_f =$ Domain (daerah asal) fungsi $f$, dan $\emptyset =$ himpunan kosong.
+                        </p>
+                    </div>
+
+                    <!-- Diagram Panah Himpunan SVG -->
+                    <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 overflow-x-auto">
+                        <h5 class="text-center font-display font-bold text-sm text-slate-700 mb-4">Visualisasi Diagram Panah Pemetaan $(f \circ g)(x)$</h5>
+                        <div class="min-w-[600px] flex justify-center">
+                            <svg viewBox="0 0 750 290" class="w-full max-w-3xl h-auto">
+                                <defs>
+                                    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6" />
+                                    </marker>
+                                    <marker id="arrowViolet" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#7c3aed" />
+                                    </marker>
+                                    <marker id="arrowEmerald" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#059669" />
+                                    </marker>
+                                </defs>
+
+                                <!-- Himpunan A (Domain g) -->
+                                <ellipse cx="120" cy="125" rx="75" ry="85" fill="#eff6ff" stroke="#3b82f6" stroke-width="2.5"/>
+                                <text x="120" y="25" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="bold" font-size="14" fill="#1e40af">Himpunan A (Domain g)</text>
+                                <circle cx="120" cy="95" r="5" fill="#1d4ed8"/>
+                                <text x="120" y="125" text-anchor="middle" font-family="Inter" font-weight="bold" font-size="15" fill="#1e3a8a">x</text>
+                                <text x="120" y="155" text-anchor="middle" font-family="Inter" font-size="12" fill="#64748b">Input Awal</text>
+
+                                <!-- Himpunan B (Irisan Rg dan Df) -->
+                                <ellipse cx="375" cy="125" rx="90" ry="85" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="6,3"/>
+                                <text x="375" y="25" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="bold" font-size="14" fill="#5b21b6">Himpunan B (Jembatan)</text>
+                                <rect x="315" y="75" width="120" height="75" rx="14" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+                                <circle cx="375" cy="95" r="5" fill="#6d28d9"/>
+                                <text x="375" y="122" text-anchor="middle" font-family="Inter" font-weight="bold" font-size="14" fill="#4c1d95">g(x)</text>
+                                <text x="375" y="140" text-anchor="middle" font-family="Inter" font-size="11" fill="#6d28d9">Rg ∩ Df ≠ ∅</text>
+
+                                <!-- Himpunan C (Range f) -->
+                                <ellipse cx="630" cy="125" rx="80" ry="85" fill="#ecfdf5" stroke="#10b981" stroke-width="2.5"/>
+                                <text x="630" y="25" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="bold" font-size="14" fill="#065f46">Himpunan C (Range f)</text>
+                                <circle cx="630" cy="95" r="5" fill="#047857"/>
+                                <text x="630" y="125" text-anchor="middle" font-family="Inter" font-weight="bold" font-size="14" fill="#064e3b">f(g(x))</text>
+                                <text x="630" y="155" text-anchor="middle" font-family="Inter" font-size="12" fill="#047857">Output Akhir</text>
+
+                                <!-- Panah Fungsi g -->
+                                <path d="M 130 92 Q 250 45 365 92" fill="none" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+                                <rect x="220" y="45" width="60" height="24" rx="6" fill="#dbeafe"/>
+                                <text x="250" y="61" text-anchor="middle" font-family="Inter" font-weight="bold" font-size="13" fill="#1d4ed8">fungsi g</text>
+
+                                <!-- Panah Fungsi f -->
+                                <path d="M 385 92 Q 505 45 620 92" fill="none" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrowViolet)"/>
+                                <rect x="475" y="45" width="60" height="24" rx="6" fill="#ede9fe"/>
+                                <text x="505" y="61" text-anchor="middle" font-family="Inter" font-weight="bold" font-size="13" fill="#6d28d9">fungsi f</text>
+
+                                <!-- Panah Langsung (f o g) -->
+                                <path d="M 125 175 Q 375 285 625 175" fill="none" stroke="#059669" stroke-width="3" marker-end="url(#arrowEmerald)"/>
+                                <rect x="285" y="235" width="180" height="32" rx="8" fill="#059669"/>
+                                <text x="375" y="256" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="bold" font-size="14" fill="#ffffff">Komposisi (f ∘ g)(x)</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Contoh Konkret Syarat Himpunan Pasangan Berurutan -->
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 space-y-3">
+                        <h5 class="font-display font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass text-indigo-600"></i> Contoh Cepat dengan Pasangan Berurutan:
+                        </h5>
+                        <p class="text-sm text-slate-600">
+                            Diketahui fungsi $g = \{(1, \color{blue}{4}), (2, \color{blue}{5}), (3, \color{red}{9})\}$ dan fungsi $f = \{(\color{blue}{4}, 10), (\color{blue}{5}, 20), (7, 30)\}$.
+                        </p>
+                        <ul class="text-sm text-slate-700 space-y-1.5 list-disc list-inside">
+                            <li>Untuk $x = 1$: $g(1) = \color{blue}{4}$, lalu $f(\color{blue}{4}) = 10$. Maka $(f \circ g)(1) = 10$. (Berhasil!)</li>
+                            <li>Untuk $x = 2$: $g(2) = \color{blue}{5}$, lalu $f(\color{blue}{5}) = 20$. Maka $(f \circ g)(2) = 20$. (Berhasil!)</li>
+                            <li>Untuk $x = 3$: $g(3) = \color{red}{9}$, tetapi angka $\color{red}{9}$ <strong>tidak ada di Domain $f$</strong>! Maka $(f \circ g)(3)$ <strong>tidak terdefinisi</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAHAP 5: CONTOH SOAL BERTINGKAT (TABS)
+                 ========================================== -->
+            <section id="contoh-soal" class="scroll-mt-24 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 font-display font-bold flex items-center justify-center">5</span>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Tahap 5 • Pendalaman Materi</span>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-slate-900">Contoh Soal Bertingkat & Trik Penyelesaian</h3>
+                    </div>
+                </div>
+
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Klik masing-masing tab tingkatan di bawah ini untuk mempelajari variasi soal fungsi komposisi yang paling sering muncul dalam ujian, lengkap dengan langkah demi langkahnya:
+                </p>
+
+                <!-- Level Tabs Navigation -->
+                <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
+                    <button onclick="switchExampleTab(1)" id="tabBtn1" class="example-tab-btn px-4 py-2.5 rounded-xl font-display font-bold text-xs sm:text-sm bg-indigo-600 text-white shadow-sm transition cursor-pointer">
+                        <i class="fa-solid fa-seedling mr-1.5"></i> Level 1: Dasar (Mencari Komposisi)
+                    </button>
+                    <button onclick="switchExampleTab(2)" id="tabBtn2" class="example-tab-btn px-4 py-2.5 rounded-xl font-display font-bold text-xs sm:text-sm bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer">
+                        <i class="fa-solid fa-puzzle-piece mr-1.5"></i> Level 2: Menengah (Mencari Fungsi Pembentuk)
+                    </button>
+                    <button onclick="switchExampleTab(3)" id="tabBtn3" class="example-tab-btn px-4 py-2.5 rounded-xl font-display font-bold text-xs sm:text-sm bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer">
+                        <i class="fa-solid fa-cubes mr-1.5"></i> Level 3: Mahir (Komposisi Tiga Fungsi)
+                    </button>
+                </div>
+
+                <!-- TAB CONTENT 1: LEVEL DASAR -->
+                <div id="tabContent1" class="example-tab-content space-y-6">
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-100 px-3 py-1 rounded-md">Soal Level 1 (Dasar)</span>
+                        </div>
+                        <p class="text-slate-800 font-medium">
+                            Diketahui dua buah fungsi pada bilangan real: $f(x) = x^2 - 3x + 2$ dan $g(x) = 2x - 1$. Tentukan:
+                        </p>
+                        <ol class="list- lower-alpha list-inside text-sm text-slate-700 space-y-1 font-medium">
+                            <li>Rumus fungsi komposisi $(f \circ g)(x)$</li>
+                            <li>Rumus fungsi komposisi $(g \circ f)(x)$</li>
+                            <li>Nilai dari $(f \circ g)(2)$</li>
+                        </ol>
+                    </div>
+
+                    <!-- Pembahasan Level 1 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3 shadow-sm">
+                            <h5 class="font-display font-bold text-indigo-700 text-sm">a. Mencari $(f \circ g)(x)$</h5>
+                            <p class="text-xs text-slate-600">Substitusikan $g(x) = 2x - 1$ menggantikan setiap huruf $x$ pada $f(x) = x^2 - 3x + 2$:</p>
+                            <div class="bg-slate-50 rounded-xl p-3 text-sm overflow-x-auto">
+                                $$\begin{aligned}
+                                (f \circ g)(x) &= f(g(x)) \\
+                                &= f(2x - 1) \\
+                                &= (2x - 1)^2 - 3(2x - 1) + 2 \\
+                                &= (4x^2 - 4x + 1) - (6x - 3) + 2 \\
+                                &= 4x^2 - 10x + 6
+                                \end{aligned}$$
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3 shadow-sm">
+                            <h5 class="font-display font-bold text-violet-700 text-sm">b. Mencari $(g \circ f)(x)$</h5>
+                            <p class="text-xs text-slate-600">Substitusikan $f(x) = x^2 - 3x + 2$ menggantikan huruf $x$ pada $g(x) = 2x - 1$:</p>
+                            <div class="bg-slate-50 rounded-xl p-3 text-sm overflow-x-auto">
+                                $$\begin{aligned}
+                                (g \circ f)(x) &= g(f(x)) \\
+                                &= g(x^2 - 3x + 2) \\
+                                &= 2(x^2 - 3x + 2) - 1 \\
+                                &= 2x^2 - 6x + 4 - 1 \\
+                                &= 2x^2 - 6x + 3
+                                \end{aligned}$$
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 space-y-2">
+                        <h5 class="font-display font-bold text-emerald-900 text-sm">c. Mencari Nilai $(f \circ g)(2)$ — Ada 2 Cara Cerdas!</h5>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                            <div class="bg-white p-3.5 rounded-xl border border-emerald-200 text-xs sm:text-sm">
+                                <strong class="text-emerald-800">Cara 1 (Pakai Rumus Hasil a):</strong><br>
+                                Karena $(f \circ g)(x) = 4x^2 - 10x + 6$, maka:<br>
+                                $$(f \circ g)(2) = 4(2)^2 - 10(2) + 6 = 16 - 20 + 6 = 2$$
+                            </div>
+                            <div class="bg-white p-3.5 rounded-xl border border-emerald-200 text-xs sm:text-sm">
+                                <strong class="text-emerald-800">Cara 2 (Tanpa Cari Rumus Komposisi Dulu):</strong><br>
+                                Hitung $g(2) = 2(2) - 1 = 3$. Lalu masukkan ke $f$:<br>
+                                $$f(3) = (3)^2 - 3(3) + 2 = 9 - 9 + 2 = 2$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB CONTENT 2: LEVEL MENENGAH -->
+                <div id="tabContent2" class="example-tab-content hidden space-y-6">
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-sm text-amber-900">
+                        <strong><i class="fa-solid fa-key mr-1"></i> Konsep Level 2:</strong> Bagaimana jika hasil komposisi $(f \circ g)(x)$ sudah diketahui, tetapi salah satu fungsi pembentuknya ($f$ atau $g$) justru disembunyikan? Ada <strong>dua kasus berbeda</strong> yang wajib kamu bedakan!
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Kasus 2A: Mencari Fungsi Luar f(x) -->
+                        <div class="bg-white border-2 border-indigo-200 rounded-2xl p-5 space-y-3 shadow-sm">
+                            <span class="px-3 py-1 rounded-md bg-indigo-100 text-indigo-800 text-xs font-bold">Kasus A: Mencari Fungsi di Sebelah Kiri / Luar</span>
+                            <p class="text-sm font-semibold text-slate-800">
+                                Diketahui $(f \circ g)(x) = 6x + 5$ dan $g(x) = 2x - 1$. Tentukan rumus $f(x)$!
+                            </p>
+                            <div class="text-xs text-slate-600 space-y-2">
+                                <p><strong>Strategi Pemisalan Variabel ($u$):</strong></p>
+                                <div class="bg-slate-50 rounded-xl p-3 overflow-x-auto">
+                                    $$\begin{aligned}
+                                    f(g(x)) &= 6x + 5 \\
+                                    f(2x - 1) &= 6x + 5
+                                    \end{aligned}$$
+                                </div>
+                                <p>Misalkan isi di dalam kurung sebagai $u$:
+                                    $$u = 2x - 1 \iff 2x = u + 1 \iff x = \frac{u + 1}{2}$$
+                                </p>
+                                <p>Substitusikan ke persamaan di atas:</p>
+                                <div class="bg-slate-50 rounded-xl p-3 overflow-x-auto">
+                                    $$\begin{aligned}
+                                    f(u) &= 6\left(\frac{u + 1}{2}\right) + 5 \\
+                                    f(u) &= 3(u + 1) + 5 \\
+                                    f(u) &= 3u + 8 \implies \mathbf{f(x) = 3x + 8}
+                                    \end{aligned}$$
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kasus 2B: Mencari Fungsi Dalam g(x) -->
+                        <div class="bg-white border-2 border-violet-200 rounded-2xl p-5 space-y-3 shadow-sm">
+                            <span class="px-3 py-1 rounded-md bg-violet-100 text-violet-800 text-xs font-bold">Kasus B: Mencari Fungsi di Sebelah Kanan / Dalam</span>
+                            <p class="text-sm font-semibold text-slate-800">
+                                Diketahui $(f \circ g)(x) = 6x + 5$ dan $f(x) = 3x + 8$. Tentukan rumus $g(x)$!
+                            </p>
+                            <div class="text-xs text-slate-600 space-y-2">
+                                <p><strong>Strategi Substitusi Langsung:</strong></p>
+                                <p>Karena $f(x) = 3x + 8$, maka jika $x$ diganti dengan $g(x)$ menjadi $f(g(x)) = 3 \cdot g(x) + 8$.</p>
+                                <div class="bg-slate-50 rounded-xl p-3 overflow-x-auto">
+                                    $$\begin{aligned}
+                                    (f \circ g)(x) &= 6x + 5 \\
+                                    f(g(x)) &= 6x + 5 \\
+                                    3 \cdot g(x) + 8 &= 6x + 5 \\
+                                    3 \cdot g(x) &= 6x + 5 - 8 \\
+                                    3 \cdot g(x) &= 6x - 3 \\
+                                    \mathbf{g(x)} &= \frac{6x - 3}{3} = \mathbf{2x - 1}
+                                    \end{aligned}$$
+                                </div>
+                                <p class="text-emerald-700 font-medium">Terbukti cocok kembali dengan soal Kasus A!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB CONTENT 3: LEVEL MAHIR (TIGA FUNGSI) -->
+                <div id="tabContent3" class="example-tab-content hidden space-y-6">
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-100 px-3 py-1 rounded-md">Soal Level 3 (Komposisi Tiga Fungsi)</span>
+                        <p class="text-slate-800 font-medium text-sm sm:text-base">
+                            Diketahui tiga fungsi: $f(x) = 2x$, $g(x) = x + 3$, dan $h(x) = x^2 - 1$. Tentukan rumus $(f \circ g \circ h)(x)$ dan nilai $(f \circ g \circ h)(2)$!
+                        </p>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-4">
+                        <p class="text-sm text-slate-700">
+                            Prinsipnya tetap sama: kerjakan berurutan dari fungsi yang <strong>paling kanan (paling dalam)</strong> menuju ke kiri:
+                            $$(f \circ g \circ h)(x) = f(g(h(x)))$$
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <strong class="text-indigo-700">Langkah 1: Masukkan $h(x)$ ke $g$</strong>
+                                $$g(h(x)) = g(x^2 - 1)$$
+                                $$= (x^2 - 1) + 3 = x^2 + 2$$
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <strong class="text-indigo-700">Langkah 2: Masukkan hasilnya ke $f$</strong>
+                                $$f(g(h(x))) = f(x^2 + 2)$$
+                                $$= 2(x^2 + 2) = 2x^2 + 4$$
+                            </div>
+                            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                                <strong class="text-emerald-800">Langkah 3: Hitung untuk $x = 2$</strong>
+                                $$(f \circ g \circ h)(2) = 2(2)^2 + 4$$
+                                $$= 2(4) + 4 = 12$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAHAP 6: SIFAT-SIFAT FUNGSI KOMPOSISI
+                 ========================================== -->
+            <section id="sifat-komposisi" class="scroll-mt-24 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 font-display font-bold flex items-center justify-center">6</span>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Tahap 6 • Sifat Aljabar</span>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-slate-900">Tiga Sifat Utama Fungsi Komposisi</h3>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Sifat 1: Tidak Komutatif -->
+                    <div class="bg-rose-50/50 border border-rose-200 rounded-2xl p-5 flex flex-col justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="px-2.5 py-1 rounded-md bg-rose-100 text-rose-800 text-xs font-bold">Sifat 1</span>
+                            <h4 class="font-display font-bold text-slate-900 text-lg">Tidak Berlaku Sifat Komutatif</h4>
+                            <div class="bg-white rounded-xl p-3 border border-rose-200 text-center">
+                                $$(f \circ g)(x) \neq (g \circ f)(x)$$
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Secara umum, membalik urutan mesin akan mengubah hasil akhir.
+                            </p>
+                        </div>
+                        <div class="bg-white/80 rounded-xl p-3 border border-rose-100 text-xs text-slate-700">
+                            <strong>Bukti Nyata:</strong><br>
+                            Pada Contoh Level 1 tadi:<br>
+                            • $(f \circ g)(x) = 4x^2 - 10x + 6$<br>
+                            • $(g \circ f)(x) = 2x^2 - 6x + 3$<br>
+                            Terlihat jelas hasilnya berbeda!
+                        </div>
+                    </div>
+
+                    <!-- Sifat 2: Asosiatif -->
+                    <div class="bg-indigo-50/50 border border-indigo-200 rounded-2xl p-5 flex flex-col justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-800 text-xs font-bold">Sifat 2</span>
+                            <h4 class="font-display font-bold text-slate-900 text-lg">Berlaku Sifat Asosiatif</h4>
+                            <div class="bg-white rounded-xl p-3 border border-indigo-200 text-center text-sm">
+                                $$(f \circ (g \circ h))(x) = ((f \circ g) \circ h)(x)$$
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Asalkan urutan kiri-ke-kanan ($f$, lalu $g$, lalu $h$) tidak diubah, pengelompokan tanda kurung mana yang digabung lebih dulu akan menghasilkan rumus akhir yang sama persis.
+                            </p>
+                        </div>
+                        <div class="bg-white/80 rounded-xl p-3 border border-indigo-100 text-xs text-slate-700">
+                            <strong>Contoh:</strong><br>
+                            Menggabungkan $(g \circ h)$ dulu lalu dimasukkan ke $f$, hasilnya sama dengan menggabungkan $(f \circ g)$ dulu lalu dimasuki $h$.
+                        </div>
+                    </div>
+
+                    <!-- Sifat 3: Elemen Identitas -->
+                    <div class="bg-emerald-50/50 border border-emerald-200 rounded-2xl p-5 flex flex-col justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 text-xs font-bold">Sifat 3</span>
+                            <h4 class="font-display font-bold text-slate-900 text-lg">Memiliki Fungsi Identitas $I(x) = x$</h4>
+                            <div class="bg-white rounded-xl p-3 border border-emerald-200 text-center text-sm">
+                                $$(f \circ I)(x) = (I \circ f)(x) = f(x)$$
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Fungsi identitas $I(x) = x$ ibarat sebuah "pipa lurus kosong" yang tidak mengubah apapun yang melewatinya.
+                            </p>
+                        </div>
+                        <div class="bg-white/80 rounded-xl p-3 border border-emerald-100 text-xs text-slate-700">
+                            <strong>Bukti:</strong><br>
+                            • $(f \circ I)(x) = f(I(x)) = f(x)$<br>
+                            • $(I \circ f)(x) = I(f(x)) = f(x)$<br>
+                            Fungsi $f(x)$ tetap menjadi dirinya sendiri.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAHAP 7: RESOLUSI MASALAH KONTEKSTUAL AWAL
+                 ========================================== -->
+            <section id="resolusi" class="scroll-mt-24 bg-white rounded-3xl border-2 border-emerald-300 shadow-md overflow-hidden">
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-4 text-white flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </span>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider font-semibold text-emerald-100">Tahap 7 • Resolusi Masalah</span>
+                            <h3 class="font-display font-bold text-lg sm:text-xl">Memecahkan Masalah Pabrik Kertas "Nusantara Pulp"</h3>
+                        </div>
+                    </div>
+                    <span class="hidden sm:inline-block px-3 py-1 rounded-full bg-emerald-900/30 text-xs font-medium">Terpecahkan!</span>
+                </div>
+
+                <div class="p-6 sm:p-8 space-y-6">
+                    <p class="text-slate-700 leading-relaxed">
+                        Sekarang kita sudah memiliki senjata lengkap <strong>Fungsi Komposisi</strong>! Mari kita kembali ke pertanyaan Manajer Pabrik di bagian pembuka tadi dan menyelesaikannya dengan elegan.
+                    </p>
+
+                    <!-- Ringkasan Data Masalah Awal -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div>
+                            <span class="text-xs font-bold text-slate-400 uppercase">Input Bahan Baku</span>
+                            <p class="font-semibold text-slate-800 mt-1">$x =$ Berat kayu gelondongan (ton)</p>
+                            <p class="text-xs text-slate-500">Kiriman hari ini: $x = 20\text{ ton}$</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-blue-600 uppercase">Mesin Tahap 1 (Kayu $\rightarrow$ Bubur)</span>
+                            <p class="font-semibold text-slate-800 mt-1">$$m = g(x) = 0,8x - 1$$</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-emerald-600 uppercase">Mesin Tahap 2 (Bubur $\rightarrow$ Rim Kertas)</span>
+                            <p class="font-semibold text-slate-800 mt-1">$$K = f(m) = 500m + 100$$</p>
+                        </div>
+                    </div>
+
+                    <!-- Perbandingan Dua Cara -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Cara Manual (2 Tahap) -->
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3">
+                            <span class="px-3 py-1 rounded-full bg-slate-200 text-slate-700 text-xs font-bold">Cara Lama (Hitung Manual Dua Tahap untuk $x = 20$)</span>
+                            <ol class="space-y-3 text-sm text-slate-700 pt-2">
+                                <li>
+                                    <strong>Tahap 1:</strong> Hitung berat bubur kertas ($m$) dari $20\text{ ton}$ kayu:
+                                    <div class="bg-white p-2.5 rounded-xl border border-slate-200 mt-1 text-center">
+                                        $$m = g(20) = 0,8(20) - 1 = 16 - 1 = 15\text{ ton bubur kertas}$$
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Tahap 2:</strong> Masukkan $m = 15\text{ ton}$ bubur kertas ke mesin pencetak:
+                                    <div class="bg-white p-2.5 rounded-xl border border-slate-200 mt-1 text-center">
+                                        $$K = f(15) = 500(15) + 100 = 7.500 + 100 = \mathbf{7.600\text{ rim}}$$
+                                    </div>
+                                </li>
+                            </ol>
+                            <p class="text-xs text-slate-500 italic">Kelemahan: Jika ada 100 pengiriman kayu dengan berat berbeda, kita harus menghitung bolak-balik 200 kali!</p>
+                        </div>
+
+                        <!-- Cara Fungsi Komposisi -->
+                        <div class="bg-emerald-50/70 border-2 border-emerald-300 rounded-2xl p-5 space-y-3">
+                            <span class="px-3 py-1 rounded-full bg-emerald-600 text-white text-xs font-bold">Cara Fungsi Komposisi $(f \circ g)(x)$ — Satu Rumus Langsung!</span>
+                            <div class="space-y-3 text-sm text-slate-800 pt-2">
+                                <p>Kita gabungkan fungsi pertama $g(x)$ ke dalam fungsi kedua $f(m)$:</p>
+                                <div class="bg-white p-3 rounded-xl border border-emerald-200 text-center overflow-x-auto">
+                                    $$\begin{aligned}
+                                    K(x) = (f \circ g)(x) &= f(g(x)) \\
+                                    &= f(0,8x - 1) \\
+                                    &= 500(0,8x - 1) + 100 \\
+                                    &= 400x - 500 + 100 \\
+                                    \mathbf{(f \circ g)(x)} &= \mathbf{400x - 400}
+                                    \end{aligned}$$
+                                </div>
+                                <p>Untuk $x = 20\text{ ton}$ kayu, langsung masukkan ke rumus komposisi:</p>
+                                <div class="bg-white p-2.5 rounded-xl border border-emerald-200 text-center font-bold text-emerald-900">
+                                    $$(f \circ g)(20) = 400(20) - 400 = 8.000 - 400 = \mathbf{7.600\text{ rim kertas}}$$
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kalkulator Interaktif Pabrik Kertas -->
+                    <div class="bg-slate-900 text-white rounded-2xl p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="space-y-1">
+                            <h5 class="font-display font-bold text-amber-400 text-base flex items-center gap-2">
+                                <i class="fa-solid fa-calculator"></i> Uji Sendiri Kalkulator Pabrik $(f \circ g)(x) = 400x - 400$
+                            </h5>
+                            <p class="text-xs text-slate-300">Geser atau ketik berat kayu ($x\text{ ton}$, minimal $2\text{ ton}$) untuk melihat perbandingan kecepatan rumus komposisi:</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-4 w-full md:w-auto justify-end">
+                            <div class="bg-slate-800 px-4 py-2 rounded-xl border border-slate-700 text-center">
+                                <label for="woodInput" class="block text-[10px] uppercase text-slate-400">Input Kayu ($x$ ton)</label>
+                                <input id="woodInput" type="number" value="20" min="2" max="1000" class="w-20 bg-transparent text-center font-bold text-lg text-amber-400 focus:outline-none border-b border-amber-400">
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-500"></i>
+                            <div class="bg-slate-800 px-4 py-2 rounded-xl border border-slate-700 text-center">
+                                <span class="block text-[10px] uppercase text-blue-400">Bubur Kertas $g(x)$</span>
+                                <span id="pulpOutput" class="font-bold text-base text-white">15 ton</span>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-500"></i>
+                            <div class="bg-emerald-900/60 px-4 py-2 rounded-xl border border-emerald-500 text-center">
+                                <span class="block text-[10px] uppercase text-emerald-300">Hasil Akhir $(f \circ g)(x)$</span>
+                                <span id="paperOutput" class="font-bold text-lg text-emerald-300">7.600 rim</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAHAP 8: LATIHAN INTERAKTIF / CEK PEMAHAMAN
+                 ========================================== -->
+            <section id="kuis" class="scroll-mt-24 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-9 h-9 rounded-xl bg-indigo-600 text-white font-display font-bold flex items-center justify-center">8</span>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Tahap 8 • Evaluasi Mandiri</span>
+                            <h3 class="font-display font-bold text-xl sm:text-2xl text-slate-900">Kuis Interaktif & Pembahasan Langsung</h3>
+                        </div>
+                    </div>
+                    <div class="bg-indigo-50 px-4 py-2 rounded-xl border border-indigo-100 text-sm font-bold text-indigo-900 self-start sm:self-auto">
+                        Skor Kamu: <span id="quizScore" class="text-indigo-600">0</span> / 4 Benar
+                    </div>
+                </div>
+
+                <p class="text-slate-600 text-sm">
+                    Pilih jawaban yang paling tepat pada 4 soal berikut untuk menguji pemahamanmu dari tingkat dasar hingga aplikasi. Pembahasan lengkap akan langsung muncul setelah kamu memilih jawaban!
+                </p>
+
+                <!-- Daftar Soal Kuis -->
+                <div class="space-y-6" id="quizContainer">
+                    
+                    <!-- Soal 1 -->
+                    <div class="quiz-card bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200 space-y-4" data-question="1" data-correct="B">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-lg bg-indigo-100 text-indigo-800 text-xs font-bold">Soal 1 • Konsep Substitusi Dasar</span>
+                            <span class="quiz-status text-xs font-semibold text-slate-400">Belum Dijawab</span>
+                        </div>
+                        <p class="text-slate-800 font-medium text-sm sm:text-base">
+                            Diketahui fungsi $f(x) = 3x - 4$ dan $g(x) = 2x + 5$. Rumus fungsi komposisi $(f \circ g)(x)$ adalah ....
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="checkQuizAnswer(1, 'A', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>A.</strong> $6x - 3$
+                            </button>
+                            <button onclick="checkQuizAnswer(1, 'B', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>B.</strong> $6x + 11$
+                            </button>
+                            <button onclick="checkQuizAnswer(1, 'C', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>C.</strong> $6x + 15$
+                            </button>
+                            <button onclick="checkQuizAnswer(1, 'D', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>D.</strong> $5x + 1$
+                            </button>
+                        </div>
+                        <div id="quizExp1" class="hidden rounded-xl p-4 text-xs sm:text-sm space-y-2">
+                            <div class="font-bold quiz-feedback-title"></div>
+                            <p class="text-slate-700">
+                                <strong>Pembahasan Langkah demi Langkah:</strong><br>
+                                Ingat bahwa $(f \circ g)(x) = f(g(x))$. Kita masukkan $g(x) = 2x + 5$ ke dalam $x$ milik $f(x) = 3x - 4$:
+                                $$(f \circ g)(x) = f(2x + 5) = 3(2x + 5) - 4 = 6x + 15 - 4 = \mathbf{6x + 11}$$
+                                <em>Catatan: Jika kamu menjawab A ($6x - 3$), itu adalah hasil dari $(g \circ f)(x)$ karena terbalik urutan!</em>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Soal 2 -->
+                    <div class="quiz-card bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200 space-y-4" data-question="2" data-correct="C">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-lg bg-indigo-100 text-indigo-800 text-xs font-bold">Soal 2 • Evaluasi Nilai Komposisi</span>
+                            <span class="quiz-status text-xs font-semibold text-slate-400">Belum Dijawab</span>
+                        </div>
+                        <p class="text-slate-800 font-medium text-sm sm:text-base">
+                            Diketahui $f(x) = x^2 + 1$ dan $g(x) = 3x - 2$. Nilai dari $(g \circ f)(-2)$ adalah ....
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="checkQuizAnswer(2, 'A', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>A.</strong> $65$
+                            </button>
+                            <button onclick="checkQuizAnswer(2, 'B', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>B.</strong> $10$
+                            </button>
+                            <button onclick="checkQuizAnswer(2, 'C', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>C.</strong> $13$
+                            </button>
+                            <button onclick="checkQuizAnswer(2, 'D', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>D.</strong> $-11$
+                            </button>
+                        </div>
+                        <div id="quizExp2" class="hidden rounded-xl p-4 text-xs sm:text-sm space-y-2">
+                            <div class="font-bold quiz-feedback-title"></div>
+                            <p class="text-slate-700">
+                                <strong>Pembahasan Langkah demi Langkah:</strong><br>
+                                Perhatikan urutannya: $(g \circ f)(-2) = g(f(-2))$. Artinya kita hitung $f(-2)$ terlebih dahulu!<br>
+                                1. Hitung $f(-2) = (-2)^2 + 1 = 4 + 1 = 5$.<br>
+                                2. Masukkan hasilnya ke fungsi $g$: $g(5) = 3(5) - 2 = 15 - 2 = \mathbf{13}$.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Soal 3 -->
+                    <div class="quiz-card bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200 space-y-4" data-question="3" data-correct="A">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-lg bg-indigo-100 text-indigo-800 text-xs font-bold">Soal 3 • Mencari Fungsi Pembentuk</span>
+                            <span class="quiz-status text-xs font-semibold text-slate-400">Belum Dijawab</span>
+                        </div>
+                        <p class="text-slate-800 font-medium text-sm sm:text-base">
+                            Jika diketahui $(f \circ g)(x) = 4x + 6$ dan $f(x) = 2x - 4$, maka rumus fungsi $g(x)$ adalah ....
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="checkQuizAnswer(3, 'A', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>A.</strong> $2x + 5$
+                            </button>
+                            <button onclick="checkQuizAnswer(3, 'B', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>B.</strong> $2x + 1$
+                            </button>
+                            <button onclick="checkQuizAnswer(3, 'C', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>C.</strong> $2x - 5$
+                            </button>
+                            <button onclick="checkQuizAnswer(3, 'D', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>D.</strong> $4x + 10$
+                            </button>
+                        </div>
+                        <div id="quizExp3" class="hidden rounded-xl p-4 text-xs sm:text-sm space-y-2">
+                            <div class="font-bold quiz-feedback-title"></div>
+                            <p class="text-slate-700">
+                                <strong>Pembahasan Langkah demi Langkah:</strong><br>
+                                Karena yang dicari adalah fungsi di sebelah kanan/dalam ($g(x)$), kita substitusi langsung ke rumus $f(x) = 2x - 4$:
+                                $$f(g(x)) = 4x + 6 \iff 2 \cdot g(x) - 4 = 4x + 6$$
+                                $$2 \cdot g(x) = 4x + 10 \iff g(x) = \frac{4x + 10}{2} = \mathbf{2x + 5}$$
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Soal 4 -->
+                    <div class="quiz-card bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200 space-y-4" data-question="4" data-correct="D">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-lg bg-amber-100 text-amber-800 text-xs font-bold">Soal 4 • Aplikasi Kontekstual Diskon Bertingkat</span>
+                            <span class="quiz-status text-xs font-semibold text-slate-400">Belum Dijawab</span>
+                        </div>
+                        <p class="text-slate-800 font-medium text-sm sm:text-base">
+                            Sebuah toko sepatu memberikan promo ganda: pertama, harga sepatu sebesar $x$ rupiah mendapat <strong>potongan langsung $\text{Rp}50.000$</strong> (fungsi $g(x) = x - 50.000$). Kedua, harga setelah potongan tersebut didiskon lagi sebesar $20\%$ sehingga pembeli cukup membayar $80\%$-nya (fungsi $f(y) = 0,8y$). Berapa harga akhir yang harus dibayar untuk sepatu seharga $\text{Rp}350.000$?
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="checkQuizAnswer(4, 'A', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>A.</strong> $\text{Rp}230.000$
+                            </button>
+                            <button onclick="checkQuizAnswer(4, 'B', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>B.</strong> $\text{Rp}250.000$
+                            </button>
+                            <button onclick="checkQuizAnswer(4, 'C', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>C.</strong> $\text{Rp}220.000$
+                            </button>
+                            <button onclick="checkQuizAnswer(4, 'D', this)" class="quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer">
+                                <strong>D.</strong> $\text{Rp}240.000$
+                            </button>
+                        </div>
+                        <div id="quizExp4" class="hidden rounded-xl p-4 text-xs sm:text-sm space-y-2">
+                            <div class="font-bold quiz-feedback-title"></div>
+                            <p class="text-slate-700">
+                                <strong>Pembahasan Langkah demi Langkah:</strong><br>
+                                Proses pertama adalah $g(x) = x - 50.000$, lalu dilanjutkan $f(y) = 0,8y$. Maka rumus komposisinya adalah:
+                                $$(f \circ g)(x) = f(g(x)) = 0,8(x - 50.000) = 0,8x - 40.000$$
+                                Untuk $x = 350.000$:
+                                $$(f \circ g)(350.000) = 0,8(350.000) - 40.000 = 280.000 - 40.000 = \mathbf{\text{Rp}240.000}$$
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Reset Quiz Button -->
+                <div class="pt-2 flex justify-end">
+                    <button onclick="resetQuiz()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition cursor-pointer">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Ulangi Kuis
+                    </button>
+                </div>
+            </section>
+
+            <!-- Footer Ringkasan -->
+            <footer class="bg-slate-900 text-slate-400 rounded-3xl p-6 sm:p-8 text-center text-xs sm:text-sm space-y-2">
+                <p class="font-display font-bold text-white text-base">Modul Pembelajaran Interaktif Matematika SMA — Fungsi Komposisi</p>
+                <p>Dirancang dengan pendekatan bertahap dari masalah kontekstual konkret menuju abstraksi aljabar formal.</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Helper to trigger KaTeX rendering on specific element or whole body
+        function renderMath(element = document.body) {
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(element, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // ==============================================
+        // SIMULASI MESIN KOMPOSISI INTERAKTIF (TAHAP 2)
+        // ==============================================
+        const presets = [
+            {
+                formulaG: "$$g(x) = x + 2$$",
+                formulaF: "$$f(x) = 3x$$",
+                calcG: (x) => `Substitusi: $g(${x}) = ${x} + 2$`,
+                evalG: (x) => x + 2,
+                calcF: (gx) => `Substitusi: $f(${gx}) = 3(${gx})$`,
+                evalF: (gx) => 3 * gx,
+                combined: (x, finalVal) => `$$(f \\circ g)(x) = 3x + 6 \\implies (f \\circ g)(${x}) = 3(${x}) + 6 = ${finalVal}$$`
+            },
+            {
+                formulaG: "$$g(x) = 2x - 1$$",
+                formulaF: "$$f(x) = x^2$$",
+                calcG: (x) => `Substitusi: $g(${x}) = 2(${x}) - 1$`,
+                evalG: (x) => 2 * x - 1,
+                calcF: (gx) => `Substitusi: $f(${gx}) = (${gx})^2$`,
+                evalF: (gx) => gx * gx,
+                combined: (x, finalVal) => `$$(f \\circ g)(x) = (2x - 1)^2 \\implies (f \\circ g)(${x}) = ${finalVal}$$`
+            },
+            {
+                formulaG: "$$g(x) = x^2 + 1$$",
+                formulaF: "$$f(x) = 2x + 5$$",
+                calcG: (x) => `Substitusi: $g(${x}) = (${x})^2 + 1$`,
+                evalG: (x) => x * x + 1,
+                calcF: (gx) => `Substitusi: $f(${gx}) = 2(${gx}) + 5$`,
+                evalF: (gx) => 2 * gx + 5,
+                combined: (x, finalVal) => `$$(f \\circ g)(x) = 2x^2 + 7 \\implies (f \\circ g)(${x}) = 2(${x})^2 + 7 = ${finalVal}$$`
+            }
+        ];
+
+        const machinePresetEl = document.getElementById('machinePreset');
+        const simInputXEl = document.getElementById('simInputX');
+        const btnDecX = document.getElementById('btnDecX');
+        const btnIncX = document.getElementById('btnIncX');
+        const btnRunSim = document.getElementById('btnRunSim');
+
+        function updateMachineSimulation(animate = false) {
+            const presetIdx = parseInt(machinePresetEl.value, 10) || 0;
+            let xVal = parseInt(simInputXEl.value, 10);
+            if (isNaN(xVal)) xVal = 0;
+
+            const current = presets[presetIdx];
+            const gxVal = current.evalG(xVal);
+            const fgxVal = current.evalF(gxVal);
+
+            // Update DOM content
+            document.getElementById('simDisplayX').innerHTML = `$$x = ${xVal}$$`;
+            document.getElementById('simFormulaG').innerHTML = current.formulaG;
+            document.getElementById('simCalcG').innerHTML = current.calcG(xVal);
+            document.getElementById('simOutG').innerHTML = `Output $g(${xVal}) = ${gxVal}$`;
+
+            document.getElementById('simFormulaF').innerHTML = current.formulaF;
+            document.getElementById('simCalcF').innerHTML = current.calcF(gxVal);
+            document.getElementById('simOutF').innerHTML = `Output Akhir $f(${gxVal}) = ${fgxVal}$`;
+
+            document.getElementById('simCombinedFormula').innerHTML = current.combined(xVal, fgxVal);
+
+            // Re-render KaTeX inside simulation container
+            renderMath(document.getElementById('simulasi-mesin'));
+
+            if (animate) {
+                const boxInput = document.getElementById('simBoxInput');
+                const boxG = document.getElementById('simBoxG');
+                const boxF = document.getElementById('simBoxF');
+
+                boxInput.classList.add('ring-4', 'ring-amber-400', 'scale-105');
+                setTimeout(() => {
+                    boxInput.classList.remove('ring-4', 'ring-amber-400', 'scale-105');
+                    boxG.classList.add('ring-4', 'ring-blue-400', 'scale-105');
+                }, 450);
+                setTimeout(() => {
+                    boxG.classList.remove('ring-4', 'ring-blue-400', 'scale-105');
+                    boxF.classList.add('ring-4', 'ring-emerald-400', 'scale-105');
+                }, 950);
+                setTimeout(() => {
+                    boxF.classList.remove('ring-4', 'ring-emerald-400', 'scale-105');
+                }, 1500);
+            }
+        }
+
+        machinePresetEl.addEventListener('change', () => updateMachineSimulation(true));
+        simInputXEl.addEventListener('input', () => updateMachineSimulation(false));
+        btnDecX.addEventListener('click', () => {
+            simInputXEl.value = (parseInt(simInputXEl.value, 10) || 0) - 1;
+            updateMachineSimulation(true);
+        });
+        btnIncX.addEventListener('click', () => {
+            simInputXEl.value = (parseInt(simInputXEl.value, 10) || 0) + 1;
+            updateMachineSimulation(true);
+        });
+        btnRunSim.addEventListener('click', () => updateMachineSimulation(true));
+
+        // ==============================================
+        // TABS CONTOH SOAL BERTINGKAT (TAHAP 5)
+        // ==============================================
+        function switchExampleTab(level) {
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById(`tabBtn${i}`);
+                const content = document.getElementById(`tabContent${i}`);
+                if (i === level) {
+                    btn.className = "example-tab-btn px-4 py-2.5 rounded-xl font-display font-bold text-xs sm:text-sm bg-indigo-600 text-white shadow-sm transition cursor-pointer";
+                    content.classList.remove('hidden');
+                } else {
+                    btn.className = "example-tab-btn px-4 py-2.5 rounded-xl font-display font-bold text-xs sm:text-sm bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer";
+                    content.classList.add('hidden');
+                }
+            }
+        }
+
+        // ==============================================
+        // KALKULATOR RESOLUSI PABRIK KERTAS (TAHAP 7)
+        // ==============================================
+        const woodInputEl = document.getElementById('woodInput');
+        const pulpOutputEl = document.getElementById('pulpOutput');
+        const paperOutputEl = document.getElementById('paperOutput');
+
+        woodInputEl.addEventListener('input', () => {
+            let x = parseFloat(woodInputEl.value);
+            if (isNaN(x) || x < 2) {
+                pulpOutputEl.textContent = "-";
+                paperOutputEl.textContent = "Min. 2 ton";
+                return;
+            }
+            const pulp = +(0.8 * x - 1).toFixed(2);
+            const paper = Math.round(400 * x - 400);
+            pulpOutputEl.textContent = `${pulp.toLocaleString('id-ID')} ton`;
+            paperOutputEl.textContent = `${paper.toLocaleString('id-ID')} rim`;
+        });
+
+        // ==============================================
+        // KUIS INTERAKTIF (TAHAP 8)
+        // ==============================================
+        const answeredState = {};
+
+        function checkQuizAnswer(qNum, selectedChoice, btnEl) {
+            const card = document.querySelector(`.quiz-card[data-question="${qNum}"]`);
+            const correctChoice = card.getAttribute('data-correct');
+            const expBox = document.getElementById(`quizExp${qNum}`);
+            const statusLabel = card.querySelector('.quiz-status');
+            const feedbackTitle = expBox.querySelector('.quiz-feedback-title');
+
+            // Reset option styles inside this card
+            card.querySelectorAll('.quiz-opt').forEach(btn => {
+                btn.classList.remove('bg-emerald-100', 'border-emerald-500', 'text-emerald-900', 'bg-rose-100', 'border-rose-500', 'text-rose-900');
+                btn.classList.add('bg-white', 'border-slate-200');
+            });
+
+            const isCorrect = (selectedChoice === correctChoice);
+            answeredState[qNum] = isCorrect;
+
+            if (isCorrect) {
+                btnEl.classList.remove('bg-white', 'border-slate-200');
+                btnEl.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+                statusLabel.textContent = "✓ Jawaban Benar";
+                statusLabel.className = "quiz-status text-xs font-bold text-emerald-600";
+                expBox.className = "rounded-xl p-4 text-xs sm:text-sm space-y-2 bg-emerald-50 border border-emerald-200";
+                feedbackTitle.innerHTML = `<span class="text-emerald-800"><i class="fa-solid fa-circle-check mr-1"></i> Tepat Sekali! Jawabanmu (${selectedChoice}) Benar.</span>`;
+            } else {
+                btnEl.classList.remove('bg-white', 'border-slate-200');
+                btnEl.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-900');
+                statusLabel.textContent = "✗ Belum Tepat";
+                statusLabel.className = "quiz-status text-xs font-bold text-rose-600";
+                expBox.className = "rounded-xl p-4 text-xs sm:text-sm space-y-2 bg-rose-50 border border-rose-200";
+                feedbackTitle.innerHTML = `<span class="text-rose-800"><i class="fa-solid fa-circle-xmark mr-1"></i> Kurang Tepat. Jawaban yang benar adalah (${correctChoice}). Mari simak pembahasannya:</span>`;
+            }
+
+            // Update Score Counter
+            const totalCorrect = Object.values(answeredState).filter(Boolean).length;
+            document.getElementById('quizScore').textContent = totalCorrect;
+        }
+
+        function resetQuiz() {
+            Object.keys(answeredState).forEach(k => delete answeredState[k]);
+            document.getElementById('quizScore').textContent = '0';
+            document.querySelectorAll('.quiz-card').forEach(card => {
+                card.querySelector('.quiz-status').textContent = 'Belum Dijawab';
+                card.querySelector('.quiz-status').className = 'quiz-status text-xs font-semibold text-slate-400';
+                card.querySelectorAll('.quiz-opt').forEach(btn => {
+                    btn.className = "quiz-opt text-left px-4 py-3 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-sm font-medium transition cursor-pointer";
+                });
+            });
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`quizExp${i}`).classList.add('hidden');
+            }
+        }
+
+        // Initial Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMath(document.body);
+            updateMachineSimulation(false);
+        });
+    </script>
+</body>
+</html>
