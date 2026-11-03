@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Interaktif: Barisan Geometri - SMK Kelas X (Keperawatan & DKV)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Integrasi KaTeX untuk Persamaan Matematika & Pecahan -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        med: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        },
+                        dkv: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .math-font {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navbar Sticky -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-tr from-teal-500 to-purple-600 text-white p-2 rounded-xl shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-tight text-slate-900">MathVocation</span>
+                        <span class="hidden sm:inline-block ml-2 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-300">
+                            SMK Kelas X • Keperawatan & DKV
+                        </span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-1 text-sm font-medium text-slate-600">
+                    <a href="#masalah-awal" class="px-3 py-2 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition">1. Masalah Nyata</a>
+                    <a href="#eksplorasi" class="px-3 py-2 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition">2. Eksplorasi Pola</a>
+                    <a href="#konsep" class="px-3 py-2 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition">3. Konsep & Rumus</a>
+                    <a href="#contoh-soal" class="px-3 py-2 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition">4. Contoh Kasus</a>
+                    <a href="#penyelesaian" class="px-3 py-2 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition">5. Solusi Awal</a>
+                    <a href="#latihan" class="px-3 py-2 rounded-lg bg-indigo-50 text-indigo-600 font-semibold hover:bg-indigo-100 transition">6. Latihan</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="relative overflow-hidden bg-slate-900 text-white py-16 sm:py-24">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:24px_24px]"></div>
+        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-medium text-teal-300 mb-6 border border-white/15">
+                <span>Modul Pembelajaran Matematika Terapan</span>
+                <span>•</span>
+                <span>Bagian 1 dari 2 (Fokus Barisan)</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                Mengenal <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-indigo-400 to-purple-400">Barisan Geometri</span> dalam Dunia Kerja
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg sm:text-xl text-slate-300 leading-relaxed mb-8">
+                Pernahkah kamu membayangkan bagaimana perawat menghitung peluruhan dosis obat di dalam darah, atau bagaimana desainer mengatur skala ukuran kanvas dan resolusi gambar? Mari kita pelajari polanya secara perlahan!
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#masalah-awal" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-teal-500 to-indigo-600 text-white font-semibold shadow-lg hover:opacity-95 transition flex items-center space-x-2">
+                    <span>Mulai Belajar Sekarang</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
+
+        <!-- BAGIAN 1: MASALAH KEHIDUPAN SEHARI-HARI -->
+        <section id="masalah-awal" class="scroll-mt-24">
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-amber-500 text-white font-bold text-sm">1</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Tantangan Dunia Kerja: Pilih Kasusmu!</h2>
+            </div>
+            <p class="text-slate-600 mb-8 text-lg leading-relaxed">
+                Sebelum kita membahas rumus matematika, mari kita lihat dua masalah nyata di klinik kesehatan dan studio desain berikut. <strong>Kita belum perlu menghitung jawabannya sekarang</strong>, cukup pahami situasinya karena di akhir pembelajaran kita akan memecahkannya dengan sangat mudah!
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Kasus Keperawatan -->
+                <div class="bg-white rounded-2xl border-2 border-teal-500/30 shadow-md overflow-hidden card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="bg-gradient-to-r from-teal-600 to-teal-500 px-6 py-4 text-white flex justify-between items-center">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-2xl">🩺</span>
+                                <h3 class="font-bold text-lg">Kasus A: Jurusan Keperawatan</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full font-medium">Mikrobiologi & Medis</span>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <h4 class="font-bold text-xl text-slate-800">Kultur Bakteri di Laboratorium</h4>
+                            <p class="text-slate-600 leading-relaxed">
+                                Seorang asisten perawat sedang mengamati sampel bakteri <em>Escherichia coli</em> di laboratorium patologi klinik untuk menguji efektivitas antibiotik.
+                            </p>
+                            <div class="bg-teal-50 border border-teal-200 rounded-xl p-4 text-sm text-teal-950 space-y-2">
+                                <p>🔬 <strong>Data Pengamatan:</strong></p>
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Pada pemeriksaan ke-1 (jam ke-0), terdapat <strong>500 koloni bakteri</strong>.</li>
+                                    <li>Setiap 1 jam, setiap bakteri membelah diri sehingga jumlahnya menjadi <strong>2 kali lipat</strong> dari jam sebelumnya.</li>
+                                </ul>
+                            </div>
+                            <p class="text-slate-700 font-medium">
+                                ❓ <strong>Pertanyaan Tantangan:</strong><br>
+                                Berapakah jumlah bakteri pada pemeriksaan ke-9 (setelah 8 jam)? Jika kita menghitung manual satu per satu hingga pemeriksaan ke-20, tentu sangat melelahkan, bukan?
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-3 bg-slate-50 border-t border-slate-100 text-xs text-slate-500 flex justify-between items-center">
+                        <span>Status: Menunggu Konsep Barisan Geometri</span>
+                        <a href="#penyelesaian" class="text-teal-600 font-semibold hover:underline">Lihat Solusi Nanti →</a>
+                    </div>
+                </div>
+
+                <!-- Kasus DKV -->
+                <div class="bg-white rounded-2xl border-2 border-purple-500/30 shadow-md overflow-hidden card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-4 text-white flex justify-between items-center">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-2xl">🎨</span>
+                                <h3 class="font-bold text-lg">Kasus B: Jurusan DKV</h3>
+                            </div>
+                            <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full font-medium">Desain Grafis & UI/UX</span>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <h4 class="font-bold text-xl text-slate-800">Kompresi & Downscaling Resolusi Aset</h4>
+                            <p class="text-slate-600 leading-relaxed">
+                                Seorang desainer grafis sedang membuat sistem ikon (*icon pack*) dan *thumbnail* bertingkat untuk aplikasi *mobile* agar ringan saat dimuat.
+                            </p>
+                            <div class="bg-purple-50 border border-purple-200 rounded-xl p-4 text-sm text-purple-950 space-y-2">
+                                <p>📐 <strong>Aturan Ukuran Kanvas:</strong></p>
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Kanvas master (Ukuran ke-1) memiliki lebar <strong>2.048 piksel (px)</strong>.</li>
+                                    <li>Setiap turun 1 tingkat ukuran, lebar kanvas diperkecil menjadi <strong>setengah ($\frac{1}{2}$) kali</strong> dari lebar sebelumnya.</li>
+                                </ul>
+                            </div>
+                            <p class="text-slate-700 font-medium">
+                                ❓ <strong>Pertanyaan Tantangan:</strong><br>
+                                Berapakah lebar kanvas pada tingkat ukuran ke-8? Bagaimana cara desainer membuat *script* otomatis untuk menentukan lebar kanvas ke-$n$?
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-3 bg-slate-50 border-t border-slate-100 text-xs text-slate-500 flex justify-between items-center">
+                        <span>Status: Menunggu Konsep Barisan Geometri</span>
+                        <a href="#penyelesaian" class="text-purple-600 font-semibold hover:underline">Lihat Solusi Nanti →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN 2: MEMBANGUN PENGETAHUAN SECARA PERLAHAN (SCAFFOLDING) -->
+        <section id="eksplorasi" class="scroll-mt-24">
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm">2</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Membangun Pengetahuan: Mengamati Pola</h2>
+            </div>
+            <p class="text-slate-600 mb-6 text-lg leading-relaxed">
+                Waktu mempelajari <strong>Barisan Aritmatika</strong> sebelumnya, kita tahu bahwa angkanya bertambah atau berkurang dengan <strong>penjumlahan atau pengurangan yang tetap</strong>. Namun, apakah kedua kasus di atas menggunakan penjumlahan? Mari kita bedah perlahan!
+            </p>
+
+            <!-- Perbandingan Aritmatika vs Geometri -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 mb-8">
+                <h3 class="font-bold text-xl text-slate-800 mb-4">🔍 Langkah 1: Membedakan Pola Tambah vs Pola Kali</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Ingat Kembali: Barisan Aritmatika</span>
+                        <div class="flex items-center space-x-3 my-4 text-xl font-bold text-slate-700 overflow-x-auto py-2">
+                            <span class="px-3 py-1.5 bg-white rounded-lg shadow-sm border">2</span>
+                            <span class="text-xs text-emerald-600 font-semibold">$+3 \rightarrow$</span>
+                            <span class="px-3 py-1.5 bg-white rounded-lg shadow-sm border">5</span>
+                            <span class="text-xs text-emerald-600 font-semibold">$+3 \rightarrow$</span>
+                            <span class="px-3 py-1.5 bg-white rounded-lg shadow-sm border">8</span>
+                            <span class="text-xs text-emerald-600 font-semibold">$+3 \rightarrow$</span>
+                            <span class="px-3 py-1.5 bg-white rounded-lg shadow-sm border">11</span>
+                        </div>
+                        <p class="text-sm text-slate-600">
+                            Polanya adalah <strong>ditambah angka yang tetap</strong> (disebut <em>beda</em> / $b$). Pertumbuhannya bersifat stabil/linier.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-xl bg-indigo-50/70 border border-indigo-200">
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Konsep Baru: Barisan Geometri</span>
+                        <div class="flex items-center space-x-3 my-4 text-xl font-bold text-indigo-900 overflow-x-auto py-2">
+                            <span class="px-3 py-1.5 bg-white rounded-lg shadow-sm border border-indigo-200">2</span>
+                            <span class="text-xs text-indigo-600 font-semibold">$\times 3 \rightarrow$</span>
+                            <span class="px-3 py-1.5 bg-white rounded-lg shadow-sm border border-indigo-200">6</span>
+                            <span class="text-xs text-indigo-600 font-semibold">$\times 3 \rightarrow$</span>
+                            <span class="px-3 py-1.5 bg-white rounded-lg shadow-sm border border-indigo-200">18</span>
+                            <span class="text-xs text-indigo-600 font-semibold">$\times 3 \rightarrow$</span>
+                            <span class="px-3 py-1.5 bg-white rounded-lg shadow-sm border border-indigo-200">54</span>
+                        </div>
+                        <p class="text-sm text-indigo-950">
+                            Polanya adalah <strong>dikalikan angka yang tetap</strong> (disebut <em>rasio</em> / $r$). Pertumbuhannya melonjak cepat atau menyusut cepat!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulator Interaktif Pembelahan / Skala -->
+            <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl p-6 sm:p-8 shadow-xl">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-white/10 pb-4">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-widest text-teal-400">Laboratorium Virtual</span>
+                        <h3 class="text-xl sm:text-2xl font-bold mt-1">🔬 Langkah 2: Simulasi Pertumbuhan & Penyusutan Geometri</h3>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="setSimMode('bakteri')" id="btn-sim-bakteri" class="px-4 py-2 rounded-xl text-sm font-semibold bg-teal-500 text-slate-950 shadow transition">
+                            🦠 Mode Bakteri ($\times 2$)
+                        </button>
+                        <button onclick="setSimMode('kanvas')" id="btn-sim-kanvas" class="px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition">
+                            🖼️ Mode Kanvas ($\times \frac{1}{2}$)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-6 items-center">
+                    <div class="lg:col-span-5 space-y-4 bg-white/5 p-5 rounded-xl border border-white/10">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-slate-300">Suku ke-<span id="sim-step-label" class="font-bold text-white">1</span> (<span id="sim-sub-label">$U_1$</span>)</span>
+                            <span id="sim-formula-badge" class="text-xs bg-teal-500/20 text-teal-300 px-2.5 py-1 rounded-md border border-teal-500/30">
+                                $r = 2$
+                            </span>
+                        </div>
+
+                        <div class="py-3">
+                            <p class="text-xs text-slate-400 uppercase">Nilai Suku Saat Ini:</p>
+                            <p id="sim-current-val" class="text-4xl font-extrabold text-teal-400 mt-1">500 koloni</p>
+                            <div id="sim-math-process" class="text-sm text-slate-200 mt-2 bg-black/30 p-3 rounded-lg overflow-x-auto">
+                                $U_1 = 500 \text{ (Nilai Awal / } a\text{)}$
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="sim-slider" class="text-xs text-slate-300 flex justify-between">
+                                <span>Geser untuk melihat urutan suku:</span>
+                                <span id="sim-slider-val" class="font-bold text-amber-300">Suku ke-1</span>
+                            </label>
+                            <input type="range" id="sim-slider" min="1" max="6" value="1" oninput="updateSimulation(this.value)" class="w-full accent-teal-400 cursor-pointer h-2 bg-slate-700 rounded-lg">
+                            <div class="flex justify-between text-[11px] text-slate-400">
+                                <span>$U_1$</span>
+                                <span>$U_2$</span>
+                                <span>$U_3$</span>
+                                <span>$U_4$</span>
+                                <span>$U_5$</span>
+                                <span>$U_6$</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Area Visualisasi -->
+                    <div class="lg:col-span-7 bg-slate-950/70 rounded-xl p-5 border border-white/10 min-h-[260px] flex flex-col justify-between">
+                        <div class="text-xs text-slate-400 flex justify-between items-center mb-3">
+                            <span id="sim-vis-title">Visualisasi Rasio Perbandingan Suku:</span>
+                            <span class="text-slate-500">Barisan Bilangan:</span>
+                        </div>
+                        
+                        <!-- Deretan Suku -->
+                        <div id="sim-sequence-boxes" class="grid grid-cols-3 sm:grid-cols-6 gap-2 my-auto">
+                            <!-- Diisi via JS -->
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-white/10 text-xs text-slate-300 leading-relaxed" id="sim-insight">
+                            💡 <strong>Perhatikan:</strong> Untuk berpindah dari satu suku ke suku berikutnya, kita selalu <strong>mengalikan dengan angka yang sama</strong>!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN 3: KONSEP & PENURUNAN RUMUS SECARA PERLAHAN -->
+        <section id="konsep" class="scroll-mt-24 space-y-10">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm">3</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Konsep Inti & Menemukan Rumus Sendiri</h2>
+                </div>
+                <p class="text-slate-600 text-lg leading-relaxed">
+                    Sekarang setelah kamu melihat polanya, mari kita definisikan secara resmi apa itu <strong>Barisan Geometri</strong> dan bagaimana kita bisa merumuskan suku ke-$n$ tanpa harus menghafal buta.
+                </p>
+            </div>
+
+            <!-- Kotak Definisi & Istilah Penting -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="bg-indigo-600 px-6 py-4 text-white">
+                    <h3 class="font-bold text-lg">📌 Pengertian Barisan Geometri</h3>
+                </div>
+                <div class="p-6 sm:p-8 space-y-6">
+                    <p class="text-slate-700 text-lg leading-relaxed bg-indigo-50/60 p-4 rounded-xl border-l-4 border-indigo-600">
+                        <strong>Barisan Geometri</strong> adalah suatu barisan bilangan yang setiap suku berikutnya diperoleh dengan cara <strong>mengalikan</strong> suku sebelumnya dengan suatu bilangan tetap yang disebut <strong>Rasio ($r$)</strong>.
+                    </p>
+
+                    <div class="grid sm:grid-cols-3 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="text-2xl font-bold text-indigo-600 mb-1">$U_1 \text{ atau } a$</div>
+                            <div class="font-semibold text-slate-800 text-sm">Suku Pertama</div>
+                            <p class="text-xs text-slate-600 mt-1">Nilai paling awal dalam suatu barisan bilangan.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="text-2xl font-bold text-teal-600 mb-1">$r$</div>
+                            <div class="font-semibold text-slate-800 text-sm">Rasio (Pembanding)</div>
+                            <p class="text-xs text-slate-600 mt-1">Bilangan pengali yang tetap antar suku berurutan ($r \neq 0$).</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="text-2xl font-bold text-purple-600 mb-1">$U_n$</div>
+                            <div class="font-semibold text-slate-800 text-sm">Suku ke-$n$</div>
+                            <p class="text-xs text-slate-600 mt-1">Nilai suku pada urutan ke-$n$ yang ingin kita cari.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cara Mencari Rasio (r) -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                <h3 class="font-bold text-xl text-slate-900 mb-3">🔎 Bagaimana Cara Mencari Nilai Rasio ($r$)?</h3>
+                <p class="text-slate-600 mb-6">
+                    Jika dari suku ke-1 ke suku ke-2 kita <strong>mengalikan</strong> dengan $r$, maka untuk mengetahui nilai $r$ cukup dengan <strong>membagi suatu suku dengan satu suku tepat di depannya</strong>:
+                </p>
+
+                <div class="bg-slate-900 text-white p-6 rounded-2xl text-center max-w-xl mx-auto mb-6 shadow-md overflow-x-auto">
+                    <p class="text-xs uppercase tracking-widest text-indigo-300 mb-2">Rumus Mencari Rasio</p>
+                    <div class="text-xl sm:text-2xl py-2">
+                        $$r = \frac{U_2}{U_1} = \frac{U_3}{U_2} = \dots = \frac{U_n}{U_{n-1}}$$
+                    </div>
+                </div>
+
+                <!-- Contoh Rasio Beragam -->
+                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="p-4 rounded-xl bg-teal-50 border border-teal-200">
+                        <span class="font-bold text-teal-900 block mb-1">1. Rasio Bilangan Bulat ($r > 1$)</span>
+                        <p class="font-mono text-xs bg-white p-2 rounded border mb-2">3, 6, 12, 24, ...</p>
+                        <p class="text-slate-700 leading-relaxed">
+                            $r = \frac{6}{3} = \mathbf{2}$<br>
+                            <span class="text-xs text-teal-800">👉 Barisan naik/membesar (contoh: pembelahan sel).</span>
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-purple-50 border border-purple-200">
+                        <span class="font-bold text-purple-900 block mb-1">2. Rasio Pecahan ($0 < r < 1$)</span>
+                        <p class="font-mono text-xs bg-white p-2 rounded border mb-2">100, 50, 25, 12.5, ...</p>
+                        <p class="text-slate-700 leading-relaxed">
+                            $r = \frac{50}{100} = \mathbf{\frac{1}{2}} \text{ (atau } 0{,}5\text{)}$<br>
+                            <span class="text-xs text-purple-800">👉 Barisan turun/mengecil (contoh: peluruhan dosis obat / kompresi piksel).</span>
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-amber-50 border border-amber-200">
+                        <span class="font-bold text-amber-900 block mb-1">3. Rasio Negatif ($r < 0$)</span>
+                        <p class="font-mono text-xs bg-white p-2 rounded border mb-2">2, -6, 18, -54, ...</p>
+                        <p class="text-slate-700 leading-relaxed">
+                            $r = \frac{-6}{2} = \mathbf{-3}$<br>
+                            <span class="text-xs text-amber-800">👉 Tanda positif dan negatif bergantian (osilasi gelombang).</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Penurunan Rumus Suku ke-n Secara Perlahan -->
+            <div class="bg-white rounded-2xl border-2 border-indigo-100 shadow-sm p-6 sm:p-8">
+                <div class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold uppercase mb-3">
+                    Tahap Penting • Membangun Rumus
+                </div>
+                <h3 class="font-bold text-xl sm:text-2xl text-slate-900 mb-3">
+                    🧠 Mengapa Rumus Barisan Geometri Berpangkat $(n - 1)$?
+                </h3>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                    Jangan langsung menghafal rumusnya! Mari kita susun satu per satu dari suku pertama ($U_1 = a$) dan perhatikan hubungan antara <strong>urutan suku</strong> dengan <strong>jumlah pangkat rasionya</strong>:
+                </p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse rounded-xl overflow-hidden">
+                        <thead>
+                            <tr class="bg-slate-800 text-white text-sm">
+                                <th class="p-3.5">Urutan Suku</th>
+                                <th class="p-3.5">Proses Perkalian dari Suku Pertama ($a$)</th>
+                                <th class="p-3.5">Bentuk Pangkat</th>
+                                <th class="p-3.5 bg-indigo-900">Hubungan Urutan ($n$) & Pangkat $r$</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-sm font-medium">
+                            <tr class="bg-slate-50/70">
+                                <td class="p-3.5 font-bold text-indigo-700">Suku ke-1 ($U_1$)</td>
+                                <td class="p-3.5 text-slate-600">$a$ <span class="text-xs text-slate-400">(belum dikali $r$)</span></td>
+                                <td class="p-3.5 text-base font-bold">$a \times r^0$</td>
+                                <td class="p-3.5 bg-indigo-50/60 text-indigo-900">Pangkatnya: $1 - 1 = 0$</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3.5 font-bold text-indigo-700">Suku ke-2 ($U_2$)</td>
+                                <td class="p-3.5 text-slate-600">$a \times r$</td>
+                                <td class="p-3.5 text-base font-bold">$a \times r^1$</td>
+                                <td class="p-3.5 bg-indigo-50/60 text-indigo-900">Pangkatnya: $2 - 1 = 1$</td>
+                            </tr>
+                            <tr class="bg-slate-50/70">
+                                <td class="p-3.5 font-bold text-indigo-700">Suku ke-3 ($U_3$)</td>
+                                <td class="p-3.5 text-slate-600">$a \times r \times r$</td>
+                                <td class="p-3.5 text-base font-bold">$a \times r^2$</td>
+                                <td class="p-3.5 bg-indigo-50/60 text-indigo-900">Pangkatnya: $3 - 1 = 2$</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3.5 font-bold text-indigo-700">Suku ke-4 ($U_4$)</td>
+                                <td class="p-3.5 text-slate-600">$a \times r \times r \times r$</td>
+                                <td class="p-3.5 text-base font-bold">$a \times r^3$</td>
+                                <td class="p-3.5 bg-indigo-50/60 text-indigo-900">Pangkatnya: $4 - 1 = 3$</td>
+                            </tr>
+                            <tr class="bg-slate-50/70">
+                                <td class="p-3.5 font-bold text-indigo-700">Suku ke-5 ($U_5$)</td>
+                                <td class="p-3.5 text-slate-600">$a \times r \times r \times r \times r$</td>
+                                <td class="p-3.5 text-base font-bold">$a \times r^4$</td>
+                                <td class="p-3.5 bg-indigo-50/60 text-indigo-900">Pangkatnya: $5 - 1 = 4$</td>
+                            </tr>
+                            <tr class="bg-amber-50/80 border-t-2 border-amber-300">
+                                <td class="p-4 font-extrabold text-amber-900">Suku ke-$n$ ($U_n$)</td>
+                                <td class="p-4 text-amber-800">$\underbrace{a \times r \times r \times \dots \times r}_{\text{sebanyak } (n-1) \text{ faktor } r}$</td>
+                                <td class="p-4 text-lg font-extrabold text-amber-900">$a \times r^{n-1}$</td>
+                                <td class="p-4 bg-amber-100/80 text-amber-950 font-bold">Pangkatnya selalu berkurang 1 dari nomor sukunya: $(n - 1)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Highlight Rumus Utama -->
+                <div class="mt-8 bg-gradient-to-r from-indigo-600 to-purple-700 rounded-2xl p-6 sm:p-8 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 text-center md:text-left">
+                        <span class="text-xs uppercase tracking-widest text-indigo-200 font-semibold">Kesimpulan Rumus Suku ke-n Barisan Geometri</span>
+                        <div class="text-3xl sm:text-4xl font-extrabold tracking-wide py-1">
+                            $$U_n = a \cdot r^{n-1}$$
+                        </div>
+                        <p class="text-sm text-indigo-100">
+                            Ingat: Kerjakan <strong>perpangkatan ($r^{n-1}$) terlebih dahulu</strong>, baru dikalikan dengan $a$!
+                        </p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-xs sm:text-sm space-y-1.5 border border-white/20 min-w-[240px]">
+                        <p><strong>Keterangan:</strong></p>
+                        <p>• $U_n$ = Nilai suku ke-$n$</p>
+                        <p>• $a$ = Suku pertama ($U_1$)</p>
+                        <p>• $r$ = Rasio antar suku</p>
+                        <p>• $n$ = Nomor urutan suku yang dicari</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN 4: CONTOH SOAL BERTAHAP (DARI MUDAH KE MENENGAH) -->
+        <section id="contoh-soal" class="scroll-mt-24 space-y-8">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm">4</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Contoh Soal Bertahap & Kontekstual</h2>
+                </div>
+                <p class="text-slate-600 text-lg">
+                    Mari kita terapkan rumus $U_n = a \cdot r^{n-1}$ pada berbagai variasi soal, mulai dari yang paling mendasar hingga aplikasi kejuruan.
+                </p>
+            </div>
+
+            <!-- Tabs Contoh Soal -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="flex flex-wrap border-b border-slate-200 bg-slate-50">
+                    <button onclick="switchExample(1)" id="tab-ex-1" class="flex-1 py-4 px-4 text-sm font-bold text-indigo-600 border-b-2 border-indigo-600 bg-white transition">
+                        Level 1: Dasar (Rasio Bulat)
+                    </button>
+                    <button onclick="switchExample(2)" id="tab-ex-2" class="flex-1 py-4 px-4 text-sm font-medium text-slate-600 hover:text-slate-900 transition">
+                        Level 2: Keperawatan (Peluruhan Obat)
+                    </button>
+                    <button onclick="switchExample(3)" id="tab-ex-3" class="flex-1 py-4 px-4 text-sm font-medium text-slate-600 hover:text-slate-900 transition">
+                        Level 3: DKV (Mencari Suku Lain)
+                    </button>
+                </div>
+
+                <!-- Konten Contoh 1 -->
+                <div id="content-ex-1" class="p-6 sm:p-8 space-y-6">
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <span class="text-xs font-bold text-indigo-600 uppercase">Soal Level 1 (Pemahaman Dasar)</span>
+                        <p class="text-slate-800 font-medium text-lg mt-1">
+                            Diketahui suatu barisan geometri: <strong>3, 6, 12, 24, ...</strong><br>
+                            Tentukan: a) Suku pertama dan rasionya, b) Nilai suku ke-8 ($U_8$)!
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-slate-800 flex items-center space-x-2">
+                            <span>📝 Langkah Penyelesaian:</span>
+                        </h4>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl border border-slate-200 bg-white">
+                                <span class="text-xs font-bold text-slate-400 uppercase">Langkah A: Identifikasi a dan r</span>
+                                <ul class="mt-2 space-y-3 text-sm text-slate-700">
+                                    <li>• Suku pertama ($a$) = $3$</li>
+                                    <li>• Rasio ($r$) = $\dfrac{U_2}{U_1} = \dfrac{6}{3} = \mathbf{2}$</li>
+                                    <li>• Urutan yang dicari ($n$) = $8$</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 rounded-xl border border-indigo-100 bg-indigo-50/40">
+                                <span class="text-xs font-bold text-indigo-600 uppercase">Langkah B: Substitusi ke Rumus</span>
+                                <div class="mt-2 space-y-2 text-sm text-slate-800">
+                                    <p>$U_n = a \times r^{n-1}$</p>
+                                    <p>$U_8 = 3 \times 2^{8-1}$</p>
+                                    <p>$U_8 = 3 \times 2^7$ <span class="text-xs text-indigo-600">(Hitung $2^7 = 128$ dulu)</span></p>
+                                    <p>$U_8 = 3 \times 128$</p>
+                                    <p class="text-base font-bold text-indigo-700 pt-1">$U_8 = 384$</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Konten Contoh 2 -->
+                <div id="content-ex-2" class="p-6 sm:p-8 space-y-6 hidden">
+                    <div class="bg-teal-50 p-5 rounded-xl border border-teal-200">
+                        <span class="text-xs font-bold text-teal-700 uppercase">Soal Level 2 (Konteks Medis / Keperawatan)</span>
+                        <p class="text-slate-800 font-medium text-lg mt-1">
+                            Seorang pasien diberikan suntikan obat pereda nyeri sebanyak <strong>400 mg</strong>. Setiap 4 jam, ginjal menyaring obat tersebut sehingga kadar obat yang tersisa di dalam darah menjadi <strong>setengah ($\frac{1}{2}$)</strong> dari kadar sebelumnya. Berapa mg obat yang tersisa di dalam darah pada pemeriksaan ke-5 (setelah 16 jam)?
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-slate-800">📝 Langkah Penyelesaian:</h4>
+                        <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-900">
+                            💡 <strong>Tips Penting Keperawatan:</strong> Perhatikan kapan $U_1$ dimulai! Saat obat baru disuntikkan (jam ke-0 / pemeriksaan ke-1) adalah $U_1 = 400\text{ mg}$. Pemeriksaan ke-5 berarti kita mencari $U_5$.
+                        </div>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl border border-slate-200 bg-white text-sm space-y-3">
+                                <span class="text-xs font-bold text-slate-400 uppercase">1. Diketahui:</span>
+                                <p>• Kadar awal ($a$) = $400\text{ mg}$</p>
+                                <p>• Rasio peluruhan ($r$) = $\dfrac{1}{2}$</p>
+                                <p>• Pemeriksaan ke-5 ($n$) = $5$</p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-teal-200 bg-teal-50/40 text-sm space-y-2">
+                                <span class="text-xs font-bold text-teal-700 uppercase">2. Perhitungan Pecahan:</span>
+                                <p>$U_5 = a \times r^{5-1}$</p>
+                                <p>$U_5 = 400 \times \left(\dfrac{1}{2}\right)^4$</p>
+                                <p>$U_5 = 400 \times \dfrac{1}{16} = \dfrac{400}{16}$</p>
+                                <p class="text-base font-bold text-teal-700 pt-1">$U_5 = 25\text{ mg}$</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Konten Contoh 3 -->
+                <div id="content-ex-3" class="p-6 sm:p-8 space-y-6 hidden">
+                    <div class="bg-purple-50 p-5 rounded-xl border border-purple-200">
+                        <span class="text-xs font-bold text-purple-700 uppercase">Soal Level 3 (Konteks DKV - Tipografi Modular Scale)</span>
+                        <p class="text-slate-800 font-medium text-lg mt-1">
+                            Dalam desain web (*UI Design*), seorang siswa DKV menyusun ukuran *font* (*typography scale*) menggunakan barisan geometri. Jika ukuran *font* tingkat ke-2 ($U_2$) adalah <strong>18 pt</strong> dan ukuran *font* tingkat ke-4 ($U_4$) adalah <strong>162 pt</strong> (untuk *display banner*), berapakah rasio ($r$) dan ukuran *font* tingkat ke-1 ($a$)?
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-slate-800">📝 Langkah Penyelesaian:</h4>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl border border-slate-200 bg-white text-sm space-y-2">
+                                <span class="text-xs font-bold text-slate-400 uppercase">Langkah A: Bandingkan $U_4$ dan $U_2$</span>
+                                <p class="text-slate-600">Dari $U_2$ ke $U_4$ melompat 2 langkah (dikali $r$ sebanyak 2 kali):</p>
+                                <div class="bg-slate-50 p-3 rounded-lg space-y-2">
+                                    <p>$\dfrac{U_4}{U_2} = \dfrac{a \cdot r^3}{a \cdot r^1}$</p>
+                                    <p>$\dfrac{162}{18} = r^2$</p>
+                                    <p>$9 = r^2 \implies r = \sqrt{9} = \mathbf{3}$</p>
+                                </div>
+                            </div>
+                            <div class="p-4 rounded-xl border border-purple-200 bg-purple-50/40 text-sm space-y-2">
+                                <span class="text-xs font-bold text-purple-700 uppercase">Langkah B: Cari Suku Pertama ($a$)</span>
+                                <p class="text-slate-600">Substitusikan $r = 3$ ke persamaan $U_2$:</p>
+                                <div class="bg-white p-3 rounded-lg border border-purple-100 space-y-2">
+                                    <p>$U_2 = a \times r$</p>
+                                    <p>$18 = a \times 3$</p>
+                                    <p>$a = \dfrac{18}{3} \implies \mathbf{a = 6\text{ pt}}$</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAGIAN 5: MENYELESAIKAN MASALAH AWAL -->
+        <section id="penyelesaian" class="scroll-mt-24 space-y-8">
+            <div class="bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-xl">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-400 text-slate-950 font-bold text-sm">5</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold">Saatnya Memecahkan Masalah Awal Kita!</h2>
+                </div>
+                <p class="text-teal-100 text-lg mb-8 leading-relaxed">
+                    Ingat dua kasus tantangan di bagian paling atas tadi? Sekarang kamu sudah menguasai konsep <strong>suku pertama ($a$)</strong>, <strong>rasio ($r$)</strong>, dan rumus <strong>$U_n = a \cdot r^{n-1}$</strong>. Mari kita selesaikan keduanya dalam hitungan detik!
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Solusi Keperawatan -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/15 space-y-4">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                            <span class="font-bold text-teal-300 flex items-center gap-2">🩺 Solusi Kasus A (Keperawatan)</span>
+                            <span class="text-xs bg-teal-500/30 px-2.5 py-1 rounded-full">Kultur Bakteri</span>
+                        </div>
+                        <p class="text-sm text-slate-200">
+                            <strong>Masalah:</strong> Awalnya ($U_1$) ada <strong>500 bakteri</strong>. Membelah diri menjadi <strong>2 kali lipat</strong> setiap jam ($r = 2$). Berapa jumlah bakteri pada <strong>pemeriksaan ke-9 ($U_9$)</strong>?
+                        </p>
+                        <div class="bg-slate-950/60 p-4 rounded-xl text-sm space-y-2 text-teal-200 border border-teal-500/20">
+                            <p class="text-xs text-slate-400">Diketahui: $a = 500,\; r = 2,\; n = 9$</p>
+                            <p>$U_n = a \times r^{n-1}$</p>
+                            <p>$U_9 = 500 \times 2^{9-1}$</p>
+                            <p>$U_9 = 500 \times 2^8$</p>
+                            <p>$U_9 = 500 \times 256$</p>
+                            <p class="text-lg font-bold text-emerald-400 pt-1">$U_9 = 128.000\text{ koloni bakteri!}$</p>
+                        </div>
+                        <p class="text-xs text-slate-300 italic">
+                            Bayangkan, hanya dalam 8 jam (pemeriksaan ke-9), 500 bakteri sudah melonjak menjadi 128.000 koloni! Itulah mengapa pasien harus disiplin meminum antibiotik tepat waktu.
+                        </p>
+                    </div>
+
+                    <!-- Solusi DKV -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/15 space-y-4">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                            <span class="font-bold text-purple-300 flex items-center gap-2">🎨 Solusi Kasus B (DKV)</span>
+                            <span class="text-xs bg-purple-500/30 px-2.5 py-1 rounded-full">Resolusi Aset</span>
+                        </div>
+                        <p class="text-sm text-slate-200">
+                            <strong>Masalah:</strong> Kanvas ke-1 ($U_1$) lebarnya <strong>2.048 px</strong>. Setiap turun tingkat diperkecil menjadi <strong>$\frac{1}{2}$ kali</strong> lipatnya ($r = \frac{1}{2}$). Berapa lebar kanvas pada <strong>ukuran ke-8 ($U_8$)</strong>?
+                        </p>
+                        <div class="bg-slate-950/60 p-4 rounded-xl text-sm space-y-2 text-purple-200 border border-purple-500/20">
+                            <p class="text-xs text-slate-400">Diketahui: $a = 2048,\; r = \frac{1}{2},\; n = 8$</p>
+                            <p>$U_n = a \times r^{n-1}$</p>
+                            <p>$U_8 = 2048 \times \left(\dfrac{1}{2}\right)^{8-1}$</p>
+                            <p>$U_8 = 2048 \times \left(\dfrac{1}{2}\right)^7 = 2048 \times \dfrac{1}{128}$</p>
+                            <p>$U_8 = \dfrac{2048}{128}$</p>
+                            <p class="text-lg font-bold text-purple-300 pt-1">$U_8 = 16\text{ piksel (16}\times\text{16 px favicon!)}$</p>
+                        </div>
+                        <p class="text-xs text-slate-300 italic">
+                            Perhatikan angka 2048, 1024, 512, 256, 128, 64, 32, 16! Angka-angka yang sangat akrab bagi anak DKV & IT ini ternyata adalah <strong>Barisan Geometri</strong>!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KALKULATOR EKSPLORASI MANDIRI -->
+        <section class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">🧮 Kalkulator Eksplorasi Barisan Geometri</h3>
+            <p class="text-sm text-slate-600 mb-6">
+                Coba masukkan angka suku pertama ($a$), rasio ($r$), dan urutan suku ($n$) untuk melihat langkah perhitungannya secara otomatis.
+            </p>
+            <div class="grid sm:grid-cols-3 gap-4 mb-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Suku Pertama ($a$)</label>
+                    <input type="number" id="calc-a" value="10" step="any" oninput="runCalculator()" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Rasio ($r$) <span class="text-[10px] font-normal text-slate-400">(contoh: 0.5 untuk ½)</span></label>
+                    <input type="number" id="calc-r" value="0.5" step="any" oninput="runCalculator()" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Suku ke-$n$ (Maks 20)</label>
+                    <input type="number" id="calc-n" value="5" min="1" max="20" oninput="runCalculator()" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold">
+                </div>
+            </div>
+            <div id="calc-output" class="bg-slate-50 rounded-xl p-5 border border-slate-200 text-sm space-y-2 overflow-x-auto">
+                <!-- Diisi oleh JS -->
+            </div>
+        </section>
+
+        <!-- BAGIAN 6: LATIHAN INTERAKTIF -->
+        <section id="latihan" class="scroll-mt-24 space-y-8">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-sm">6</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Uji Pemahamanmu!</h2>
+                </div>
+                <p class="text-slate-600 text-lg">
+                    Kerjakan 4 soal interaktif di bawah ini untuk memastikan kamu benar-benar siap sebelum pertemuan berikutnya membahas <em>Deret Geometri</em>.
+                </p>
+            </div>
+
+            <div class="space-y-6" id="quiz-container">
+                <!-- Soal 1 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-slate-100 text-slate-700">Soal 1 • Konsep Rasio</span>
+                    <p class="font-semibold text-slate-800 text-lg mt-3 mb-4">
+                        Perhatikan barisan bilangan berikut: <strong>160, 80, 40, 20, ...</strong><br>
+                        Berapakah nilai suku pertama ($a$) dan rasio ($r$) dari barisan tersebut?
+                    </p>
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <button onclick="checkAnswer(1, 'A', false)" class="quiz-btn-1 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            A. $a = 160$ dan $r = -80$
+                        </button>
+                        <button onclick="checkAnswer(1, 'B', false)" class="quiz-btn-1 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            B. $a = 160$ dan $r = 2$
+                        </button>
+                        <button onclick="checkAnswer(1, 'C', true)" class="quiz-btn-1 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            C. $a = 160$ dan $r = \frac{1}{2}$ (atau $0{,}5$)
+                        </button>
+                        <button onclick="checkAnswer(1, 'D', false)" class="quiz-btn-1 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            D. $a = 20$ dan $r = \frac{1}{2}$
+                        </button>
+                    </div>
+                    <div id="feedback-1" class="hidden mt-4 p-4 rounded-xl text-sm"></div>
+                </div>
+
+                <!-- Soal 2 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-teal-100 text-teal-800">Soal 2 • Aplikasi Keperawatan</span>
+                    <p class="font-semibold text-slate-800 text-lg mt-3 mb-4">
+                        Di sebuah ruang isolasi, jumlah virus pada sampel udara awalnya terdeteksi sebanyak <strong>100 partikel</strong> ($U_1$). Pada sampel kultur tanpa sinar UV, jumlahnya menjadi <strong>3 kali lipat</strong> setiap jam. Berapakah jumlah partikel virus pada <strong>pemeriksaan ke-5 ($U_5$)</strong>?
+                    </p>
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <button onclick="checkAnswer(2, 'A', false)" class="quiz-btn-2 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            A. $1.500\text{ partikel}$
+                        </button>
+                        <button onclick="checkAnswer(2, 'B', false)" class="quiz-btn-2 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            B. $2.700\text{ partikel}$
+                        </button>
+                        <button onclick="checkAnswer(2, 'C', true)" class="quiz-btn-2 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            C. $8.100\text{ partikel}$
+                        </button>
+                        <button onclick="checkAnswer(2, 'D', false)" class="quiz-btn-2 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            D. $24.300\text{ partikel}$
+                        </button>
+                    </div>
+                    <div id="feedback-2" class="hidden mt-4 p-4 rounded-xl text-sm"></div>
+                </div>
+
+                <!-- Soal 3 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-purple-100 text-purple-800">Soal 3 • Aplikasi DKV</span>
+                    <p class="font-semibold text-slate-800 text-lg mt-3 mb-4">
+                        Seorang animator membuat efek lingkaran membesar (*ripple effect*). Pada *frame* ke-1, diameter lingkaran adalah <strong>5 piksel</strong>. Setiap berpindah *frame* berikutnya, diameternya membesar menjadi <strong>2 kali lipat</strong>. Berapakah diameter lingkaran pada <strong>*frame* ke-7 ($U_7$)</strong>?
+                    </p>
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <button onclick="checkAnswer(3, 'A', false)" class="quiz-btn-3 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            A. $160\text{ piksel}$
+                        </button>
+                        <button onclick="checkAnswer(3, 'B', true)" class="quiz-btn-3 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            B. $320\text{ piksel}$
+                        </button>
+                        <button onclick="checkAnswer(3, 'C', false)" class="quiz-btn-3 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            C. $640\text{ piksel}$
+                        </button>
+                        <button onclick="checkAnswer(3, 'D', false)" class="quiz-btn-3 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            D. $70\text{ piksel}$
+                        </button>
+                    </div>
+                    <div id="feedback-3" class="hidden mt-4 p-4 rounded-xl text-sm"></div>
+                </div>
+
+                <!-- Soal 4 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-800">Soal 4 • Tantangan Analisis</span>
+                    <p class="font-semibold text-slate-800 text-lg mt-3 mb-4">
+                        Suatu barisan geometri memiliki suku ke-2 ($U_2$) = <strong>10</strong> dan suku ke-5 ($U_5$) = <strong>80</strong>. Berapakah nilai rasio ($r$) dari barisan tersebut?
+                    </p>
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <button onclick="checkAnswer(4, 'A', true)" class="quiz-btn-4 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            A. $r = 2$
+                        </button>
+                        <button onclick="checkAnswer(4, 'B', false)" class="quiz-btn-4 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            B. $r = 3$
+                        </button>
+                        <button onclick="checkAnswer(4, 'C', false)" class="quiz-btn-4 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            C. $r = 4$
+                        </button>
+                        <button onclick="checkAnswer(4, 'D', false)" class="quiz-btn-4 text-left p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition font-medium text-sm">
+                            D. $r = 8$
+                        </button>
+                    </div>
+                    <div id="feedback-4" class="hidden mt-4 p-4 rounded-xl text-sm"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RANGKUMAN & PREVIEW MATERI SELANJUTNYA -->
+        <section class="bg-indigo-50 rounded-3xl p-6 sm:p-10 border border-indigo-100">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-7 space-y-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Ringkasan Materi Hari Ini</span>
+                    <h3 class="text-2xl font-bold text-slate-900">Apa Saja yang Sudah Kita Kuasai?</h3>
+                    <ul class="space-y-2 text-slate-700 text-sm sm:text-base">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-indigo-600 font-bold">✓</span>
+                            <span><strong>Barisan Geometri</strong> memiliki pola perkalian tetap yang disebut <strong>rasio ($r$)</strong>.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-indigo-600 font-bold">✓</span>
+                            <span>Cara mencari rasio adalah membagi suatu suku dengan suku sebelumnya: $r = \dfrac{U_2}{U_1}$.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-indigo-600 font-bold">✓</span>
+                            <span>Rumus mencari suku ke-$n$ adalah $U_n = a \cdot r^{n-1}$.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:col-span-5 bg-white p-6 rounded-2xl border border-indigo-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-2 text-amber-600 font-bold text-sm">
+                        <span>🚀 Materi Selanjutnya (Bagian 2):</span>
+                    </div>
+                    <h4 class="font-bold text-lg text-slate-900">Deret Geometri ($S_n$)</h4>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Hari ini kita baru menghitung nilai pada satu titik urutan saja ($U_n$). Bagaimana jika kita ingin menjumlahkan <strong>total seluruh dosis obat</strong> yang masuk selama seminggu, atau <strong>total seluruh kapasitas memori semua ukuran file desain</strong>? Kita akan mempelajarinya di modul <strong>Deret Geometri</strong> berikutnya!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm border-t border-slate-800">
+        <div class="max-w-5xl mx-auto px-4">
+            <p class="font-medium text-slate-300">Modul Pembelajaran Interaktif Matematika SMK Kelas X</p>
+            <p class="text-xs mt-1">Didesain khusus untuk Program Keahlian Keperawatan & Desain Komunikasi Visual (DKV)</p>
+        </div>
+    </footer>
+
+    <!-- Script Interaktivitas -->
+    <script>
+        // Helper untuk me-render KaTeX pada suatu elemen DOM
+        function renderMath(el) {
+            if (typeof renderMathInElement === 'function' && el) {
+                renderMathInElement(el, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Helper konversi desimal umum ke pecahan LaTeX untuk tampilan
+        function toLatexFraction(val) {
+            const eps = 0.0001;
+            if (Math.abs(val - 0.5) < eps) return { isFrac: true, num: 1, den: 2, tex: "\\frac{1}{2}" };
+            if (Math.abs(val - 0.25) < eps) return { isFrac: true, num: 1, den: 4, tex: "\\frac{1}{4}" };
+            if (Math.abs(val - 0.2) < eps) return { isFrac: true, num: 1, den: 5, tex: "\\frac{1}{5}" };
+            if (Math.abs(val - 0.125) < eps) return { isFrac: true, num: 1, den: 8, tex: "\\frac{1}{8}" };
+            if (Math.abs(val - 0.1) < eps) return { isFrac: true, num: 1, den: 10, tex: "\\frac{1}{10}" };
+            if (Math.abs(val - 1/3) < eps) return { isFrac: true, num: 1, den: 3, tex: "\\frac{1}{3}" };
+            if (Math.abs(val - 2/3) < eps) return { isFrac: true, num: 2, den: 3, tex: "\\frac{2}{3}" };
+            if (Math.abs(val - 0.75) < eps) return { isFrac: true, num: 3, den: 4, tex: "\\frac{3}{4}" };
+            return { isFrac: false, tex: val.toString() };
+        }
+
+        // State untuk Simulator
+        let currentSimMode = 'bakteri'; // 'bakteri' atau 'kanvas'
+
+        function setSimMode(mode) {
+            currentSimMode = mode;
+            const btnBakteri = document.getElementById('btn-sim-bakteri');
+            const btnKanvas = document.getElementById('btn-sim-kanvas');
+            const badge = document.getElementById('sim-formula-badge');
+
+            if (mode === 'bakteri') {
+                btnBakteri.className = "px-4 py-2 rounded-xl text-sm font-semibold bg-teal-500 text-slate-950 shadow transition";
+                btnKanvas.className = "px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition";
+                badge.innerHTML = "$r = 2$";
+                badge.className = "text-xs bg-teal-500/20 text-teal-300 px-2.5 py-1 rounded-md border border-teal-500/30";
+            } else {
+                btnKanvas.className = "px-4 py-2 rounded-xl text-sm font-semibold bg-purple-500 text-white shadow transition";
+                btnBakteri.className = "px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition";
+                badge.innerHTML = "$r = \\frac{1}{2}$";
+                badge.className = "text-xs bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded-md border border-purple-500/30";
+            }
+            renderMath(badge);
+            updateSimulation(document.getElementById('sim-slider').value);
+        }
+
+        function updateSimulation(step) {
+            const n = parseInt(step);
+            document.getElementById('sim-step-label').textContent = n;
+            const subLabel = document.getElementById('sim-sub-label');
+            subLabel.innerHTML = `$U_${n}$`;
+            renderMath(subLabel);
+
+            document.getElementById('sim-slider-val').textContent = "Suku ke-" + n;
+
+            const a = currentSimMode === 'bakteri' ? 500 : 2048;
+            const r = currentSimMode === 'bakteri' ? 2 : 0.5;
+            const unit = currentSimMode === 'bakteri' ? 'koloni' : 'px';
+
+            const currentVal = a * Math.pow(r, n - 1);
+            const valDisplay = document.getElementById('sim-current-val');
+            valDisplay.textContent = currentVal.toLocaleString('id-ID') + ' ' + unit;
+            valDisplay.className = currentSimMode === 'bakteri' 
+                ? "text-4xl font-extrabold text-teal-400 mt-1" 
+                : "text-4xl font-extrabold text-purple-400 mt-1";
+
+            // Buat penjelasan proses perkalian dengan KaTeX
+            let multString = `${a}`;
+            for (let i = 1; i < n; i++) {
+                multString += currentSimMode === 'bakteri' ? ' \\times 2' : ' \\times \\frac{1}{2}';
+            }
+            const powerStr = n - 1;
+            const rStr = currentSimMode === 'bakteri' ? '2' : '\\left(\\frac{1}{2}\\right)';
+            const mathProcessEl = document.getElementById('sim-math-process');
+            mathProcessEl.innerHTML = n === 1 
+                ? `$U_1 = ${a} \\text{ (Suku Pertama / } a\\text{)}$` 
+                : `$U_${n} = ${multString} = ${a} \\times ${rStr}^{${powerStr}}$`;
+            renderMath(mathProcessEl);
+
+            // Render kotak barisan
+            const container = document.getElementById('sim-sequence-boxes');
+            container.innerHTML = '';
+            for (let i = 1; i <= 6; i++) {
+                const val = a * Math.pow(r, i - 1);
+                const isActive = i === n;
+                const isPassed = i < n;
+                
+                let boxClass = "p-3 rounded-xl border text-center transition-all ";
+                if (isActive) {
+                    boxClass += currentSimMode === 'bakteri'
+                        ? "bg-teal-500/20 border-teal-400 text-white scale-105 shadow-lg"
+                        : "bg-purple-500/20 border-purple-400 text-white scale-105 shadow-lg";
+                } else if (isPassed) {
+                    boxClass += "bg-white/10 border-white/20 text-slate-200";
+                } else {
+                    boxClass += "bg-white/5 border-white/5 text-slate-500 opacity-50";
+                }
+
+                container.innerHTML += `
+                    <div class="${boxClass}">
+                        <div class="text-[11px] opacity-75">$U_${i}$</div>
+                        <div class="font-bold text-sm sm:text-base mt-1">${val.toLocaleString('id-ID')}</div>
+                        <div class="text-[11px] mt-1 opacity-75">${i === 1 ? '$a$' : '$a \\cdot r^{' + (i-1) + '}$'}</div>
+                    </div>
+                `;
+            }
+            renderMath(container);
+        }
+
+        // Fungsi Ganti Tab Contoh Soal
+        function switchExample(num) {
+            for (let i = 1; i <= 3; i++) {
+                const tab = document.getElementById('tab-ex-' + i);
+                const content = document.getElementById('content-ex-' + i);
+                if (i === num) {
+                    tab.className = "flex-1 py-4 px-4 text-sm font-bold text-indigo-600 border-b-2 border-indigo-600 bg-white transition";
+                    content.classList.remove('hidden');
+                } else {
+                    tab.className = "flex-1 py-4 px-4 text-sm font-medium text-slate-600 hover:text-slate-900 transition";
+                    content.classList.add('hidden');
+                }
+            }
+        }
+
+        // Kalkulator Eksplorasi dengan KaTeX & Pecahan
+        function runCalculator() {
+            const a = parseFloat(document.getElementById('calc-a').value);
+            const r = parseFloat(document.getElementById('calc-r').value);
+            let n = parseInt(document.getElementById('calc-n').value);
+            const out = document.getElementById('calc-output');
+
+            if (isNaN(a) || isNaN(r) || isNaN(n) || n < 1) {
+                out.innerHTML = `<p class="text-rose-600 font-sans">Masukkan angka yang valid ($n$ minimal 1).</p>`;
+                renderMath(out);
+                return;
+            }
+            if (n > 25) {
+                n = 25;
+                document.getElementById('calc-n').value = 25;
+            }
+
+            const pangkat = n - 1;
+            const rPangkat = Math.pow(r, pangkat);
+            const hasil = a * rPangkat;
+            const fracInfo = toLatexFraction(r);
+
+            // Buat 5 suku pertama sebagai preview
+            let deretPreview = [];
+            for (let i = 1; i <= Math.min(n, 6); i++) {
+                deretPreview.push(Number((a * Math.pow(r, i - 1)).toFixed(4)));
+            }
+
+            let stepR = fracInfo.isFrac ? `\\left(${fracInfo.tex}\\right)` : `(${r})`;
+            let stepRPangkat = fracInfo.isFrac && pangkat > 0
+                ? `\\dfrac{${Math.pow(fracInfo.num, pangkat)}}{${Math.pow(fracInfo.den, pangkat)}}`
+                : Number(rPangkat.toFixed(6)).toLocaleString('id-ID');
+
+            out.innerHTML = `
+                <div class="text-xs text-slate-500 font-sans mb-2">Preview Barisan: <strong>${deretPreview.join(', ')}${n > 6 ? ', ...' : ''}</strong></div>
+                <p>$$U_{${n}} = a \\times r^{n-1}$$</p>
+                <p>$$U_{${n}} = ${a} \\times ${stepR}^{${n}-1} = ${a} \\times ${stepR}^{${pangkat}}$$</p>
+                <p>$$U_{${n}} = ${a} \\times ${stepRPangkat}$$</p>
+                <p class="text-base font-bold text-indigo-700 pt-1">$$U_{${n}} = ${Number(hasil.toFixed(6)).toLocaleString('id-ID')}$$</p>
+            `;
+            renderMath(out);
+        }
+
+        // Fungsi Cek Jawaban Kuis dengan KaTeX
+        const explanations = {
+            1: {
+                correct: "Tepat sekali! Suku pertama $a = 160$, dan rasionya adalah $r = \\dfrac{U_2}{U_1} = \\dfrac{80}{160} = \\dfrac{1}{2}$ (atau $0{,}5$).",
+                wrong: "Kurang tepat. Ingat: rasio pada barisan geometri dicari dengan membagi $U_2$ dengan $U_1$ ($r = \\dfrac{80}{160} = \\dfrac{1}{2}$), bukan dikurangi."
+            },
+            2: {
+                correct: "Benar! Diketahui $a = 100$, $r = 3$, dan $n = 5$. Maka $U_5 = 100 \\times 3^{5-1} = 100 \\times 3^4 = 100 \\times 81 = 8.100\\text{ partikel}$.",
+                wrong: "Coba hitung kembali! Ingat rumus $U_5 = a \\times r^4$. Karena $a = 100$ dan $r = 3$, maka $U_5 = 100 \\times 3^4 = 100 \\times 81$."
+            },
+            3: {
+                correct: "Bagus sekali! $a = 5$, $r = 2$, $n = 7$. Maka $U_7 = 5 \\times 2^{7-1} = 5 \\times 2^6 = 5 \\times 64 = 320\\text{ piksel}$.",
+                wrong: "Belum tepat. Gunakan rumus $U_7 = a \\times r^6$ dengan $a = 5$ dan $r = 2$. Hitung $2^6$ terlebih dahulu ($64$), lalu kalikan dengan $5$."
+            },
+            4: {
+                correct: "Luar biasa! $\\dfrac{U_5}{U_2} = \\dfrac{a \\cdot r^4}{a \\cdot r^1} \\implies \\dfrac{80}{10} = r^3 \\implies r^3 = 8$. Maka $r = \\sqrt[3]{8} = 2$.",
+                wrong: "Mari kita analisis: Dari $U_2$ ke $U_5$ melompat 3 kali perkalian rasio ($r^3$). Jadi $r^3 = \\dfrac{U_5}{U_2} = \\dfrac{80}{10} = 8$. Berapakah akar pangkat tiga dari $8$?"
+            }
+        };
+
+        function checkAnswer(qNum, choice, isCorrect) {
+            const feedbackEl = document.getElementById('feedback-' + qNum);
+            const buttons = document.querySelectorAll('.quiz-btn-' + qNum);
+
+            buttons.forEach(btn => {
+                btn.classList.remove('border-emerald-500', 'bg-emerald-50', 'border-rose-400', 'bg-rose-50');
+            });
+
+            feedbackEl.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-900', 'border-emerald-300', 'bg-rose-50', 'text-rose-900', 'border-rose-300');
+            feedbackEl.classList.add('border');
+
+            if (isCorrect) {
+                feedbackEl.classList.add('bg-emerald-50', 'text-emerald-900', 'border-emerald-300');
+                feedbackEl.innerHTML = `<strong>✅ Jawaban Pilihan ${choice} Benar!</strong><br>${explanations[qNum].correct}`;
+            } else {
+                feedbackEl.classList.add('bg-rose-50', 'text-rose-900', 'border-rose-300');
+                feedbackEl.innerHTML = `<strong>❌ Pilihan ${choice} Belum Tepat.</strong><br>${explanations[qNum].wrong}`;
+            }
+            renderMath(feedbackEl);
+        }
+
+        // Inisialisasi saat halaman dimuat
+        window.onload = function() {
+            renderMath(document.body);
+            updateSimulation(1);
+            runCalculator();
+        };
+    </script>
+</body>
+</html>
