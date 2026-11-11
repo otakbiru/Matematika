@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Lengkap: Barisan & Deret Geometri</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Lora', 'serif'],
+                    },
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#0f172a',
+                        accent: '#3b82f6'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar & KaTeX adjustments */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.5rem 0;
+        }
+        .math-box {
+            background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+            border-left: 4px solid #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-200 selection:text-blue-900">
+
+    <!-- Header / Hero -->
+    <header class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white border-b border-slate-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-semibold tracking-wider uppercase rounded-full mb-3">
+                        Modul Matematika Aljabar
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-serif font-bold tracking-tight text-white mb-4">
+                        Barisan & Deret Geometri
+                    </h1>
+                    <p class="text-slate-300 text-base md:text-lg max-w-2xl leading-relaxed">
+                        Panduan komprehensif, sistematis, dan mendalam mengenai konsep pola perkalian berhingga, penurunan rumus jumlah $n$ suku pertama ($S_n$), sifat-sifat khusus, hingga aplikasinya dalam perhitungan ilmiah.
+                    </p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center shrink-0 w-full md:w-auto">
+                    <p class="text-xs text-slate-400 uppercase tracking-widest mb-2">Rumus Inti Deret Geometri</p>
+                    <div class="text-xl md:text-2xl text-blue-200 font-medium">
+                        $$S_n = \frac{a(r^n - 1)}{r - 1}$$
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1">untuk $r \neq 1$</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Sidebar Navigation -->
+            <aside class="lg:w-72 shrink-0">
+                <div class="sticky top-6 bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <h3 class="font-bold text-slate-900 text-sm uppercase tracking-wider mb-4 pb-2 border-b border-slate-100">
+                        Daftar Isi Materi
+                    </h3>
+                    <nav class="space-y-1.5 text-sm font-medium">
+                        <a href="#pengertian" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition">1. Konsep Dasar & Definisi</a>
+                        <a href="#barisan" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition">2. Rumus Suku ke-$n$ ($U_n$)</a>
+                        <a href="#deret" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition">3. Deret Geometri ($S_n$) & Bukti</a>
+                        <a href="#hubungan" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition">4. Hubungan $U_n$ dan $S_n$</a>
+                        <a href="#suku-tengah-sisipan" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition">5. Suku Tengah & Sisipan</a>
+                        <a href="#sifat-khusus" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition">6. Sifat-Sifat Khusus</a>
+                        <a href="#aplikasi" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition">7. Aplikasi Kontekstual</a>
+                        <a href="#contoh-soal" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition">8. Contoh Soal & Pembahasan</a>
+                        <a href="#kalkulator" class="block px-3 py-2 rounded-lg bg-blue-50 text-blue-700 font-semibold hover:bg-blue-100 transition mt-3">⚡ Simulasi & Kalkulator</a>
+                        <a href="#latihan" class="block px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700 font-semibold hover:bg-emerald-100 transition">📝 Kuis Interaktif</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Article Content -->
+            <main class="flex-1 space-y-10 min-w-0">
+
+                <!-- BAGIAN 1: KONSEP DASAR -->
+                <section id="pengertian" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">1</span>
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Konsep Dasar: Barisan vs Deret Geometri</h2>
+                    </div>
+                    
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        Sebelum mempelajari <strong>Deret Geometri</strong> secara mendalam, kita harus memahami fondasinya terlebih dahulu, yaitu <strong>Barisan Geometri</strong> (sering disebut juga <em>barisan ukur</em>).
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-4 my-6">
+                        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                            <h3 class="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                                Barisan Geometri
+                            </h3>
+                            <p class="text-sm text-slate-600 leading-relaxed mb-3">
+                                Susunan bilangan yang dibentuk menurut urutan tertentu, di mana perbandingan (hasil bagi) antara dua suku yang berurutan selalu <strong>tetap (konstan)</strong>. Pemisah antar suku menggunakan tanda koma $(,)$.
+                            </p>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 text-center text-sm">
+                                Bentuk Umum: $U_1, U_2, U_3, \dots, U_n$<br>
+                                Contoh: $2, 6, 18, 54, 162$
+                            </div>
+                        </div>
+
+                        <div class="p-5 rounded-xl bg-blue-50/50 border border-blue-200">
+                            <h3 class="font-bold text-blue-950 mb-2 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                                Deret Geometri
+                            </h3>
+                            <p class="text-sm text-slate-600 leading-relaxed mb-3">
+                                <strong>Penjumlahan beruntun</strong> dari suku-suku pada suatu barisan geometri. Pemisah antar suku menggunakan tanda tambah $(+)$, dan jumlah $n$ suku pertamanya dilambangkan dengan $S_n$.
+                            </p>
+                            <div class="bg-white p-3 rounded-lg border border-blue-200 text-center text-sm">
+                                Bentuk Umum: $U_1 + U_2 + U_3 + \dots + U_n$<br>
+                                Contoh: $2 + 6 + 18 + 54 + 162$
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-slate-800 mt-6 mb-3">Pengertian Rasio ($r$)</h3>
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        Perbandingan yang bernilai tetap antara suatu suku dengan suku tepat di depannya disebut sebagai <strong>rasio</strong> dan dilambangkan dengan huruf $r$. Nilai $r$ tidak boleh sama dengan nol ($r \neq 0$).
+                    </p>
+
+                    <div class="math-box p-4 rounded-r-xl my-4">
+                        $$r = \frac{U_2}{U_1} = \frac{U_3}{U_2} = \frac{U_4}{U_3} = \dots = \frac{U_n}{U_{n-1}}$$
+                    </div>
+
+                    <h3 class="text-lg font-bold text-slate-800 mt-6 mb-3">Klasifikasi Deret Geometri Berdasarkan Nilai Rasio ($r$)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                                    <th class="p-3 font-semibold">Interval Nilai $r$</th>
+                                    <th class="p-3 font-semibold">Jenis Deret</th>
+                                    <th class="p-3 font-semibold">Karakteristik Suku</th>
+                                    <th class="p-3 font-semibold">Contoh ($a > 0$)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-slate-600">
+                                <tr>
+                                    <td class="p-3 font-medium text-slate-900">$r > 1$</td>
+                                    <td class="p-3">Deret Geometri Naik (Divergen)</td>
+                                    <td class="p-3">Nilai suku semakin membesar secara eksponensial</td>
+                                    <td class="p-3">$3 + 6 + 12 + 24 + \dots$ ($r=2$)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium text-slate-900">$0 < r < 1$</td>
+                                    <td class="p-3">Deret Geometri Turun</td>
+                                    <td class="p-3">Nilai suku semakin mengecil mendekati nol</td>
+                                    <td class="p-3">$16 + 8 + 4 + 2 + \dots$ ($r=\frac{1}{2}$)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium text-slate-900">$r < 0$</td>
+                                    <td class="p-3">Deret Geometri Bergoyang (Alternating)</td>
+                                    <td class="p-3">Tanda positif dan negatif bergantian terus-menerus</td>
+                                    <td class="p-3">$2 - 6 + 18 - 54 + \dots$ ($r=-3$)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium text-slate-900">$r = 1$</td>
+                                    <td class="p-3">Deret Geometri Konstan</td>
+                                    <td class="p-3">Semua suku bernilai sama dengan suku pertama</td>
+                                    <td class="p-3">$5 + 5 + 5 + 5 + \dots$ ($r=1$)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- BAGIAN 2: BARISAN GEOMETRI (Un) -->
+                <section id="barisan" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">2</span>
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Menentukan Suku ke-$n$ ($U_n$)</h2>
+                    </div>
+
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        Jika suku pertama dinyatakan sebagai $U_1 = a$ dan rasio antar suku adalah $r$, maka kita dapat mengkonstruksi pola setiap suku sebagai berikut:
+                    </p>
+
+                    <ul class="space-y-2 text-slate-700 bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6 text-sm md:text-base">
+                        <li>Suku pertama: $U_1 = a = a \cdot r^{1-1} = a \cdot r^0$</li>
+                        <li>Suku kedua: $U_2 = U_1 \cdot r = a \cdot r^1 = a \cdot r^{2-1}$</li>
+                        <li>Suku ketiga: $U_3 = U_2 \cdot r = (a \cdot r) \cdot r = a \cdot r^2 = a \cdot r^{3-1}$</li>
+                        <li>Suku keempat: $U_4 = U_3 \cdot r = (a \cdot r^2) \cdot r = a \cdot r^3 = a \cdot r^{4-1}$</li>
+                        <li class="pt-2 border-t border-slate-200 font-semibold text-blue-900">
+                            Polanya: Pangkat dari $r$ selalu berselisih $1$ lebih kecil dari indeks sukunya ($n$).
+                        </li>
+                    </ul>
+
+                    <div class="math-box p-5 rounded-r-xl my-4">
+                        <p class="text-xs font-bold uppercase tracking-wider text-blue-800 mb-1">Rumus Suku ke-$n$ Barisan Geometri</p>
+                        $$U_n = a \cdot r^{n-1}$$
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-slate-600 mt-3 pt-3 border-t border-blue-200/60">
+                            <div>$U_n$ = Suku ke-$n$</div>
+                            <div>$a$ = Suku pertama ($U_1$)</div>
+                            <div>$r$ = Rasio</div>
+                            <div>$n$ = Banyak/urutan suku ($n \in \mathbb{N}$)</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-6">
+                        <h4 class="font-bold text-amber-900 text-sm mb-1">💡 Rumus Praktis Mencari Rasio dari Dua Suku Sembarang</h4>
+                        <p class="text-xs md:text-sm text-amber-800 leading-relaxed">
+                            Jika diketahui dua suku yang tidak berurutan, misalnya suku ke-$m$ ($U_m$) dan suku ke-$k$ ($U_k$) dengan $m > k$, maka berlaku hubungan:
+                        </p>
+                        <div class="text-amber-950 text-sm my-1">
+                            $$\frac{U_m}{U_k} = \frac{a \cdot r^{m-1}}{a \cdot r^{k-1}} \implies r^{m-k} = \frac{U_m}{U_k} \implies r = \sqrt[m-k]{\frac{U_m}{U_k}}$$
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BAGIAN 3: DERET GEOMETRI (Sn) & BUKTI -->
+                <section id="deret" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">3</span>
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Deret Geometri ($S_n$) & Penurunan Rumusnya</h2>
+                    </div>
+
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        Jumlah $n$ suku pertama dari suatu deret geometri dilambangkan dengan $S_n$. Secara definisi, $S_n$ ditulis sebagai:
+                    </p>
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-center mb-6">
+                        $$S_n = U_1 + U_2 + U_3 + U_4 + \dots + U_{n-1} + U_n$$
+                        $$S_n = a + ar + ar^2 + ar^3 + \dots + ar^{n-2} + ar^{n-1}$$
+                    </div>
+
+                    <h3 class="text-lg font-bold text-slate-800 mb-3">Pembuktian Matematis Rumus $S_n$</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Bagaimana kita menjumlahkan seluruh suku tersebut dengan cepat tanpa menghitungnya satu per satu? Kita gunakan teknik <strong>manipulasi aljabar (mengalikan persamaan dengan rasio $r$ lalu mengeliminasinya)</strong>:
+                    </p>
+
+                    <div class="bg-slate-900 text-slate-100 p-6 rounded-xl font-mono text-sm overflow-x-auto mb-6 shadow-inner">
+                        <p class="text-slate-400 mb-2">// Persamaan (1): Bentuk asli Sn</p>
+                        $$S_n = a + ar + ar^2 + ar^3 + \dots + ar^{n-2} + ar^{n-1}$$
+                        
+                        <p class="text-slate-400 mt-4 mb-2">// Persamaan (2): Kalikan kedua ruas Persamaan (1) dengan r</p>
+                        $$r \cdot S_n = ar + ar^2 + ar^3 + ar^4 + \dots + ar^{n-1} + ar^n$$
+
+                        <hr class="border-slate-700 my-4">
+                        <p class="text-blue-400 mb-2">// Kurangkan Persamaan (1) dengan Persamaan (2): [Pers. 1 - Pers. 2]</p>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Perhatikan bahwa suku-suku tengah ($ar, ar^2, \dots, ar^{n-1}$) saling menghabiskan, sehingga hanya menyisakan suku paling awal ($a$) dan suku paling akhir ($ar^n$):
+                        </p>
+                        $$S_n - r \cdot S_n = a - ar^n$$
+                        $$(1 - r) S_n = a(1 - r^n)$$
+                        $$S_n = \frac{a(1 - r^n)}{1 - r} \quad \text{(dengan syarat } r \neq 1 \text{)}$$
+                    </div>
+
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Jika pada langkah terakhir kita mengalikan pembilang dan penyebut dengan $\frac{-1}{-1}$ (atau mengurangkan Persamaan 2 dengan Persamaan 1), kita akan memperoleh bentuk ekuivalen:
+                        $$S_n = \frac{a(r^n - 1)}{r - 1}$$
+                        Kedua rumus di atas sebenarnya <strong>sama persis dan memberikan hasil yang identik</strong>, namun pemilihannya dibedakan demi kenyamanan perhitungan agar penyebut tidak bernilai negatif.
+                    </p>
+
+                    <!-- Rangkuman 3 Kondisi Sn -->
+                    <div class="grid md:grid-cols-3 gap-4 mt-6">
+                        <div class="math-box p-5 rounded-xl border border-blue-200">
+                            <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">Kondisi 1: $r > 1$ atau $r < -1$</span>
+                            <div class="my-4">
+                                $$S_n = \frac{a(r^n - 1)}{r - 1}$$
+                            </div>
+                            <p class="text-xs text-slate-600">
+                                Digunakan ketika nilai mutlak rasio lebih dari $1$ ($|r| > 1$) agar pembilang dan penyebut bernilai positif.
+                            </p>
+                        </div>
+
+                        <div class="math-box p-5 rounded-xl border border-blue-200">
+                            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">Kondisi 2: $r < 1$ dan $r \neq 1$</span>
+                            <div class="my-4">
+                                $$S_n = \frac{a(1 - r^n)}{1 - r}$$
+                            </div>
+                            <p class="text-xs text-slate-600">
+                                Sangat disarankan ketika rasio berupa pecahan di antara $-1 < r < 1$ (misal $r = \frac{1}{2}$).
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-100 p-5 rounded-xl border border-slate-300">
+                            <span class="px-2.5 py-1 bg-slate-700 text-white text-xs font-bold rounded-md">Kondisi 3: Khusus $r = 1$</span>
+                            <div class="my-4">
+                                $$S_n = n \cdot a$$
+                            </div>
+                            <p class="text-xs text-slate-600">
+                                Jika $r = 1$, rumus pembagian tidak bisa dipakai karena penyebut menjadi $0$. Deretnya hanya $a + a + \dots + a$ sebanyak $n$ kali.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BAGIAN 4: HUBUNGAN Un DAN Sn -->
+                <section id="hubungan" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">4</span>
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Hubungan Antara $U_n$ dan $S_n$</h2>
+                    </div>
+
+                    <p class="text-slate-600 leading-relaxed mb-4">
+                        Pada sembarang deret (baik aritmatika maupun geometri), jumlah $n$ suku pertama ($S_n$) adalah jumlah $(n-1)$ suku pertama ($S_{n-1}$) ditambah dengan suku terakhirnya ($U_n$).
+                    </p>
+
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 text-sm space-y-2 mb-4">
+                        <div>$$S_n = \underbrace{U_1 + U_2 + U_3 + \dots + U_{n-1}}_{S_{n-1}} + U_n$$</div>
+                        <div>$$S_n = S_{n-1} + U_n$$</div>
+                    </div>
+
+                    <div class="math-box p-4 rounded-r-xl">
+                        <p class="text-xs font-bold uppercase tracking-wider text-blue-800 mb-1">Rumus Menentukan $U_n$ dari Fungsi $S_n$</p>
+                        $$U_n = S_n - S_{n-1} \quad \text{(untuk } n \ge 2 \text{, sedangkan } U_1 = S_1\text{)}$$
+                    </div>
+
+                    <div class="mt-4 p-4 bg-blue-50/50 border border-blue-100 rounded-xl text-sm text-slate-700">
+                        <strong>Ciri Khas Rumus Eksplisit $S_n$ Deret Geometri:</strong><br>
+                        Setiap rumus jumlah $n$ suku pertama deret geometri selalu dapat dituliskan dalam bentuk fungsi eksponensial:
+                        $$S_n = p \cdot r^n + q \quad \text{dengan syarat mutlak: } p + q = 0 \text{ (atau } q = -p\text{)}$$
+                        Di mana $r$ adalah bilangan pokok eksponen (rasio) dan suku pertamanya adalah $a = S_1 = p \cdot r + q$.
+                    </div>
+                </section>
+
+                <!-- BAGIAN 5: SUKU TENGAH & SISIPAN -->
+                <section id="suku-tengah-sisipan" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">5</span>
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Suku Tengah ($U_t$) dan Sisipan</h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Suku Tengah -->
+                        <div class="border border-slate-200 rounded-xl p-5">
+                            <h3 class="text-lg font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100">
+                                A. Suku Tengah ($U_t$)
+                            </h3>
+                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                                Suatu barisan/deret geometri berhingga yang memiliki banyak suku <strong>ganjil</strong> ($n$ ganjil, dengan $n = 2t - 1$) pasti memiliki sebuah suku tepat di tengah yang disebut suku tengah ($U_t$).
+                            </p>
+                            <div class="math-box p-4 rounded-r-lg mb-3">
+                                <p class="text-xs font-semibold text-blue-900">Letak Indeks Suku Tengah:</p>
+                                $$t = \frac{n + 1}{2}$$
+                                <p class="text-xs font-semibold text-blue-900 mt-3">Nilai Suku Tengah:</p>
+                                $$U_t = \sqrt{U_1 \cdot U_n} = \sqrt{a \cdot U_{2t-1}}$$
+                            </div>
+                            <p class="text-xs text-slate-500 italic">
+                                *Catatan: Bukti diperoleh dari $U_t = a \cdot r^{t-1} = \sqrt{a^2 \cdot r^{2t-2}} = \sqrt{a \cdot (a \cdot r^{n-1})} = \sqrt{a \cdot U_n}$.
+                            </p>
+                        </div>
+
+                        <!-- Sisipan -->
+                        <div class="border border-slate-200 rounded-xl p-5">
+                            <h3 class="text-lg font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100">
+                                B. Sisipan pada Deret Geometri
+                            </h3>
+                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                                Apabila di antara setiap dua suku yang berurutan pada suatu deret geometri (yang memiliki rasio awal $r$ dan banyak suku $n$) disisipkan sebanyak $k$ buah bilangan sehingga terbentuk deret geometri baru, maka:
+                            </p>
+                            <div class="math-box p-4 rounded-r-lg space-y-2 text-sm">
+                                <div>
+                                    <span class="font-semibold text-blue-900 text-xs block">1. Rasio Baru ($r'$):</span>
+                                    $$r' = \sqrt[k+1]{r} = \sqrt[k+1]{\frac{U_2}{U_1}}$$
+                                </div>
+                                <div class="pt-2 border-t border-blue-200/50">
+                                    <span class="font-semibold text-blue-900 text-xs block">2. Banyak Suku Baru ($n'$):</span>
+                                    $$n' = n + (n - 1)k$$
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">
+                                *Perhatian: Jika $k+1$ bernilai genap dan $r > 0$, maka terdapat dua kemungkinan rasio baru yaitu positif dan negatif ($\pm \sqrt[k+1]{r}$).
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BAGIAN 6: SIFAT-SIFAT KHUSUS -->
+                <section id="sifat-khusus" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">6</span>
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Sifat-Sifat Khusus & Teorema</h2>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">1. Sifat Simetri Perkalian Suku</h4>
+                            <p class="text-sm text-slate-600 mb-2">
+                                Pada deret geometri berhingga dengan $n$ suku, hasil kali dua suku yang berjarak sama dari ujung awal dan ujung akhir adalah konstan dan sama dengan hasil kali suku pertama dan suku terakhir:
+                            </p>
+                            $$U_1 \cdot U_n = U_2 \cdot U_{n-1} = U_3 \cdot U_{n-2} = \dots = a^2 \cdot r^{n-1}$$
+                            <p class="text-sm text-slate-600 mt-2">
+                                Untuk tiga suku berurutan $U_1, U_2, U_3$, selalu berlaku syarat rata-rata geometrik:
+                                $$U_2^2 = U_1 \cdot U_3 \quad \text{atau secara umum} \quad U_n^2 = U_{n-k} \cdot U_{n+k}$$
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">2. Permisalan Tiga Suku Berurutan dalam Soal</h4>
+                            <p class="text-sm text-slate-600">
+                                Jika dalam soal diketahui <strong>hasil kali tiga suku berurutan</strong> pada deret geometri, gunakan permisalan simetris berikut agar variabel $r$ langsung tereliminasi saat dikalikan:
+                                $$\frac{p}{r}, \quad p, \quad p \cdot r$$
+                                Sehingga hasil kalinya adalah $\left(\frac{p}{r}\right) \cdot p \cdot (p \cdot r) = p^3$. Nilai suku tengah ($p$) dapat langsung ditemukan!
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">3. Transformasi Logaritma (Hubungan dengan Aritmatika)</h4>
+                            <p class="text-sm text-slate-600">
+                                Jika $U_1, U_2, U_3, \dots, U_n$ adalah barisan geometri dengan suku-suku positif ($U_n > 0$), maka barisan logaritmanya:
+                                $$\log U_1, \quad \log U_2, \quad \log U_3, \quad \dots, \quad \log U_n$$
+                                membentuk <strong>Barisan Aritmatika</strong> dengan suku pertama $A = \log a$ dan beda $B = \log r$.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BAGIAN 7: APLIKASI KONTEKSTUAL -->
+                <section id="aplikasi" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">7</span>
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Aplikasi dalam Kehidupan Nyata</h2>
+                    </div>
+
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                        Banyak fenomena alam maupun perhitungan ekonomi yang mengikuti pola barisan dan deret geometri. Berikut adalah tiga aplikasi utamanya beserta jebakan konsep indeks waktunya:
+                    </p>
+
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="p-5 rounded-xl border border-slate-200 bg-gradient-to-b from-white to-slate-50">
+                            <div class="text-blue-600 font-bold text-xs uppercase tracking-wider mb-1">Biologi & Demografi</div>
+                            <h4 class="font-bold text-slate-900 mb-2">Pembelahan Sel / Pertumbuhan</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                                Jika mula-mula (waktu $t=0$) terdapat $M_0$ bakteri yang membelah diri menjadi $r$ kali lipat setiap periode waktu tertentu, maka setelah $k$ kali pembelahan, jumlahnya adalah:
+                            </p>
+                            <div class="bg-white p-2.5 rounded border border-slate-200 text-center text-sm">
+                                $$M_k = M_0 \cdot r^k$$
+                            </div>
+                            <p class="text-[11px] text-amber-700 mt-2">
+                                <strong>Hati-hati:</strong> Kondisi mula-mula adalah $U_1 = M_0$, sehingga setelah $k$ kali pembelahan nilainya setara dengan $U_{k+1} = a \cdot r^k$.
+                            </p>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-slate-200 bg-gradient-to-b from-white to-slate-50">
+                            <div class="text-emerald-600 font-bold text-xs uppercase tracking-wider mb-1">Matematika Keuangan</div>
+                            <h4 class="font-bold text-slate-900 mb-2">Bunga Majemuk & Tabungan</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                                Modal awal $M_0$ yang diinvestasikan dengan suku bunga majemuk $i$ (dalam desimal/persen) per periode selama $k$ periode akan berkembang menjadi:
+                            </p>
+                            <div class="bg-white p-2.5 rounded border border-slate-200 text-center text-sm">
+                                $$M_k = M_0 (1 + i)^k$$
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-2">
+                                Jika seseorang menabung secara rutin setiap awal tahun dengan nominal tetap, total tabungannya dihitung menggunakan rumus deret $S_n$.
+                            </p>
+                        </div>
+
+                        <div class="p-5 rounded-xl border border-slate-200 bg-gradient-to-b from-white to-slate-50">
+                            <div class="text-rose-600 font-bold text-xs uppercase tracking-wider mb-1">Fisika & Ekonomi</div>
+                            <h4 class="font-bold text-slate-900 mb-2">Penyusutan & Peluruhan</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                                Nilai barang atau massa zat radioaktif awal $M_0$ yang menyusut sebesar $p\%$ setiap periode selama $k$ periode memiliki rasio $r = 1 - p\%$:
+                            </p>
+                            <div class="bg-white p-2.5 rounded border border-slate-200 text-center text-sm">
+                                $$M_k = M_0 (1 - p)^k$$
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-2">
+                                Ini merupakan contoh penerapan barisan geometri turun ($0 < r < 1$) pada waktu berhingga.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BAGIAN 8: CONTOH SOAL & PEMBAHASAN BERTINGKAT -->
+                <section id="contoh-soal" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">8</span>
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Contoh Soal & Pembahasan Bertingkat</h2>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Soal 1 -->
+                        <div class="border border-slate-200 rounded-xl overflow-hidden">
+                            <div class="bg-slate-100 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                                <span class="font-bold text-slate-800 text-sm">Contoh Soal 1: Perhitungan Dasar $U_n$ dan $S_n$</span>
+                                <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-full">Level Dasar</span>
+                            </div>
+                            <div class="p-5 text-sm space-y-4">
+                                <p class="text-slate-700">
+                                    <strong>Soal:</strong> Diketahui deret geometri $3 + 6 + 12 + 24 + \dots$. Tentukan nilai suku ke-$8$ ($U_8$) dan jumlah $8$ suku pertama ($S_8$) dari deret tersebut!
+                                </p>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2 text-slate-700">
+                                    <p class="font-semibold text-blue-900">Pembahasan:</p>
+                                    <p>Dari deret $3 + 6 + 12 + 24 + \dots$, kita identifikasi unsur-unsurnya:</p>
+                                    <ul class="list-disc list-inside space-y-1 ml-2">
+                                        <li>Suku pertama: $a = U_1 = 3$</li>
+                                        <li>Rasio: $r = \frac{U_2}{U_1} = \frac{6}{3} = 2$ (karena $r = 2 > 1$, gunakan rumus $S_n$ untuk $r > 1$)</li>
+                                    </ul>
+                                    <p class="pt-2 font-medium">1. Menentukan Suku ke-$8$ ($U_8$):</p>
+                                    $$U_n = a \cdot r^{n-1} \implies U_8 = 3 \cdot 2^{8-1} = 3 \cdot 2^7 = 3 \cdot 128 = 384$$
+                                    <p class="pt-2 font-medium">2. Menentukan Jumlah $8$ Suku Pertama ($S_8$):</p>
+                                    $$S_n = \frac{a(r^n - 1)}{r - 1} \implies S_8 = \frac{3(2^8 - 1)}{2 - 1} = \frac{3(256 - 1)}{1} = 3 \cdot 255 = 765$$
+                                    <p class="text-emerald-700 font-semibold">Jadi, nilai suku ke-$8$ adalah $384$ dan jumlah $8$ suku pertamanya adalah $765$.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Soal 2 -->
+                        <div class="border border-slate-200 rounded-xl overflow-hidden">
+                            <div class="bg-slate-100 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                                <span class="font-bold text-slate-800 text-sm">Contoh Soal 2: Diketahui Dua Suku Tidak Berurutan</span>
+                                <span class="px-2.5 py-0.5 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">Level Menengah</span>
+                            </div>
+                            <div class="p-5 text-sm space-y-4">
+                                <p class="text-slate-700">
+                                    <strong>Soal:</strong> Suatu deret geometri memiliki suku ke-$2$ bernilai $12$ dan suku ke-$5$ bernilai $-\frac{3}{2}$. Tentukan jumlah $6$ suku pertama ($S_6$) deret tersebut!
+                                </p>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2 text-slate-700">
+                                    <p class="font-semibold text-blue-900">Pembahasan:</p>
+                                    <p>Diketahui $U_2 = 12$ dan $U_5 = -\frac{3}{2}$. Kita bandingkan kedua suku untuk mendapatkan $r$:</p>
+                                    $$\frac{U_5}{U_2} = \frac{a \cdot r^4}{a \cdot r^1} \implies r^3 = \frac{-\frac{3}{2}}{12} = -\frac{3}{24} = -\frac{1}{8}$$
+                                    $$r = \sqrt[3]{-\frac{1}{8}} = -\frac{1}{2}$$
+                                    <p>Substitusikan $r = -\frac{1}{2}$ ke persamaan $U_2 = 12$ untuk mencari $a$:</p>
+                                    $$a \cdot r = 12 \implies a \cdot \left(-\frac{1}{2}\right) = 12 \implies a = -24$$
+                                    <p>Karena $r = -\frac{1}{2} < 1$, kita gunakan rumus $S_n = \frac{a(1 - r^n)}{1 - r}$ untuk $n = 6$:</p>
+                                    $$S_6 = \frac{-24 \left(1 - \left(-\frac{1}{2}\right)^6\right)}{1 - \left(-\frac{1}{2}\right)} = \frac{-24 \left(1 - \frac{1}{64}\right)}{\frac{3}{2}} = -24 \cdot \frac{2}{3} \cdot \left(\frac{63}{64}\right) = -16 \cdot \frac{63}{64} = -\frac{63}{4} = -15{,}75$$
+                                    <p class="text-emerald-700 font-semibold">Jadi, jumlah $6$ suku pertama deret tersebut adalah $-\frac{63}{4}$ atau $-15{,}75$.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Soal 3 -->
+                        <div class="border border-slate-200 rounded-xl overflow-hidden">
+                            <div class="bg-slate-100 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                                <span class="font-bold text-slate-800 text-sm">Contoh Soal 3: Masalah Kontekstual Produksi & Panjang Tali</span>
+                                <span class="px-2.5 py-0.5 bg-amber-100 text-amber-800 text-xs font-semibold rounded-full">Level Menengah</span>
+                            </div>
+                            <div class="p-5 text-sm space-y-4">
+                                <p class="text-slate-700">
+                                    <strong>Soal:</strong> Seutas tali dipotong menjadi $5$ bagian dengan panjang masing-masing bagian membentuk barisan geometri. Jika potongan tali yang paling pendek adalah $4\text{ cm}$ dan potongan tali yang paling panjang adalah $324\text{ cm}$, berapakah panjang tali semula sebelum dipotong?
+                                </p>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2 text-slate-700">
+                                    <p class="font-semibold text-blue-900">Pembahasan:</p>
+                                    <p>Tali dipotong menjadi $5$ bagian ($n = 5$). Potongan terpendek adalah suku pertama ($U_1 = a = 4\text{ cm}$) dan potongan terpanjang adalah suku ke-$5$ ($U_5 = 324\text{ cm}$). Panjang tali semula adalah jumlah seluruh potongan ($S_5$).</p>
+                                    $$U_5 = a \cdot r^4 \implies 324 = 4 \cdot r^4 \implies r^4 = \frac{324}{4} = 81$$
+                                    <p>Karena panjang tali selalu positif, maka rasio harus positif: $r = \sqrt[4]{81} = 3$.</p>
+                                    <p>Hitung panjang tali semula ($S_5$):</p>
+                                    $$S_5 = \frac{a(r^5 - 1)}{r - 1} = \frac{4(3^5 - 1)}{3 - 1} = \frac{4(243 - 1)}{2} = 2 \cdot 242 = 484\text{ cm}$$
+                                    <p class="text-emerald-700 font-semibold">Jadi, panjang tali semula sebelum dipotong adalah $484\text{ cm}$ (atau $4{,}84\text{ meter}$).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Soal 4 -->
+                        <div class="border border-slate-200 rounded-xl overflow-hidden">
+                            <div class="bg-slate-100 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                                <span class="font-bold text-slate-800 text-sm">Contoh Soal 4: Manipulasi Aljabar Jumlah Suku Genap & Ganjil</span>
+                                <span class="px-2.5 py-0.5 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full">Level HOTS / Olimpiade</span>
+                            </div>
+                            <div class="p-5 text-sm space-y-4">
+                                <p class="text-slate-700">
+                                    <strong>Soal:</strong> Suatu deret geometri terdiri dari $8$ suku. Jumlah $4$ suku pertama deret tersebut adalah $45$, sedangkan jumlah $4$ suku terakhirnya adalah $720$. Jika rasio deret bernilai positif, tentukan nilai suku pertama ($a$) dan jumlah seluruh suku deret tersebut ($S_8$)!
+                                </p>
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2 text-slate-700">
+                                    <p class="font-semibold text-blue-900">Pembahasan:</p>
+                                    <p>Jumlah seluruh $8$ suku adalah $S_8 = \text{Jumlah 4 suku pertama} + \text{Jumlah 4 suku terakhir} = 45 + 720 = 765$.</p>
+                                    <p>Untuk mencari $a$ dan $r$, perhatikan hubungan pemfaktoran yang sangat elegan berikut:</p>
+                                    $$\text{Jumlah 4 suku pertama: } U_1 + U_2 + U_3 + U_4 = a + ar + ar^2 + ar^3 = 45$$
+                                    $$\text{Jumlah 4 suku terakhir: } U_5 + U_6 + U_7 + U_8 = ar^4 + ar^5 + ar^6 + ar^7 = 720$$
+                                    <p>Faktorkan $r^4$ dari kelompok $4$ suku terakhir:</p>
+                                    $$r^4 \underbrace{(a + ar + ar^2 + ar^3)}_{45} = 720$$
+                                    $$r^4 \cdot 45 = 720 \implies r^4 = \frac{720}{45} = 16 \implies r = 2 \quad (\text{karena } r > 0)$$
+                                    <p>Substitusikan $r = 2$ ke persamaan $S_4 = 45$:</p>
+                                    $$S_4 = \frac{a(2^4 - 1)}{2 - 1} = 45 \implies a(15) = 45 \implies a = 3$$
+                                    <p class="text-emerald-700 font-semibold">Jadi, suku pertama deret tersebut adalah $a = 3$, rasionya $r = 2$, dan jumlah seluruh $8$ sukunya adalah $S_8 = 765$.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BAGIAN 9: KALKULATOR & SIMULASI INTERAKTIF -->
+                <section id="kalkulator" class="bg-gradient-to-br from-blue-950 to-slate-900 text-white rounded-2xl shadow-md p-6 md:p-8">
+                    <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-blue-400">Fitur Eksplorasi Interaktif</span>
+                            <h2 class="text-2xl font-serif font-bold text-white mt-1">Simulasi & Kalkulator Langkah-demi-Langkah</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-white/10 rounded-lg text-xs text-blue-200 border border-white/10">
+                            Otomatis Merender KaTeX
+                        </span>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-4 mb-6">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1.5">Suku Pertama ($a$)</label>
+                            <input type="number" id="calc-a" value="4" step="any" class="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1.5">Rasio ($r$)</label>
+                            <input type="number" id="calc-r" value="3" step="any" class="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1.5">Banyak Suku ($n$, maks 20)</label>
+                            <input type="number" id="calc-n" value="6" min="1" max="20" class="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </div>
+                    </div>
+
+                    <button onclick="hitungGeometri()" class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow transition mb-6">
+                        Hitung & Tampilkan Penjabaran
+                    </button>
+
+                    <!-- Output Kalkulator -->
+                    <div id="calc-output" class="bg-white text-slate-800 rounded-xl p-5 space-y-4">
+                        <!-- Diisi oleh JavaScript -->
+                    </div>
+                </section>
+
+                <!-- BAGIAN 10: LATIHAN SOAL INTERAKTIF -->
+                <section id="latihan" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                    <div class="flex items-center justify-between flex-wrap gap-3 mb-6">
+                        <div class="flex items-center gap-3">
+                            <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-600 text-white font-bold text-sm">📝</span>
+                            <h2 class="text-2xl font-serif font-bold text-slate-900">Uji Pemahaman Mandiri</h2>
+                        </div>
+                        <span class="text-xs text-slate-500">Klik pilihan jawaban untuk mengecek kebenaran</span>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Quiz 1 -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50">
+                            <p class="font-medium text-slate-900 text-sm mb-3">
+                                <strong>1.</strong> Diketahui barisan geometri dengan suku pertama $64$ dan suku ke-$4$ adalah $8$. Berapakah jumlah $6$ suku pertama ($S_6$) dari deret geometri yang bersesuaian?
+                            </p>
+                            <div class="grid sm:grid-cols-2 gap-2.5 text-sm mb-3">
+                                <button onclick="checkAnswer(1, 'A', false)" class="quiz-btn-1 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">A. $124$</button>
+                                <button onclick="checkAnswer(1, 'B', true)" class="quiz-btn-1 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">B. $126$</button>
+                                <button onclick="checkAnswer(1, 'C', false)" class="quiz-btn-1 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">C. $127{,}5$</button>
+                                <button onclick="checkAnswer(1, 'D', false)" class="quiz-btn-1 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">D. $128$</button>
+                            </div>
+                            <div id="quiz-feedback-1" class="hidden p-4 rounded-lg bg-white border border-slate-200 text-xs text-slate-700 space-y-1">
+                                <p id="quiz-status-1" class="font-bold text-sm mb-1"></p>
+                                <p><strong>Pembahasan:</strong> Diketahui $a = 64$ dan $U_4 = 8$. Maka $a \cdot r^3 = 8 \implies 64 \cdot r^3 = 8 \implies r^3 = \frac{1}{8} \implies r = \frac{1}{2}$.</p>
+                                <p>Gunakan rumus $S_n$ untuk $r < 1$:</p>
+                                $$S_6 = \frac{64\left(1 - \left(\frac{1}{2}\right)^6\right)}{1 - \frac{1}{2}} = \frac{64\left(1 - \frac{1}{64}\right)}{\frac{1}{2}} = 128 \cdot \frac{63}{64} = 2 \cdot 63 = 126$$
+                            </div>
+                        </div>
+
+                        <!-- Quiz 2 -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50">
+                            <p class="font-medium text-slate-900 text-sm mb-3">
+                                <strong>2.</strong> Di antara bilangan $5$ dan $405$ disisipkan $3$ buah bilangan positif sehingga membentuk deret geometri. Jumlah seluruh bilangan pada deret geometri yang baru terbentuk tersebut adalah...
+                            </p>
+                            <div class="grid sm:grid-cols-2 gap-2.5 text-sm mb-3">
+                                <button onclick="checkAnswer(2, 'A', false)" class="quiz-btn-2 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">A. $580$</button>
+                                <button onclick="checkAnswer(2, 'B', false)" class="quiz-btn-2 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">B. $600$</button>
+                                <button onclick="checkAnswer(2, 'C', true)" class="quiz-btn-2 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">C. $605$</button>
+                                <button onclick="checkAnswer(2, 'D', false)" class="quiz-btn-2 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">D. $625$</button>
+                            </div>
+                            <div id="quiz-feedback-2" class="hidden p-4 rounded-lg bg-white border border-slate-200 text-xs text-slate-700 space-y-1">
+                                <p id="quiz-status-2" class="font-bold text-sm mb-1"></p>
+                                <p><strong>Pembahasan:</strong> Rasio awal $r = \frac{405}{5} = 81$. Banyak sisipan $k = 3$.</p>
+                                <p>Rasio baru setelah sisipan: $r' = \sqrt[k+1]{r} = \sqrt[3+1]{81} = \sqrt[4]{81} = 3$.</p>
+                                <p>Banyak suku sekarang menjadi $n' = 2 + 3 = 5$ suku (yaitu $5 + 15 + 45 + 135 + 405$). Maka $S_5$:</p>
+                                $$S_5 = \frac{5(3^5 - 1)}{3 - 1} = \frac{5(242)}{2} = 5 \cdot 121 = 605$$
+                            </div>
+                        </div>
+
+                        <!-- Quiz 3 -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50">
+                            <p class="font-medium text-slate-900 text-sm mb-3">
+                                <strong>3.</strong> Jumlah $n$ suku pertama suatu deret geometri dinyatakan oleh rumus $S_n = 2^{n+2} - 4$. Rasio ($r$) dan suku ke-$4$ ($U_4$) dari deret tersebut berturut-turut adalah...
+                            </p>
+                            <div class="grid sm:grid-cols-2 gap-2.5 text-sm mb-3">
+                                <button onclick="checkAnswer(3, 'A', false)" class="quiz-btn-3 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">A. $r = 2$ dan $U_4 = 16$</button>
+                                <button onclick="checkAnswer(3, 'B', true)" class="quiz-btn-3 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">B. $r = 2$ dan $U_4 = 32$</button>
+                                <button onclick="checkAnswer(3, 'C', false)" class="quiz-btn-3 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">C. $r = 4$ dan $U_4 = 32$</button>
+                                <button onclick="checkAnswer(3, 'D', false)" class="quiz-btn-3 text-left px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition">D. $r = 2$ dan $U_4 = 64$</button>
+                            </div>
+                            <div id="quiz-feedback-3" class="hidden p-4 rounded-lg bg-white border border-slate-200 text-xs text-slate-700 space-y-1">
+                                <p id="quiz-status-3" class="font-bold text-sm mb-1"></p>
+                                <p><strong>Pembahasan:</strong> Ubah rumus ke bentuk standar $S_n = 4 \cdot 2^n - 4$. Terlihat jelas basis eksponennya adalah rasio $r = 2$.</p>
+                                <p>Gunakan hubungan $U_n = S_n - S_{n-1}$ untuk mencari $U_4$:</p>
+                                $$U_4 = S_4 - S_3 = (2^{4+2} - 4) - (2^{3+2} - 4) = (2^6 - 4) - (2^5 - 4) = 64 - 32 = 32$$
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs">
+            <p>Modul Pembelajaran Matematika Interaktif — Barisan & Deret Geometri Berhingga</p>
+            <p class="mt-1 text-slate-500">Dirender menggunakan KaTeX Engine</p>
+        </div>
+    </footer>
+
+    <!-- Scripts for KaTeX & Interactivity -->
+    <script>
+        const katexConfig = {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        };
+
+        function renderAllMath(element = document.body) {
+            if (window.renderMathInElement) {
+                renderMathInElement(element, katexConfig);
+            }
+        }
+
+        // Kalkulator Deret Geometri
+        function hitungGeometri() {
+            const a = parseFloat(document.getElementById('calc-a').value);
+            const r = parseFloat(document.getElementById('calc-r').value);
+            let n = parseInt(document.getElementById('calc-n').value);
+            const output = document.getElementById('calc-output');
+
+            if (isNaN(a) || isNaN(r) || isNaN(n) || n < 1) {
+                output.innerHTML = `<p class="text-rose-600 font-semibold text-sm">Mohon masukkan nilai angka yang valid (dengan $n \\ge 1$).</p>`;
+                renderAllMath(output);
+                return;
+            }
+
+            if (n > 20) {
+                n = 20;
+                document.getElementById('calc-n').value = 20;
+            }
+
+            const un = a * Math.pow(r, n - 1);
+            let sn = 0;
+            let snStepLatex = '';
+
+            if (r === 1) {
+                sn = n * a;
+                snStepLatex = `$$S_{${n}} = n \\cdot a = ${n} \\cdot (${a}) = ${sn}$$`;
+            } else if (r > 1 || r < -1) {
+                const rn = Math.pow(r, n);
+                sn = (a * (rn - 1)) / (r - 1);
+                snStepLatex = `$$S_{${n}} = \\frac{a(r^{${n}} - 1)}{r - 1} = \\frac{${a}((${r})^{${n}} - 1)}{${r} - 1} = \\frac{${a}(${Number(rn.toFixed(6))} - 1)}{${Number((r - 1).toFixed(4))}} = ${Number(sn.toFixed(6))}$$`;
+            } else {
+                const rn = Math.pow(r, n);
+                sn = (a * (1 - rn)) / (1 - r);
+                snStepLatex = `$$S_{${n}} = \\frac{a(1 - r^{${n}})}{1 - r} = \\frac{${a}(1 - (${r})^{${n}})}{1 - (${r})} = \\frac{${a}(1 - ${Number(rn.toFixed(6))})}{${Number((1 - r).toFixed(4))}} = ${Number(sn.toFixed(6))}$$`;
+            }
+
+            // Buat daftar deret
+            let terms = [];
+            for (let i = 0; i < n; i++) {
+                let val = Number((a * Math.pow(r, i)).toFixed(4));
+                terms.push(val < 0 ? `(${val})` : `${val}`);
+            }
+
+            output.innerHTML = `
+                <div class="border-b border-slate-200 pb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Visualisasi Deret ($S_{${n}}$):</span>
+                    <div class="text-sm font-mono text-blue-900 bg-blue-50 p-3 rounded-lg mt-1 overflow-x-auto">
+                        $${terms.join(' + ')} = ${Number(sn.toFixed(6))}$
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <p class="font-bold text-slate-700 mb-1">1. Perhitungan Suku ke-$${n}$ ($U_{${n}}$):</p>
+                        $$U_{${n}} = a \\cdot r^{${n}-1} = ${a} \\cdot (${r})^{${n-1}} = ${Number(un.toFixed(6))}$$
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <p class="font-bold text-slate-700 mb-1">2. Perhitungan Jumlah $${n}$ Suku Pertama ($S_{${n}}$):</p>
+                        ${snStepLatex}
+                    </div>
+                </div>
+            `;
+
+            renderAllMath(output);
+        }
+
+        // Kuis Interaktif
+        function checkAnswer(qNum, choice, isCorrect) {
+            const feedbackBox = document.getElementById(`quiz-feedback-${qNum}`);
+            const statusText = document.getElementById(`quiz-status-${qNum}`);
+            const buttons = document.querySelectorAll(`.quiz-btn-${qNum}`);
+
+            buttons.forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-emerald-500', 'bg-emerald-50', 'ring-rose-500', 'bg-rose-50');
+            });
+
+            feedbackBox.classList.remove('hidden');
+            if (isCorrect) {
+                statusText.textContent = `✅ Jawaban Anda (${choice}) Benar!`;
+                statusText.className = 'font-bold text-sm mb-1 text-emerald-600';
+            } else {
+                statusText.textContent = `❌ Jawaban Anda (${choice}) Kurang Tepat. Simak pembahasannya:`;
+                statusText.className = 'font-bold text-sm mb-1 text-rose-600';
+            }
+            renderAllMath(feedbackBox);
+        }
+
+        // Jalankan saat halaman selesai dimuat
+        document.addEventListener("DOMContentLoaded", function() {
+            renderAllMath();
+            hitungGeometri();
+        });
+    </script>
+</body>
+</html>
