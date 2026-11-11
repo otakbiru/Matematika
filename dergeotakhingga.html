@@ -1,0 +1,2255 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deret Geometri Tak Hingga — Modul Interaktif Matematika SMA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- KaTeX for crisp mathematical formulas -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#1e1b4b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Smooth transitions for SVG partitions */
+        .cake-slice {
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .katex-display {
+            margin: 0.65em 0 !important;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.25rem 0;
+        }
+        /* Range slider styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 999px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -5px;
+            background-color: #4f46e5;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(79, 70, 229, 0.4);
+            transition: transform 0.15s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+        .nav-pill.active {
+            background-color: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-600 selection:text-white">
+
+    <!-- STICKY HEADER & NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white font-bold text-lg shadow-md group-hover:scale-105 transition">
+                        S<sub>&infin;</sub>
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600 block">Matematika SMA</span>
+                        <h1 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">Deret Geometri Tak Hingga</h1>
+                    </div>
+                </a>
+
+                <!-- Desktop Quick Navigation Pills -->
+                <nav class="hidden xl:flex items-center gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200/80">
+                    <a href="#tahap-1" class="nav-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">1. Intuisi</a>
+                    <a href="#tahap-2" class="nav-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">2. Rumus S<sub>&infin;</sub></a>
+                    <a href="#tahap-3" class="nav-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">3. Konvergen vs Divergen</a>
+                    <a href="#tahap-4" class="nav-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">4. Ganjil & Genap</a>
+                    <a href="#tahap-5" class="nav-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">5. Aplikasi</a>
+                    <a href="#tahap-6" class="nav-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">6. Contoh Soal</a>
+                    <a href="#tahap-7" class="nav-pill px-3 py-1.5 rounded-lg text-xs font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 transition">7. Kuis Uji Pemahaman</a>
+                </nav>
+
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-btn" class="xl:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none" aria-label="Buka Navigasi">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Horizontal Scroll Navigation -->
+        <div id="mobile-nav" class="xl:hidden hidden border-t border-slate-100 bg-white px-4 py-3">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <a href="#tahap-1" class="mobile-link px-3 py-2 rounded-lg text-xs font-semibold bg-slate-50 text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">1. Intuisi Visual</a>
+                <a href="#tahap-2" class="mobile-link px-3 py-2 rounded-lg text-xs font-semibold bg-slate-50 text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">2. Penurunan Rumus</a>
+                <a href="#tahap-3" class="mobile-link px-3 py-2 rounded-lg text-xs font-semibold bg-slate-50 text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">3. Lab Rasio</a>
+                <a href="#tahap-4" class="mobile-link px-3 py-2 rounded-lg text-xs font-semibold bg-slate-50 text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">4. Ganjil & Genap</a>
+                <a href="#tahap-5" class="mobile-link px-3 py-2 rounded-lg text-xs font-semibold bg-slate-50 text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">5. Pantulan Bola</a>
+                <a href="#tahap-6" class="mobile-link px-3 py-2 rounded-lg text-xs font-semibold bg-slate-50 text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">6. Contoh Soal</a>
+                <a href="#tahap-7" class="mobile-link px-3 py-2 rounded-lg text-xs font-semibold bg-indigo-600 text-white col-span-2 sm:col-span-2 text-center">7. Kuis Interaktif</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. HERO & PETA KONSEP -->
+    <section id="hero" class="relative overflow-hidden bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-900 text-white py-14 sm:py-20">
+        <!-- Decorative background grid -->
+        <div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(#818cf8 1px, transparent 1px); background-size: 28px 28px;"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold">
+                        <i class="fa-solid fa-sparkles"></i>
+                        <span>Modul Eksplorasi Konsep &bull; Kelas X / XI SMA</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                        Menjumlahkan Tak Hingga Banyaknya Suku, <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-sky-300 to-emerald-300">Namun Hasilnya Terbatas?</span>
+                    </h2>
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
+                        Selamat datang di modul interaktif <strong>Deret Geometri Tak Hingga</strong>. Di sini kamu tidak hanya menghafal rumus $S_\infty = \frac{a}{1-r}$, melainkan melihat langsung <em>mengapa</em> rumus itu bekerja melalui visualisasi geometri, laboratorium rasio, dan simulasi fisika pantulan bola.
+                    </p>
+
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <a href="#tahap-1" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5">
+                            <span>Mulai Eksplorasi Visual</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="#tahap-5" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm transition">
+                            <i class="fa-solid fa-basketball text-amber-400"></i>
+                            <span>Simulasi Bola Memantul</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tujuan Pembelajaran Card -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-6 sm:p-7 shadow-2xl space-y-4">
+                        <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
+                                <i class="fa-solid fa-bullseye text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Tujuan Pembelajaran</h3>
+                                <p class="text-xs text-slate-300">Setelah mempelajari modul ini, kamu mampu:</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-200">
+                            <li class="flex items-start gap-3">
+                                <span class="w-5 h-5 rounded-full bg-indigo-500/30 text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span>
+                                <span>Menjelaskan intuisi limit jumlah deret tak hingga melalui representasi luas persegi.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-5 h-5 rounded-full bg-indigo-500/30 text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span>
+                                <span>Menurunkan rumus $S_\infty = \frac{a}{1-r}$ dari rumus $S_n$ menggunakan pendekatan limit.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-5 h-5 rounded-full bg-indigo-500/30 text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span>
+                                <span>Membedakan syarat deret <strong>Konvergen</strong> ($|r| < 1$) dan <strong>Divergen</strong> ($|r| \ge 1$).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-5 h-5 rounded-full bg-indigo-500/30 text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">4</span>
+                                <span>Menguraikan deret menjadi suku-suku berindeks ganjil ($S_{\text{ganjil}}$) dan genap ($S_{\text{genap}}$).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-5 h-5 rounded-full bg-indigo-500/30 text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">5</span>
+                                <span>Menyelesaikan masalah kontekstual lintasan bola memantul & pecahan desimal berulang.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
+
+        <!-- =========================================================================
+             TAHAP 1: MEMBANGUN INTUISI (PARADOKS KUE / PERSEGI 1x1)
+        ========================================================================== -->
+        <section id="tahap-1" class="scroll-mt-24">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs uppercase tracking-wider mb-2">Tahap 1 &bull; Membangun Intuisi</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Eksplorasi Visual: Paradoks Persegi $1 \times 1$</h2>
+                </div>
+                <p class="text-sm text-slate-600 max-w-md">
+                    Bayangkan sebuah kue persegi utuh berukuran $1 \times 1$ satuan luas. Apa yang terjadi jika kita terus mengambil setengah dari sisa kue yang ada tanpa henti?
+                </p>
+            </div>
+
+            <!-- Pertanyaan Pemantik Banner -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 rounded-r-2xl p-5 mb-8 flex items-start gap-4 shadow-sm">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-lightbulb text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-amber-950 text-base">Pertanyaan Pemantik untuk Direnungkan:</h3>
+                    <p class="text-amber-900 text-sm mt-1 leading-relaxed">
+                        <em>"Bagaimana mungkin kita menjumlahkan tak hingga banyaknya bilangan positif ($\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \frac{1}{16} + \dots$), tetapi totalnya tidak meledak menjadi tak hingga, melainkan tertahan tepat di angka $1$?"</em> Mari buktikan secara visual di bawah ini!
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-start bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                <!-- Left Column: Interactive 1x1 Square SVG -->
+                <div class="lg:col-span-6 flex flex-col items-center">
+                    <div class="w-full max-w-[420px] aspect-square bg-slate-100 rounded-2xl p-3 border-2 border-slate-300 shadow-inner relative">
+                        <svg id="cake-svg" viewBox="0 0 400 400" class="w-full h-full rounded-xl overflow-hidden bg-white border border-slate-200">
+                            <!-- Rendered dynamically via JS -->
+                        </svg>
+                    </div>
+                    <div class="flex items-center justify-between w-full max-w-[420px] mt-3 text-xs text-slate-500 px-1">
+                        <span>Luas Persegi Utuh = $1\text{ satuan}^2$</span>
+                        <span id="cake-step-counter" class="font-semibold text-indigo-600">Banyak Suku ($n$): 1</span>
+                    </div>
+
+                    <!-- Control Buttons -->
+                    <div class="flex flex-wrap items-center justify-center gap-3 mt-5 w-full max-w-[420px]">
+                        <button id="btn-add-slice" class="flex-1 min-w-[180px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-semibold text-sm shadow-md shadow-indigo-600/20 transition">
+                            <i class="fa-solid fa-plus-circle"></i>
+                            <span>Tambah Suku Berikutnya</span>
+                        </button>
+                        <button id="btn-auto-slice" class="px-4 py-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold text-sm border border-emerald-200 transition" title="Simulasi Otomatis">
+                            <i class="fa-solid fa-play mr-1"></i> Auto
+                        </button>
+                        <button id="btn-reset-slice" class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Live Numerical & Conceptual Breakdown -->
+                <div class="lg:col-span-6 space-y-6">
+                    <!-- Metrics Grid -->
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4">
+                            <span class="text-xs font-semibold text-indigo-600 uppercase">Suku Terakhir ($U_n$)</span>
+                            <div id="metric-un" class="text-xl font-extrabold text-slate-900 font-mono mt-1">1/2</div>
+                            <div id="metric-un-dec" class="text-xs text-slate-500 mt-0.5">= 0,500000</div>
+                        </div>
+                        <div class="bg-emerald-50/70 border border-emerald-100 rounded-2xl p-4">
+                            <span class="text-xs font-semibold text-emerald-700 uppercase">Total Luas Diwarnai ($S_n$)</span>
+                            <div id="metric-sn" class="text-xl font-extrabold text-emerald-800 font-mono mt-1">1/2</div>
+                            <div id="metric-sn-dec" class="text-xs text-emerald-700 font-medium mt-0.5">= 0,500000</div>
+                        </div>
+                        <div class="bg-slate-100 border border-slate-200 rounded-2xl p-4">
+                            <span class="text-xs font-semibold text-slate-600 uppercase">Sisa Luas Kosong ($1 - S_n$)</span>
+                            <div id="metric-rem" class="text-xl font-extrabold text-slate-700 font-mono mt-1">1/2</div>
+                            <div id="metric-rem-dec" class="text-xs text-slate-500 mt-0.5">= 0,500000</div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar Approaching 1 -->
+                    <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200">
+                        <div class="flex justify-between text-xs font-semibold mb-2">
+                            <span class="text-slate-700">Kedekatan Jumlah Parsial ($S_n$) terhadap $1$:</span>
+                            <span id="cake-percent" class="text-indigo-600 font-mono">50,0000%</span>
+                        </div>
+                        <div class="w-full h-4 bg-slate-200 rounded-full overflow-hidden p-0.5">
+                            <div id="cake-progress-bar" class="h-full bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 rounded-full transition-all duration-500" style="width: 50%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Live Series Expansion Display -->
+                    <div class="bg-slate-900 text-white rounded-2xl p-5 shadow-inner space-y-3">
+                        <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+                            <span>Representasi Deret Geometri ($a = \frac{1}{2}, r = \frac{1}{2}$):</span>
+                            <span id="series-formula-tag" class="font-mono text-indigo-300">S_n = 1 - (1/2)^n</span>
+                        </div>
+                        <div id="cake-series-text" class="font-mono text-sm sm:text-base leading-relaxed break-words text-emerald-300">
+                            S₁ = 1/2 = 0,5
+                        </div>
+                    </div>
+
+                    <!-- Insight Explanation Box -->
+                    <div class="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-5 text-sm text-slate-700 space-y-2 leading-relaxed">
+                        <h4 class="font-bold text-indigo-950 flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass-chart text-indigo-600"></i>
+                            <span>Kesimpulan Intuisi:</span>
+                        </h4>
+                        <p>
+                            Setiap kali kita menambahkan suku baru, kita hanya mengisi <strong>setengah dari ruang kosong yang tersisa</strong>. Akibatnya:
+                        </p>
+                        <ul class="list-disc list-inside space-y-1 text-slate-600">
+                            <li>Total luas tidak akan pernah melebihi $1$ karena seluruh potongan berada di dalam kotak $1 \times 1$.</li>
+                            <li>Saat $n$ menuju tak hingga ($n \to \infty$), sisa ruang kosong $\left(\frac{1}{2}\right)^n$ menyusut menuju $0$.</li>
+                            <li>Maka, jumlah tak hingganya adalah tepat <strong>$S_\infty = 1$</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             TAHAP 2: PENGERTIAN & PENURUNAN RUMUS
+        ========================================================================== -->
+        <section id="tahap-2" class="scroll-mt-24">
+            <div class="mb-8">
+                <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs uppercase tracking-wider mb-2">Tahap 2 &bull; Konsep Formal & Aljabar</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Pengertian & Penurunan Rumus $S_\infty$</h2>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Definisi & Konsep Limit -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">
+                            <i class="fa-solid fa-book-open text-indigo-600"></i> Definisi Formal
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Apa itu Deret Geometri Tak Hingga?</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            <strong>Deret Geometri Tak Hingga</strong> adalah penjumlahan suku-suku pada barisan geometri yang banyaknya tidak terbatas (menuju tak hingga):
+                        </p>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center overflow-x-auto">
+                            $$S_\infty = U_1 + U_2 + U_3 + \dots + U_n + \dots$$
+                            $$S_\infty = a + ar + ar^2 + ar^3 + \dots$$
+                        </div>
+                        <div class="text-xs text-slate-600 space-y-1.5 pt-1">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+                                <span>$a = U_1$ adalah <strong>suku pertama</strong>.</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+                                <span>$r = \frac{U_2}{U_1} = \frac{U_n}{U_{n-1}}$ adalah <strong>rasio</strong> (pembanding tetap).</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Mini-Tool: Mengapa r^n mendekati 0? -->
+                    <div class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-lg space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-indigo-300">Uji Konsep Limit</span>
+                            <span class="px-2.5 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200 text-xs font-mono">|r| &lt; 1</span>
+                        </div>
+                        <h3 class="text-lg font-bold">Mengapa $\lim_{n \to \infty} r^n = 0$ saat $|r| < 1$?</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Coba pilih nilai rasio pecahan di bawah ini dan besarkan pangkat $n$-nya. Perhatikan bagaimana nilai $r^n$ menyusut drastis mendekati $0$!
+                        </p>
+
+                        <div class="space-y-3 pt-2">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-300">Pilih Rasio $r$ (dengan $|r| < 1$):</span>
+                                    <span id="limit-r-label" class="font-mono font-bold text-emerald-300">r = 0.5</span>
+                                </div>
+                                <input id="limit-r-slider" type="range" min="-0.9" max="0.9" step="0.1" value="0.5" class="w-full">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-300">Banyak Suku ($n$):</span>
+                                    <span id="limit-n-label" class="font-mono font-bold text-amber-300">n = 10</span>
+                                </div>
+                                <input id="limit-n-slider" type="range" min="1" max="60" step="1" value="10" class="w-full">
+                            </div>
+                        </div>
+
+                        <div class="bg-black/30 border border-white/10 rounded-2xl p-4 font-mono text-center">
+                            <div class="text-xs text-slate-400 mb-1">Hasil Perhitungan $r^n$:</div>
+                            <div id="limit-result-display" class="text-base sm:text-lg font-bold text-emerald-400 break-all">
+                                (0.5)^10 = 0.0009765625
+                            </div>
+                            <div id="limit-conclusion-tag" class="text-[11px] text-indigo-200 mt-1">
+                                Semakin besar n, nilainya semakin mendekati 0!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Formula Derivation Interactive Accordion -->
+                <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">Penurunan Rumus Langkah demi Langkah</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">Klik setiap langkah atau tombol di bawah untuk menelusuri asal-usul rumus $S_\infty$.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button id="btn-next-deriv" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition shadow-sm">
+                                    Buka Langkah Berikutnya <i class="fa-solid fa-chevron-down ml-1"></i>
+                                </button>
+                                <button id="btn-all-deriv" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                                    Buka Semua
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Steps List -->
+                        <div class="space-y-3" id="derivation-steps">
+                            <!-- Step 1 -->
+                            <div class="deriv-step rounded-2xl border border-indigo-200 bg-indigo-50/40 p-4 transition-all" data-step="1">
+                                <div class="flex items-center justify-between cursor-pointer deriv-header">
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">1</span>
+                                        <h4 class="font-bold text-slate-900 text-sm sm:text-base">Mulai dari Rumus Jumlah $n$ Suku Pertama ($S_n$)</h4>
+                                    </div>
+                                    <span class="text-xs font-semibold text-indigo-600">Terbuka</span>
+                                </div>
+                                <div class="deriv-body mt-3 pl-10 text-sm text-slate-700 space-y-2">
+                                    <p>Ingat kembali rumus jumlah $n$ suku pertama deret geometri untuk $r \neq 1$:</p>
+                                    <div class="bg-white rounded-xl p-3 border border-slate-200 text-center">
+                                        $$S_n = \frac{a(1 - r^n)}{1 - r}$$
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="deriv-step rounded-2xl border border-slate-200 bg-slate-50/60 p-4 transition-all opacity-60" data-step="2">
+                                <div class="flex items-center justify-between cursor-pointer deriv-header">
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-7 h-7 rounded-lg bg-slate-300 text-slate-700 font-bold text-xs flex items-center justify-center step-badge">2</span>
+                                        <h4 class="font-bold text-slate-900 text-sm sm:text-base">Uraikan Pecahan & Terapkan Limit $n \to \infty$</h4>
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 step-status">Klik untuk buka</span>
+                                </div>
+                                <div class="deriv-body hidden mt-3 pl-10 text-sm text-slate-700 space-y-2">
+                                    <p>Karena kita menjumlahkan suku hingga tak terhingga banyaknya, maka $S_\infty$ adalah nilai limit dari $S_n$ ketika $n$ mendekati tak hingga ($n \to \infty$):</p>
+                                    <div class="bg-white rounded-xl p-3 border border-slate-200 text-center">
+                                        $$S_\infty = \lim_{n \to \infty} S_n = \lim_{n \to \infty} \left( \frac{a - a r^n}{1 - r} \right) = \frac{a}{1 - r} - \frac{a}{1 - r} \cdot \lim_{n \to \infty} r^n$$
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="deriv-step rounded-2xl border border-slate-200 bg-slate-50/60 p-4 transition-all opacity-60" data-step="3">
+                                <div class="flex items-center justify-between cursor-pointer deriv-header">
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-7 h-7 rounded-lg bg-slate-300 text-slate-700 font-bold text-xs flex items-center justify-center step-badge">3</span>
+                                        <h4 class="font-bold text-slate-900 text-sm sm:text-base">Evaluasi Nilai $\lim_{n \to \infty} r^n$ untuk $|r| < 1$</h4>
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 step-status">Klik untuk buka</span>
+                                </div>
+                                <div class="deriv-body hidden mt-3 pl-10 text-sm text-slate-700 space-y-2">
+                                    <p>Apabila rasio berada di antara $-1$ dan $1$ ($-1 < r < 1$ atau $|r| < 1$), maka ketika dipangkatkan dengan $n$ yang sangat besar menuju tak hingga, nilainya menyusut menjadi $0$:</p>
+                                    <div class="bg-white rounded-xl p-3 border border-slate-200 text-center">
+                                        $$\lim_{n \to \infty} r^n = 0 \quad \text{(untuk } -1 < r < 1\text{)}$$
+                                    </div>
+                                    <p>Substitusikan $\lim_{n \to \infty} r^n = 0$ ke dalam persamaan pada Langkah 2:</p>
+                                    <div class="bg-white rounded-xl p-3 border border-slate-200 text-center">
+                                        $$S_\infty = \frac{a(1 - 0)}{1 - r}$$
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="deriv-step rounded-2xl border border-slate-200 bg-slate-50/60 p-4 transition-all opacity-60" data-step="4">
+                                <div class="flex items-center justify-between cursor-pointer deriv-header">
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-7 h-7 rounded-lg bg-slate-300 text-slate-700 font-bold text-xs flex items-center justify-center step-badge">4</span>
+                                        <h4 class="font-bold text-slate-900 text-sm sm:text-base">Rumus Utama Deret Geometri Tak Hingga Konvergen</h4>
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 step-status">Klik untuk buka</span>
+                                </div>
+                                <div class="deriv-body hidden mt-3 pl-10 text-sm text-slate-700 space-y-2">
+                                    <p>Sehingga kita memperoleh rumus jumlah deret geometri tak hingga yang <strong>konvergen</strong>:</p>
+                                    <div class="bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-2xl p-4 text-center shadow-md">
+                                        $$S_\infty = \frac{a}{1 - r} \quad \text{dengan syarat } -1 < r < 1, \, r \neq 0$$
+                                    </div>
+                                    <p class="text-xs text-slate-500 italic">Tips Hafalan Mudah: "S tak hingga sama dengan <strong>A-I-R</strong>" ($a$ dibagi $1 - r$).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             TAHAP 3: KONVERGEN VS DIVERGEN (LABORATORIUM EKSPLORASI RASIO)
+        ========================================================================== -->
+        <section id="tahap-3" class="scroll-mt-24">
+            <div class="mb-8">
+                <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs uppercase tracking-wider mb-2">Tahap 3 &bull; Analisis Perilaku Rasio</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Konvergen vs Divergen: Laboratorium Eksplorasi Rasio</h2>
+                <p class="text-sm text-slate-600 mt-1">Tidak semua deret geometri tak hingga bisa dihitung dengan rumus $\frac{a}{1-r}$. Semuanya bergantung pada nilai rasio $r$!</p>
+            </div>
+
+            <!-- Theory Comparison Cards -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <!-- Konvergen Card -->
+                <div class="bg-white rounded-3xl p-6 border-2 border-emerald-500/30 shadow-sm relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-compress mr-1"></i> Deret Konvergen (Memusat)
+                        </span>
+                        <span class="font-mono text-sm font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">
+                            -1 &lt; r &lt; 1, r &ne; 0
+                        </span>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Nilai mutlak suku-sukunya semakin mengecil mendekati nol ($\lim_{n\to\infty} U_n = 0$), sehingga jumlah totalnya <strong>memiliki limit / terbatas</strong> pada satu nilai tertentu:
+                    </p>
+                    <div class="bg-emerald-50/70 rounded-2xl p-3 text-sm text-emerald-950 font-mono space-y-1 border border-emerald-200/70">
+                        <div>&bull; Contoh 1 ($r = \frac{1}{2}$): $8 + 4 + 2 + 1 + \frac{1}{2} + \dots = \frac{8}{1 - 1/2} = 16$</div>
+                        <div>&bull; Contoh 2 ($r = -\frac{1}{3}$): $9 - 3 + 1 - \frac{1}{3} + \dots = \frac{9}{1 - (-1/3)} = \frac{27}{4}$</div>
+                    </div>
+                </div>
+
+                <!-- Divergen Card -->
+                <div class="bg-white rounded-3xl p-6 border-2 border-rose-500/30 shadow-sm relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-800 font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-expand mr-1"></i> Deret Divergen (Menyebar)
+                        </span>
+                        <span class="font-mono text-sm font-bold text-rose-700 bg-rose-50 px-3 py-1 rounded-lg border border-rose-200">
+                            r &le; -1 atau r &ge; 1
+                        </span>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Nilai mutlak suku-sukunya semakin membesar atau berosilasi tanpa meredam, sehingga jumlah tak hingganya <strong>tidak terbatas ($\pm\infty$) atau tidak terdefinisi</strong>.
+                    </p>
+                    <div class="bg-rose-50/70 rounded-2xl p-3 text-sm text-rose-950 font-mono space-y-1 border border-rose-200/70">
+                        <div>&bull; Contoh 1 ($r = 2$): $3 + 6 + 12 + 24 + 48 + \dots = +\infty$</div>
+                        <div>&bull; Contoh 2 ($r = -1$): $5 - 5 + 5 - 5 + 5 - \dots$ (Berganti-ganti $5$ dan $0$)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Ratio Simulator -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-indigo-600"></i>
+                            <span>Simulator Interaktif Barisan ($U_n$) & Jumlah Parsial ($S_n$)</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">Geser slider suku pertama ($a$) dan rasio ($r$) atau klik tombol preset untuk mengamati grafik konvergensi.</p>
+                    </div>
+                    <!-- Live Status Badge -->
+                    <div id="lab-status-badge" class="inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold text-sm self-start lg:self-auto">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span id="lab-status-text">KONVERGEN (S&infin; = 16,00)</span>
+                    </div>
+                </div>
+
+                <!-- Controls & Presets -->
+                <div class="grid md:grid-cols-12 gap-6 items-center bg-slate-50 p-5 rounded-2xl border border-slate-200/80">
+                    <!-- Slider a -->
+                    <div class="md:col-span-4 space-y-2">
+                        <div class="flex justify-between text-xs font-semibold">
+                            <span class="text-slate-700">Suku Pertama ($a$):</span>
+                            <span id="lab-a-val" class="font-mono text-indigo-600 font-bold text-sm">a = 8</span>
+                        </div>
+                        <input id="lab-a-slider" type="range" min="1" max="12" step="1" value="8" class="w-full">
+                        <div class="flex justify-between text-[11px] text-slate-400 font-mono">
+                            <span>1</span><span>6</span><span>12</span>
+                        </div>
+                    </div>
+
+                    <!-- Slider r -->
+                    <div class="md:col-span-4 space-y-2">
+                        <div class="flex justify-between text-xs font-semibold">
+                            <span class="text-slate-700">Rasio ($r$):</span>
+                            <span id="lab-r-val" class="font-mono text-indigo-600 font-bold text-sm">r = 0.50</span>
+                        </div>
+                        <input id="lab-r-slider" type="range" min="-1.5" max="1.5" step="0.05" value="0.5" class="w-full">
+                        <div class="flex justify-between text-[11px] text-slate-400 font-mono">
+                            <span>-1.5 (Divergen)</span><span>0</span><span>+1.5 (Divergen)</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Presets -->
+                    <div class="md:col-span-4 space-y-2">
+                        <span class="text-xs font-semibold text-slate-700 block">Coba Kasus menarik ($r$):</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <button class="lab-preset px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition" data-r="0.5">r = 0.5</button>
+                            <button class="lab-preset px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition" data-r="-0.6">r = -0.6</button>
+                            <button class="lab-preset px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition" data-r="0.8">r = 0.8</button>
+                            <button class="lab-preset px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-rose-100 text-rose-800 hover:bg-rose-200 transition" data-r="1">r = 1.0</button>
+                            <button class="lab-preset px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-rose-100 text-rose-800 hover:bg-rose-200 transition" data-r="-1">r = -1.0</button>
+                            <button class="lab-preset px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-rose-100 text-rose-800 hover:bg-rose-200 transition" data-r="1.25">r = 1.25</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dual Canvas Charts -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <!-- Chart 1: Barisan Suku U_n -->
+                    <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-800">Grafik Suku ke-$n$ ($U_1, U_2, \dots, U_{10}$)</h4>
+                                <p class="text-xs text-slate-500">Apakah nilai sukunya mengecil menuju $0$?</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-700 font-mono text-xs font-semibold">U_n = a &middot; r^(n-1)</span>
+                        </div>
+                        <div class="w-full h-56 bg-white rounded-xl border border-slate-200 p-2">
+                            <canvas id="canvas-un"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 2: Jumlah Parsial S_n -->
+                    <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-800">Grafik Jumlah Parsial ($S_1, S_2, \dots, S_{10}$)</h4>
+                                <p class="text-xs text-slate-500">Apakah jumlahnya mendekati garis batas $S_\infty$?</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 font-mono text-xs font-semibold">Garis Putus = S_&infin;</span>
+                        </div>
+                        <div class="w-full h-56 bg-white rounded-xl border border-slate-200 p-2">
+                            <canvas id="canvas-sn"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation Summary Bar -->
+                <div id="lab-explanation-box" class="rounded-2xl p-4 bg-indigo-50/70 border border-indigo-100 text-sm text-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div id="lab-explanation-text" class="leading-relaxed">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div id="lab-s10-comparison" class="font-mono text-xs bg-white px-4 py-2.5 rounded-xl border border-slate-200 shrink-0">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             TAHAP 4: PEMISAHAN SUKU GANJIL DAN SUKU GENAP
+        ========================================================================== -->
+        <section id="tahap-4" class="scroll-mt-24">
+            <div class="mb-8">
+                <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs uppercase tracking-wider mb-2">Tahap 4 &bull; Anatomi Deret</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Pemisahan Suku Ganjil ($S_{\text{ganjil}}$) dan Suku Genap ($S_{\text{genap}}$)</h2>
+                <p class="text-sm text-slate-600 mt-1">Sering kali soal ujian hanya memberitahu jumlah suku-suku ganjil dan jumlah suku-suku genap. Mari kita bedah rahasianya!</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                <!-- Left 7 Cols: Visual Decomposition & Formulas -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- Color-coded visual decomposition -->
+                    <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-5">
+                        <h3 class="text-lg font-bold text-slate-900">Membedah Deret Geometri Tak Hingga</h3>
+                        <p class="text-sm text-slate-600">
+                            Setiap deret geometri tak hingga yang konvergen dapat dipisahkan menjadi dua kelompok deret baru: kelompok <strong>suku berindeks ganjil</strong> dan kelompok <strong>suku berindeks genap</strong>.
+                        </p>
+
+                        <!-- Visual Pills -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-center gap-2 font-mono text-sm">
+                            <span class=" font-bold text-slate-700 mr-1">S<sub>&infin;</sub> =</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-indigo-100 text-indigo-800 border border-indigo-300 font-bold">U₁ (a)</span>
+                            <span>+</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-teal-100 text-teal-800 border border-teal-300 font-bold">U₂ (ar)</span>
+                            <span>+</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-indigo-100 text-indigo-800 border border-indigo-300 font-bold">U₃ (ar²)</span>
+                            <span>+</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-teal-100 text-teal-800 border border-teal-300 font-bold">U₄ (ar³)</span>
+                            <span>+</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-indigo-100 text-indigo-800 border border-indigo-300 font-bold">U₅ (ar⁴)</span>
+                            <span>+</span>
+                            <span class="px-3 py-1.5 rounded-xl bg-teal-100 text-teal-800 border border-teal-300 font-bold">U₆ (ar⁵)</span>
+                            <span>+ &dots;</span>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <!-- S Ganjil Card -->
+                            <div class="rounded-2xl bg-indigo-50/70 border border-indigo-200 p-5 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">1. Deret Suku Ganjil</span>
+                                    <span class="px-2 py-0.5 rounded bg-indigo-200/70 text-indigo-900 font-mono text-xs font-bold">U₁, U₃, U₅, ...</span>
+                                </div>
+                                <div class="text-xs text-slate-600 space-y-1 pt-1">
+                                    <div>$$S_{\text{ganjil}} = a + ar^2 + ar^4 + ar^6 + \dots$$</div>
+                                    <p>&bull; Suku pertama baru: $a_{\text{baru}} = a$</p>
+                                    <p>&bull; Rasio baru: $r_{\text{baru}} = \frac{ar^2}{a} = r^2$</p>
+                                </div>
+                                <div class="bg-white rounded-xl p-2.5 border border-indigo-200 text-center font-bold text-indigo-950">
+                                    $$S_{\text{ganjil}} = \frac{a}{1 - r^2}$$
+                                </div>
+                            </div>
+
+                            <!-- S Genap Card -->
+                            <div class="rounded-2xl bg-teal-50/70 border border-teal-200 p-5 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-teal-800">2. Deret Suku Genap</span>
+                                    <span class="px-2 py-0.5 rounded bg-teal-200/70 text-teal-900 font-mono text-xs font-bold">U₂, U₄, U₆, ...</span>
+                                </div>
+                                <div class="text-xs text-slate-600 space-y-1 pt-1">
+                                    <div>$$S_{\text{genap}} = ar + ar^3 + ar^5 + ar^7 + \dots$$</div>
+                                    <p>&bull; Suku pertama baru: $a_{\text{baru}} = ar$</p>
+                                    <p>&bull; Rasio baru: $r_{\text{baru}} = \frac{ar^3}{ar} = r^2$</p>
+                                </div>
+                                <div class="bg-white rounded-xl p-2.5 border border-teal-200 text-center font-bold text-teal-950">
+                                    $$S_{\text{genap}} = \frac{ar}{1 - r^2}$$
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hubungan Emas Box -->
+                        <div class="rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-5">
+                            <h4 class="font-bold text-amber-950 text-sm flex items-center gap-2 mb-2">
+                                <i class="fa-solid fa-key text-amber-600"></i>
+                                <span>Dua Hubungan Kunci yang Wajib Diingat!</span>
+                            </h4>
+                            <div class="grid sm:grid-cols-2 gap-4 items-center">
+                                <div class="bg-white rounded-xl p-3 border border-amber-200 text-center">
+                                    <span class="text-xs text-slate-500 block">1. Penjumlahan Total:</span>
+                                    $$S_\infty = S_{\text{ganjil}} + S_{\text{genap}}$$
+                                </div>
+                                <div class="bg-white rounded-xl p-3 border border-amber-200 text-center">
+                                    <span class="text-xs text-slate-500 block">2. Perbandingan Langsung:</span>
+                                    $$\frac{S_{\text{genap}}}{S_{\text{ganjil}}} = \frac{\frac{ar}{1-r^2}}{\frac{a}{1-r^2}} = r$$
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right 5 Cols: Interactive Odd-Even Explorer -->
+                <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase">Kalkulator Pembuktian</span>
+                            <h3 class="text-lg font-bold text-slate-900">Uji Hubungan $S_{\text{ganjil}}$ & $S_{\text{genap}}$</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Atur nilai suku pertama ($a$) dan rasio ($r$) di bawah ini, lalu amati bagaimana $S_{\text{ganjil}}$ dan $S_{\text{genap}}$ selalu memenuhi $\frac{S_{\text{genap}}}{S_{\text{ganjil}}} = r$.
+                    </p>
+
+                    <div class="space-y-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span>Suku Pertama ($a$):</span>
+                                <span id="oe-a-label" class="font-mono font-bold text-indigo-600">a = 12</span>
+                            </div>
+                            <input id="oe-a-slider" type="range" min="2" max="24" step="2" value="12" class="w-full">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span>Rasio ($r$):</span>
+                                <span id="oe-r-label" class="font-mono font-bold text-indigo-600">r = 0.50</span>
+                            </div>
+                            <input id="oe-r-slider" type="range" min="-0.8" max="0.8" step="0.1" value="0.5" class="w-full">
+                        </div>
+                    </div>
+
+                    <!-- Output Cards -->
+                    <div class="space-y-3 font-mono text-sm">
+                        <div class="flex items-center justify-between p-3.5 rounded-xl bg-indigo-50 border border-indigo-100">
+                            <span class="text-xs font-sans font-semibold text-indigo-900">Jumlah Suku Ganjil ($S_{\text{ganjil}} = \frac{a}{1-r^2}$):</span>
+                            <span id="oe-sganjil" class="font-bold text-indigo-700">16,00</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3.5 rounded-xl bg-teal-50 border border-teal-100">
+                            <span class="text-xs font-sans font-semibold text-teal-900">Jumlah Suku Genap ($S_{\text{genap}} = \frac{ar}{1-r^2}$):</span>
+                            <span id="oe-sgenap" class="font-bold text-teal-700">8,00</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-900 text-white">
+                            <span class="text-xs font-sans font-semibold text-slate-300">Total ($S_\infty = S_{\text{ganjil}} + S_{\text{genap}}$):</span>
+                            <span id="oe-stotal" class="font-bold text-emerald-400">24,00</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3.5 rounded-xl bg-amber-50 border border-amber-200">
+                            <span class="text-xs font-sans font-semibold text-amber-900">Bukti Rasio ($S_{\text{genap}} \div S_{\text{ganjil}}$):</span>
+                            <span id="oe-ratio-proof" class="font-bold text-amber-800">8,00 / 16,00 = 0,50</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             TAHAP 5: APLIKASI KONTEKSTUAL (BOLA MEMANTUL & DESIMAL BERULANG)
+        ========================================================================== -->
+        <section id="tahap-5" class="scroll-mt-24 space-y-12">
+            <div>
+                <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs uppercase tracking-wider mb-2">Tahap 5 &bull; Aplikasi Kontekstual</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Penerapan Nyata: Pantulan Bola & Pecahan Desimal Berulang</h2>
+            </div>
+
+            <!-- APLIKASI 1: BOLA MEMANTUL -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
+                    <div>
+                        <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Aplikasi Kontekstual 1</span>
+                        <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">Menghitung Total Panjang Lintasan Bola Memantul</h3>
+                        <p class="text-sm text-slate-600 mt-1">
+                            Perhatikan perbedaan krusial antara bola yang <strong>dijatuhkan dari atas</strong> vs <strong>dilempar vertikal dari tanah</strong>!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Perbandingan 2 Kasus Bola -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Kasus 1: Dijatuhkan dari ketinggian h0 -->
+                    <div class="rounded-2xl bg-orange-50/60 border border-orange-200 p-5 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-lg bg-orange-500 text-white text-xs font-bold">Kasus A: Bola Dijatuhkan dari Atas</span>
+                            <span class="text-xs font-mono font-semibold text-orange-800">Rasio r = p/q</span>
+                        </div>
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            Bola dijatuhkan dari ketinggian awal $h_0$. Lintasan pertama hanya <strong>turun sejauh $h_0$</strong>, sedangkan setiap pantulan berikutnya selalu mengalami <strong>naik dan turun</strong> dengan tinggi yang sama ($r h_0, r^2 h_0, \dots$):
+                        </p>
+                        <div class="bg-white rounded-xl p-3 border border-orange-200 text-xs space-y-1">
+                            <div>&bull; $\text{Lintasan Turun } (S_{\text{turun}}) = h_0 + r h_0 + r^2 h_0 + \dots = \frac{h_0}{1 - r}$</div>
+                            <div>&bull; $\text{Lintasan Naik } (S_{\text{naik}}) = r h_0 + r^2 h_0 + r^3 h_0 + \dots = \frac{r h_0}{1 - r}$</div>
+                            <div class="pt-1 font-bold text-orange-900 border-t border-orange-100">
+                                $$S_{\text{total}} = S_{\text{turun}} + S_{\text{naik}} = h_0 \left(\frac{1 + r}{1 - r}\right) = \left(\frac{q + p}{q - p}\right) h_0$$
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kasus 2: Dilempar dari bawah/tanah -->
+                    <div class="rounded-2xl bg-sky-50/60 border border-sky-200 p-5 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-lg bg-sky-600 text-white text-xs font-bold">Kasus B: Bola Dilempar dari Tanah</span>
+                            <span class="text-xs font-mono font-semibold text-sky-800">Rasio r = p/q</span>
+                        </div>
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            Bola dilempar vertikal ke atas dari tanah hingga mencapai tinggi maksimum pertama $h_0$. Karena sejak awal bola <strong>naik lalu turun</strong> dengan jarak yang sama, maka $S_{\text{naik}} = S_{\text{turun}}$:
+                        </p>
+                        <div class="bg-white rounded-xl p-3 border border-sky-200 text-xs space-y-1">
+                            <div>&bull; $\text{Lintasan Naik } (S_{\text{naik}}) = h_0 + r h_0 + r^2 h_0 + \dots = \frac{h_0}{1 - r}$</div>
+                            <div>&bull; $\text{Lintasan Turun } (S_{\text{turun}}) = h_0 + r h_0 + r^2 h_0 + \dots = \frac{h_0}{1 - r}$</div>
+                            <div class="pt-1 font-bold text-sky-900 border-t border-sky-100">
+                                $$S_{\text{total}} = 2 \cdot S_{\text{turun}} = \frac{2 h_0}{1 - r} = \left(\frac{2q}{q - p}\right) h_0$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Ball Bounce Canvas Simulator -->
+                <div class="grid lg:grid-cols-12 gap-8 items-start pt-2">
+                    <!-- Canvas Visualization -->
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-inner">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 text-xs text-slate-300">
+                                <div class="flex items-center gap-4">
+                                    <span class="flex items-center gap-1.5"><span class="w-3 h-1 bg-orange-400 inline-block rounded"></span> Lintasan Turun</span>
+                                    <span class="flex items-center gap-1.5"><span class="w-3 h-1 bg-emerald-400 inline-block rounded"></span> Lintasan Naik</span>
+                                </div>
+                                <span id="ball-sim-caption" class="font-mono text-amber-300">h₀ = 12 m, r = 3/4</span>
+                            </div>
+                            <div class="w-full h-72 sm:h-80 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 relative">
+                                <canvas id="canvas-ball" class="w-full h-full block"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-3">
+                            <button id="btn-animate-ball" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm shadow-md transition">
+                                <i class="fa-solid fa-basketball"></i>
+                                <span>Jatuhkan / Lempar Bola (Animasi)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Controls & Automatic Calculation -->
+                    <div class="lg:col-span-5 space-y-5">
+                        <!-- Mode Switch -->
+                        <div class="bg-slate-100 p-1.5 rounded-2xl grid grid-cols-2 gap-1.5">
+                            <button id="mode-drop" class="py-2.5 px-3 rounded-xl text-xs font-bold bg-white text-slate-900 shadow-sm transition">
+                                <i class="fa-solid fa-arrow-down text-orange-500 mr-1"></i> Dijatuhkan dari Atas
+                            </button>
+                            <button id="mode-throw" class="py-2.5 px-3 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition">
+                                <i class="fa-solid fa-arrow-up text-sky-600 mr-1"></i> Dilempar dari Tanah
+                            </button>
+                        </div>
+
+                        <!-- Sliders for h0 and r = p/q -->
+                        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-700">Tinggi Awal ($h_0$):</span>
+                                    <span id="ball-h0-val" class="font-mono font-bold text-indigo-600">12 meter</span>
+                                </div>
+                                <input id="ball-h0-slider" type="range" min="4" max="30" step="2" value="12" class="w-full">
+                            </div>
+
+                            <div>
+                                <span class="text-xs font-semibold text-slate-700 block mb-2">Pilih Rasio Pantulan ($r = p/q$):</span>
+                                <div class="grid grid-cols-5 gap-2" id="ball-ratio-btns">
+                                    <button class="ball-r-btn py-2 rounded-xl font-mono text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-indigo-50" data-p="1" data-q="2">1/2</button>
+                                    <button class="ball-r-btn py-2 rounded-xl font-mono text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-indigo-50" data-p="3" data-q="5">3/5</button>
+                                    <button class="ball-r-btn py-2 rounded-xl font-mono text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-indigo-50" data-p="2" data-q="3">2/3</button>
+                                    <button class="ball-r-btn py-2 rounded-xl font-mono text-xs font-bold border-2 border-indigo-600 bg-indigo-50 text-indigo-700" data-p="3" data-q="4">3/4</button>
+                                    <button class="ball-r-btn py-2 rounded-xl font-mono text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-indigo-50" data-p="4" data-q="5">4/5</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Calculation Results -->
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between p-3.5 rounded-xl bg-orange-50 border border-orange-200">
+                                <div>
+                                    <span class="text-xs font-bold text-orange-950 block">Total Lintasan Turun ($S_{\text{turun}}$)</span>
+                                    <span id="ball-down-detail" class="text-[11px] font-mono text-orange-800">12 + 9 + 6.75 + ...</span>
+                                </div>
+                                <span id="ball-down-total" class="font-mono font-extrabold text-base text-orange-700">48 m</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-3.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                                <div>
+                                    <span class="text-xs font-bold text-emerald-950 block">Total Lintasan Naik ($S_{\text{naik}}$)</span>
+                                    <span id="ball-up-detail" class="text-[11px] font-mono text-emerald-800">9 + 6.75 + 5.06 + ...</span>
+                                </div>
+                                <span id="ball-up-total" class="font-mono font-extrabold text-base text-emerald-700">36 m</span>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-slate-900 text-white space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-semibold text-slate-300">Panjang Lintasan Total ($S_{\text{total}}$):</span>
+                                    <span id="ball-grand-total" class="font-mono font-extrabold text-xl text-amber-400">84 meter</span>
+                                </div>
+                                <div id="ball-shortcut-formula" class="text-xs font-mono text-indigo-300 pt-1 border-t border-slate-800">
+                                    Cara Cepat: ((4 + 3) / (4 - 3)) &times; 12 = 7 &times; 12 = 84 m
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- APLIKASI 2: PECAHAN DESIMAL BERULANG -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+                    <div>
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Aplikasi Kontekstual 2</span>
+                        <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">Mengubah Pecahan Desimal Berulang menjadi Pecahan Biasa</h3>
+                        <p class="text-sm text-slate-600 mt-1">
+                            Bilangan desimal berulang seperti $0,333\dots$ atau $0,272727\dots$ sebenarnya adalah <strong>Deret Geometri Tak Hingga</strong> dengan rasio $r = 10^{-k}$!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-8 items-center">
+                    <!-- Interactive Selection & Step-by-Step Breakdown -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Pilih Contoh Desimal Berulang:</label>
+                        <div class="grid grid-cols-2 gap-2.5" id="decimal-presets">
+                            <button class="dec-btn p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-left transition" data-id="0">
+                                <div class="font-mono font-bold text-indigo-950 text-sm">0,3333...</div>
+                                <div class="text-[11px] text-indigo-700">1 angka berulang ($r = 1/10$)</div>
+                            </button>
+                            <button class="dec-btn p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-indigo-50/40 text-left transition" data-id="1">
+                                <div class="font-mono font-bold text-slate-900 text-sm">0,272727...</div>
+                                <div class="text-[11px] text-slate-500">2 angka berulang ($r = 1/100$)</div>
+                            </button>
+                            <button class="dec-btn p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-indigo-50/40 text-left transition" data-id="2">
+                                <div class="font-mono font-bold text-slate-900 text-sm">0,16666...</div>
+                                <div class="text-[11px] text-slate-500">Campuran ($0,1 + 0,0666\dots$)</div>
+                            </button>
+                            <button class="dec-btn p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-indigo-50/40 text-left transition" data-id="3">
+                                <div class="font-mono font-bold text-slate-900 text-sm">2,125125...</div>
+                                <div class="text-[11px] text-slate-500">3 angka berulang ($r = 1/1000$)</div>
+                            </button>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-xs text-slate-600 space-y-1.5 leading-relaxed">
+                            <div class="font-bold text-slate-800">Pola Umum Desimal Berulang:</div>
+                            <div>&bull; Jika <strong>1 angka</strong> berulang: rasio $r = 0,1 = \frac{1}{10}$</div>
+                            <div>&bull; Jika <strong>2 angka</strong> berulang: rasio $r = 0,01 = \frac{1}{100}$</div>
+                            <div>&bull; Jika <strong>3 angka</strong> berulang: rasio $r = 0,001 = \frac{1}{1000}$</div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Math Solution Display -->
+                    <div class="lg:col-span-7 bg-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-lg space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <span class="text-xs font-semibold text-indigo-300 uppercase tracking-wider">Bedah Aljabar Deret Geometri</span>
+                            <span id="dec-badge" class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">Hasil: 1/3</span>
+                        </div>
+                        <div id="dec-solution-content" class="space-y-3 text-sm leading-relaxed">
+                            <!-- Rendered via JS & KaTeX -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             TAHAP 6: CONTOH SOAL BERTINGKAT & PEMBAHASAN
+        ========================================================================== -->
+        <section id="tahap-6" class="scroll-mt-24">
+            <div class="mb-8">
+                <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs uppercase tracking-wider mb-2">Tahap 6 &bull; Latihan Terbimbing</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Contoh Soal Bertingkat & Pembahasan Sistematis</h2>
+                <p class="text-sm text-slate-600 mt-1">Coba pikirkan strateginya terlebih dahulu, lalu klik tombol <strong>"Lihat Pembahasan Langkah demi Langkah"</strong>.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Contoh Soal 1 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">Level 1 &bull; Dasar</span>
+                            <span class="text-xs text-slate-400 font-mono">Menghitung S&infin;</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base">
+                            Hitunglah jumlah deret geometri tak hingga berikut:<br>
+                            $$27 - 9 + 3 - 1 + \frac{1}{3} - \dots$$
+                        </h3>
+                    </div>
+                    <div>
+                        <button class="toggle-sol-btn w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold text-xs transition flex items-center justify-center gap-2" data-target="sol-1">
+                            <span>Lihat Pembahasan Langkah demi Langkah</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div id="sol-1" class="hidden mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-700 space-y-2">
+                            <p><strong>Langkah 1: Identifikasi suku pertama ($a$) dan rasio ($r$)</strong></p>
+                            <p>Dari deret diperoleh $a = 27$ dan $r = \frac{-9}{27} = -\frac{1}{3}$. Karena $|r| = \frac{1}{3} < 1$, deret ini <strong>konvergen</strong>.</p>
+                            <p><strong>Langkah 2: Substitusikan ke rumus $S_\infty$</strong></p>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                                $$S_\infty = \frac{a}{1 - r} = \frac{27}{1 - \left(-\frac{1}{3}\right)} = \frac{27}{\frac{4}{3}} = 27 \times \frac{3}{4} = \frac{81}{4} = 20,25$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contoh Soal 2 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold">Level 2 &bull; Menengah</span>
+                            <span class="text-xs text-slate-400 font-mono">Mencari Rasio & Suku ke-n</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base">
+                            Suatu deret geometri tak hingga memiliki suku pertama $a = 12$ dan jumlah tak hingganya $S_\infty = 18$. Tentukan nilai rasio ($r$) dan suku ke-$4$ ($U_4$) deret tersebut!
+                        </h3>
+                    </div>
+                    <div>
+                        <button class="toggle-sol-btn w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold text-xs transition flex items-center justify-center gap-2" data-target="sol-2">
+                            <span>Lihat Pembahasan Langkah demi Langkah</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div id="sol-2" class="hidden mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-700 space-y-2">
+                            <p><strong>Langkah 1: Cari rasio ($r$) dari rumus $S_\infty$</strong></p>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                                $$S_\infty = \frac{a}{1 - r} \implies 18 = \frac{12}{1 - r} \implies 1 - r = \frac{12}{18} = \frac{2}{3}$$
+                                $$r = 1 - \frac{2}{3} = \frac{1}{3}$$
+                            </div>
+                            <p><strong>Langkah 2: Hitung suku ke-$4$ ($U_4 = a r^3$)</strong></p>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                                $$U_4 = 12 \cdot \left(\frac{1}{3}\right)^3 = 12 \cdot \frac{1}{27} = \frac{4}{9}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contoh Soal 3 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold">Level 3 &bull; Suku Ganjil & Genap</span>
+                            <span class="text-xs text-slate-400 font-mono">Analisis Anatomi Deret</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base">
+                            Jumlah semua suku deret geometri tak hingga adalah $36$, sedangkan jumlah semua suku berindeks genapnya adalah $12$. Tentukan rasio ($r$) dan suku pertama ($a$) deret tersebut!
+                        </h3>
+                    </div>
+                    <div>
+                        <button class="toggle-sol-btn w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold text-xs transition flex items-center justify-center gap-2" data-target="sol-3">
+                            <span>Lihat Pembahasan Langkah demi Langkah</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div id="sol-3" class="hidden mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-700 space-y-2">
+                            <p><strong>Langkah 1: Cari jumlah suku ganjil ($S_{\text{ganjil}}$)</strong></p>
+                            <p>Karena $S_\infty = S_{\text{ganjil}} + S_{\text{genap}}$, maka:</p>
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                $$S_{\text{ganjil}} = 36 - 12 = 24$$
+                            </div>
+                            <p><strong>Langkah 2: Gunakan hubungan $\frac{S_{\text{genap}}}{S_{\text{ganjil}}} = r$</strong></p>
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                $$r = \frac{12}{24} = \frac{1}{2}$$
+                            </div>
+                            <p><strong>Langkah 3: Cari suku pertama ($a$)</strong></p>
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                $$S_\infty = \frac{a}{1 - r} \implies 36 = \frac{a}{1 - \frac{1}{2}} \implies a = 36 \times \frac{1}{2} = 18$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contoh Soal 4 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">Level 4 &bull; Aplikasi Kontekstual</span>
+                            <span class="text-xs text-slate-400 font-mono">Bola Memantul</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base">
+                            Sebuah bola dijatuhkan dari ketinggian $h_0$ meter. Setiap kali memantul, bola mencapai ketinggian $\frac{3}{5}$ dari tinggi sebelumnya. Jika panjang seluruh lintasan bola sampai berhenti adalah $60\text{ meter}$, berapakah ketinggian awal $h_0$?
+                        </h3>
+                    </div>
+                    <div>
+                        <button class="toggle-sol-btn w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 font-semibold text-xs transition flex items-center justify-center gap-2" data-target="sol-4">
+                            <span>Lihat Pembahasan Langkah demi Langkah</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div id="sol-4" class="hidden mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-700 space-y-2">
+                            <p><strong>Langkah 1: Identifikasi besaran pada bola dijatuhkan</strong></p>
+                            <p>Diketahui $S_{\text{total}} = 60\text{ m}$ dan rasio pantulan $r = \frac{p}{q} = \frac{3}{5}$.</p>
+                            <p><strong>Langkah 2: Gunakan persamaan total lintasan bola jatuh</strong></p>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                                $$S_{\text{total}} = h_0 \left(\frac{1 + r}{1 - r}\right) = h_0 \left(\frac{q + p}{q - p}\right)$$
+                                $$60 = h_0 \left(\frac{5 + 3}{5 - 3}\right) \implies 60 = h_0 \left(\frac{8}{2}\right) \implies 60 = 4 h_0$$
+                                $$h_0 = \frac{60}{4} = 15\text{ meter}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             TAHAP 7: KUIS INTERAKTIF (UJI PEMAHAMAN SISWA)
+        ========================================================================== -->
+        <section id="tahap-7" class="scroll-mt-24">
+            <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-xl border border-indigo-500/20">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8">
+                    <div>
+                        <span class="inline-block px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 font-bold text-xs uppercase tracking-wider mb-2">Tahap 7 &bull; Evaluasi Mandiri</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold">Kuis Interaktif: Uji Pemahamanmu!</h2>
+                        <p class="text-sm text-slate-300 mt-1">Jawab 5 pertanyaan bertingkat berikut untuk mengukur penguasaan konsep Deret Geometri Tak Hingga.</p>
+                    </div>
+                    <!-- Score Pill -->
+                    <div class="flex items-center gap-4 bg-white/10 px-5 py-3 rounded-2xl border border-white/15 self-start md:self-auto">
+                        <div>
+                            <span class="text-[11px] uppercase tracking-wider text-slate-300 block">Skor Saat Ini</span>
+                            <span id="quiz-score-display" class="text-2xl font-extrabold text-emerald-400 font-mono">0 / 100</span>
+                        </div>
+                        <div class="h-8 w-px bg-white/15"></div>
+                        <div>
+                            <span class="text-[11px] uppercase tracking-wider text-slate-300 block">Terjawab</span>
+                            <span id="quiz-progress-display" class="text-base font-bold text-white font-mono">0 / 5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Questions Container -->
+                <div id="quiz-container" class="space-y-6">
+                    <!-- Rendered dynamically via JS -->
+                </div>
+
+                <!-- Quiz Summary / Reset Footer -->
+                <div class="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+                    <div id="quiz-final-message" class="text-sm text-slate-300">
+                        Pilih jawaban pada setiap nomor untuk melihat umpan balik dan pembahasan langsung.
+                    </div>
+                    <button id="btn-reset-quiz" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/15 transition">
+                        <i class="fa-solid fa-rotate-right mr-1.5"></i> Ulangi Kuis
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-indigo-600 text-white font-bold flex items-center justify-center">S<sub>&infin;</sub></span>
+                <span class="font-semibold text-slate-700">Modul Interaktif Matematika SMA — Deret Geometri Tak Hingga</span>
+            </div>
+            <div>
+                Dirancang untuk membangun intuisi visual, penalaran aljabar, dan pemecahan masalah kontekstual.
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================================================
+         JAVASCRIPT LOGIC FOR ALL INTERACTIVE MODULES
+    ========================================================================== -->
+    <script>
+        // Helper to trigger KaTeX rendering on any element
+        function renderMath(element = document.body) {
+            if (window.renderMathInElement) {
+                window.renderMathInElement(element, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Mobile navigation toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileNav = document.getElementById('mobile-nav');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('hidden');
+        });
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => mobileNav.classList.add('hidden'));
+        });
+
+        /* =====================================================================
+           TAHAP 1: VISUALISASI PARADOKS KUE / PERSEGI 1x1
+        ===================================================================== */
+        const cakeSvg = document.getElementById('cake-svg');
+        const btnAddSlice = document.getElementById('btn-add-slice');
+        const btnAutoSlice = document.getElementById('btn-auto-slice');
+        const btnResetSlice = document.getElementById('btn-reset-slice');
+
+        let cakeStep = 1;
+        const maxCakeSteps = 10;
+        let autoSliceInterval = null;
+
+        const sliceColors = [
+            '#4f46e5', // 1/2 - Indigo
+            '#0ea5e9', // 1/4 - Sky
+            '#10b981', // 1/8 - Emerald
+            '#f59e0b', // 1/16 - Amber
+            '#ec4899', // 1/32 - Pink
+            '#8b5cf6', // 1/64 - Violet
+            '#14b8a6', // 1/128 - Teal
+            '#f97316', // 1/256 - Orange
+            '#06b6d4', // 1/512 - Cyan
+            '#6366f1'  // 1/1024 - Indigo
+        ];
+
+        function drawCakePartition(steps) {
+            cakeSvg.innerHTML = '';
+            let x = 0, y = 0, w = 400, h = 400;
+
+            for (let i = 1; i <= steps; i++) {
+                const isVerticalSplit = (i % 2 === 1);
+                let rectX = x, rectY = y, rectW = w, rectH = h;
+
+                if (isVerticalSplit) {
+                    rectW = w / 2;
+                    x += rectW;
+                    w -= rectW;
+                } else {
+                    rectH = h / 2;
+                    y += rectH;
+                    h -= rectH;
+                }
+
+                const color = sliceColors[(i - 1) % sliceColors.length];
+                const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', rectX);
+                rect.setAttribute('y', rectY);
+                rect.setAttribute('width', rectW);
+                rect.setAttribute('height', rectH);
+                rect.setAttribute('fill', color);
+                rect.setAttribute('stroke', '#ffffff');
+                rect.setAttribute('stroke-width', '2');
+                rect.setAttribute('class', 'cake-slice');
+                group.appendChild(rect);
+
+                // Label if area is large enough
+                if (i <= 7) {
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', rectX + rectW / 2);
+                    text.setAttribute('y', rectY + rectH / 2);
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('dominant-baseline', 'middle');
+                    text.setAttribute('fill', '#ffffff');
+                    text.setAttribute('font-family', 'JetBrains Mono, monospace');
+                    text.setAttribute('font-weight', '700');
+                    const fontSize = Math.max(9, Math.min(20, Math.min(rectW, rectH) * 0.24));
+                    text.setAttribute('font-size', fontSize);
+                    text.textContent = `1/${Math.pow(2, i)}`;
+                    group.appendChild(text);
+                }
+
+                cakeSvg.appendChild(group);
+            }
+
+            // Draw remaining empty box highlight
+            const remRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            remRect.setAttribute('x', x);
+            remRect.setAttribute('y', y);
+            remRect.setAttribute('width', w);
+            remRect.setAttribute('height', h);
+            remRect.setAttribute('fill', '#f8fafc');
+            remRect.setAttribute('stroke', '#94a3b8');
+            remRect.setAttribute('stroke-dasharray', '4 4');
+            cakeSvg.appendChild(remRect);
+
+            if (steps <= 5) {
+                const remText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                remText.setAttribute('x', x + w / 2);
+                remText.setAttribute('y', y + h / 2);
+                remText.setAttribute('text-anchor', 'middle');
+                remText.setAttribute('dominant-baseline', 'middle');
+                remText.setAttribute('fill', '#64748b');
+                remText.setAttribute('font-size', '11');
+                remText.setAttribute('font-family', 'Inter, sans-serif');
+                remText.textContent = `Sisa: 1/${Math.pow(2, steps)}`;
+                cakeSvg.appendChild(remText);
+            }
+
+            // Update metrics
+            const denom = Math.pow(2, steps);
+            const num = denom - 1;
+            const unVal = 1 / denom;
+            const snVal = num / denom;
+            const remVal = 1 / denom;
+
+            document.getElementById('cake-step-counter').textContent = `Banyak Suku (n): ${steps}`;
+            document.getElementById('metric-un').textContent = `1/${denom}`;
+            document.getElementById('metric-un-dec').textContent = `= ${unVal.toFixed(6).replace('.', ',')}`;
+            document.getElementById('metric-sn').textContent = `${num}/${denom}`;
+            document.getElementById('metric-sn-dec').textContent = `= ${snVal.toFixed(6).replace('.', ',')}`;
+            document.getElementById('metric-rem').textContent = `1/${denom}`;
+            document.getElementById('metric-rem-dec').textContent = `= ${remVal.toFixed(6).replace('.', ',')}`;
+
+            const pct = (snVal * 100).toFixed(4).replace('.', ',') + '%';
+            document.getElementById('cake-percent').textContent = pct;
+            document.getElementById('cake-progress-bar').style.width = `${snVal * 100}%`;
+
+            // Series text
+            let terms = [];
+            for (let k = 1; k <= steps; k++) {
+                terms.push(`1/${Math.pow(2, k)}`);
+            }
+            document.getElementById('cake-series-text').textContent =
+                `S_${steps} = ${terms.join(' + ')} = ${num}/${denom} ≈ ${snVal.toFixed(6).replace('.', ',')}`;
+
+            btnAddSlice.disabled = (steps >= maxCakeSteps);
+            if (steps >= maxCakeSteps) {
+                btnAddSlice.classList.add('opacity-50', 'cursor-not-allowed');
+                btnAddSlice.innerHTML = `<i class="fa-solid fa-check-circle"></i> <span>Sangat Mendekati 1 (n = 10)</span>`;
+            } else {
+                btnAddSlice.classList.remove('opacity-50', 'cursor-not-allowed');
+                btnAddSlice.innerHTML = `<i class="fa-solid fa-plus-circle"></i> <span>Tambah Suku Berikutnya (1/${Math.pow(2, steps + 1)})</span>`;
+            }
+        }
+
+        btnAddSlice.addEventListener('click', () => {
+            if (cakeStep < maxCakeSteps) {
+                cakeStep++;
+                drawCakePartition(cakeStep);
+            }
+        });
+
+        btnResetSlice.addEventListener('click', () => {
+            if (autoSliceInterval) {
+                clearInterval(autoSliceInterval);
+                autoSliceInterval = null;
+                btnAutoSlice.innerHTML = `<i class="fa-solid fa-play mr-1"></i> Auto`;
+            }
+            cakeStep = 1;
+            drawCakePartition(cakeStep);
+        });
+
+        btnAutoSlice.addEventListener('click', () => {
+            if (autoSliceInterval) {
+                clearInterval(autoSliceInterval);
+                autoSliceInterval = null;
+                btnAutoSlice.innerHTML = `<i class="fa-solid fa-play mr-1"></i> Auto`;
+                return;
+            }
+            if (cakeStep >= maxCakeSteps) cakeStep = 1;
+            btnAutoSlice.innerHTML = `<i class="fa-solid fa-pause mr-1"></i> Jeda`;
+            autoSliceInterval = setInterval(() => {
+                if (cakeStep < maxCakeSteps) {
+                    cakeStep++;
+                    drawCakePartition(cakeStep);
+                } else {
+                    clearInterval(autoSliceInterval);
+                    autoSliceInterval = null;
+                    btnAutoSlice.innerHTML = `<i class="fa-solid fa-play mr-1"></i> Auto`;
+                }
+            }, 700);
+        });
+
+        /* =====================================================================
+           TAHAP 2: UJI KONSEP LIMIT r^n & ACCORDION PENURUNAN RUMUS
+        ===================================================================== */
+        const limitRSlider = document.getElementById('limit-r-slider');
+        const limitNSlider = document.getElementById('limit-n-slider');
+
+        function updateLimitCalculator() {
+            const r = parseFloat(limitRSlider.value);
+            const n = parseInt(limitNSlider.value, 10);
+            document.getElementById('limit-r-label').textContent = `r = ${r.toFixed(1)}`;
+            document.getElementById('limit-n-label').textContent = `n = ${n}`;
+
+            const val = Math.pow(r, n);
+            const formatted = Math.abs(val) < 1e-8 && val !== 0 ? val.toExponential(4) : val.toFixed(10).replace(/\.?0+$/, '');
+            document.getElementById('limit-result-display').textContent = `(${r.toFixed(1)})^${n} = ${formatted || '0'}`;
+
+            const tag = document.getElementById('limit-conclusion-tag');
+            if (Math.abs(r) === 0) {
+                tag.textContent = 'Karena r = 0, nilainya tepat 0.';
+            } else if (Math.abs(val) < 0.001) {
+                tag.textContent = 'Nilainya sudah sangat kecil (hampir 0)! Saat n → ∞, r^n = 0.';
+            } else {
+                tag.textContent = 'Geser n lebih besar untuk melihat nilainya menyusut menuju 0!';
+            }
+        }
+        limitRSlider.addEventListener('input', updateLimitCalculator);
+        limitNSlider.addEventListener('input', updateLimitCalculator);
+
+        // Step-by-Step Derivation Accordion
+        let currentDerivStep = 1;
+        const derivSteps = document.querySelectorAll('.deriv-step');
+        const btnNextDeriv = document.getElementById('btn-next-deriv');
+        const btnAllDeriv = document.getElementById('btn-all-deriv');
+
+        function openDerivStep(stepNum) {
+            derivSteps.forEach(card => {
+                const s = parseInt(card.getAttribute('data-step'), 10);
+                const body = card.querySelector('.deriv-body');
+                const badge = card.querySelector('.step-badge');
+                const status = card.querySelector('.step-status');
+
+                if (s <= stepNum) {
+                    card.classList.remove('opacity-60', 'bg-slate-50/60', 'border-slate-200');
+                    card.classList.add('bg-indigo-50/40', 'border-indigo-200');
+                    body.classList.remove('hidden');
+                    if (badge) {
+                        badge.classList.remove('bg-slate-300', 'text-slate-700');
+                        badge.classList.add('bg-indigo-600', 'text-white');
+                    }
+                    if (status) {
+                        status.textContent = 'Terbuka';
+                        status.classList.remove('text-slate-500');
+                        status.classList.add('text-indigo-600');
+                    }
+                }
+            });
+            currentDerivStep = Math.max(currentDerivStep, stepNum);
+            if (currentDerivStep >= 4) {
+                btnNextDeriv.innerHTML = `<i class="fa-solid fa-check mr-1"></i> Semua Langkah Terbuka`;
+            }
+        }
+
+        derivSteps.forEach(card => {
+            card.querySelector('.deriv-header').addEventListener('click', () => {
+                const s = parseInt(card.getAttribute('data-step'), 10);
+                openDerivStep(s);
+            });
+        });
+
+        btnNextDeriv.addEventListener('click', () => {
+            if (currentDerivStep < 4) {
+                openDerivStep(currentDerivStep + 1);
+            }
+        });
+
+        btnAllDeriv.addEventListener('click', () => {
+            openDerivStep(4);
+        });
+
+        /* =====================================================================
+           TAHAP 3: LABORATORIUM EKSPLORASI RASIO (KONVERGEN VS DIVERGEN)
+        ===================================================================== */
+        const labASlider = document.getElementById('lab-a-slider');
+        const labRSlider = document.getElementById('lab-r-slider');
+        const canvasUn = document.getElementById('canvas-un');
+        const canvasSn = document.getElementById('canvas-sn');
+
+        function drawLabCharts() {
+            const a = parseFloat(labASlider.value);
+            const r = parseFloat(labRSlider.value);
+
+            document.getElementById('lab-a-val').textContent = `a = ${a}`;
+            document.getElementById('lab-r-val').textContent = `r = ${r.toFixed(2)}`;
+
+            const N = 10;
+            const unList = [];
+            const snList = [];
+            let runningSum = 0;
+
+            for (let n = 1; n <= N; n++) {
+                const un = a * Math.pow(r, n - 1);
+                runningSum += un;
+                unList.push(un);
+                snList.push(runningSum);
+            }
+
+            const isConvergent = Math.abs(r) < 1 && r !== 0;
+            const isZeroRatio = (r === 0);
+            const sInf = (Math.abs(r) < 1) ? (a / (1 - r)) : null;
+
+            // Update status badge & explanation
+            const badge = document.getElementById('lab-status-badge');
+            const expBox = document.getElementById('lab-explanation-text');
+            const s10Comp = document.getElementById('lab-s10-comparison');
+
+            if (isConvergent) {
+                badge.className = 'inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold text-sm self-start lg:self-auto';
+                badge.innerHTML = `<span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span><span>KONVERGEN (S&infin; = ${sInf.toFixed(2).replace('.', ',')})</span>`;
+                expBox.innerHTML = `<strong>Analisis Konvergen:</strong> Karena $-1 < r < 1$ ($r = ${r.toFixed(2)}$), nilai suku $U_n$ meluruh menuju $0$. Jumlah parsial $S_n$ mendekati garis batas asimtot <strong>$S_\\infty = \\frac{${a}}{1 - (${r.toFixed(2)})} = ${sInf.toFixed(2)}$</strong>.`;
+                s10Comp.innerHTML = `S₁₀ = ${snList[9].toFixed(3)} &nbsp;|&nbsp; S&infin; = ${sInf.toFixed(3)}`;
+            } else if (isZeroRatio) {
+                badge.className = 'inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-sky-100 border border-sky-300 text-sky-900 font-bold text-sm self-start lg:self-auto';
+                badge.innerHTML = `<span class="w-3 h-3 rounded-full bg-sky-500"></span><span>TRIVIAL r = 0 (S&infin; = ${a})</span>`;
+                expBox.innerHTML = `<strong>Kasus Khusus $r = 0$:</strong> Semua suku setelah suku pertama bernilai $0$ ($U_2 = U_3 = \\dots = 0$), sehingga jumlahnya langsung konstan $S_\\infty = a = ${a}$.`;
+                s10Comp.innerHTML = `S₁₀ = ${a.toFixed(2)} &nbsp;|&nbsp; S&infin; = ${a.toFixed(2)}`;
+            } else {
+                badge.className = 'inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-rose-100 border border-rose-300 text-rose-900 font-bold text-sm self-start lg:self-auto';
+                badge.innerHTML = `<span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span><span>DIVERGEN (Tidak Memiliki Limit Jumlah)</span>`;
+                expBox.innerHTML = `<strong>Analisis Divergen:</strong> Karena $|r| \\ge 1$ ($r = ${r.toFixed(2)}$), suku ke-$n$ ($U_n$) tidak mengecil menuju $0$. Akibatnya jumlah parsial $S_n$ terus membesar atau berosilasi tanpa batas!`;
+                s10Comp.innerHTML = `S₁₀ = ${snList[9].toFixed(2)} &nbsp;|&nbsp; S&infin; = Tidak Terdefinisi`;
+            }
+            renderMath(expBox);
+
+            // Render Bar Chart for U_n
+            renderCanvasChart(canvasUn, unList, {
+                type: 'bar',
+                colorPositive: '#4f46e5',
+                colorNegative: '#ec4899',
+                asymptote: 0
+            });
+
+            // Render Line/Point Chart for S_n
+            renderCanvasChart(canvasSn, snList, {
+                type: 'line',
+                colorPositive: '#0d9488',
+                asymptote: sInf
+            });
+        }
+
+        function renderCanvasChart(canvas, data, opts) {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const width = rect.width - 16;
+            const height = rect.height - 16;
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+            ctx.clearRect(0, 0, width, height);
+
+            const padLeft = 44, padRight = 18, padTop = 18, padBottom = 26;
+            const plotW = width - padLeft - padRight;
+            const plotH = height - padTop - padBottom;
+
+            let minVal = Math.min(0, ...data);
+            let maxVal = Math.max(0, ...data);
+            if (opts.asymptote !== null && opts.asymptote !== undefined) {
+                minVal = Math.min(minVal, opts.asymptote);
+                maxVal = Math.max(maxVal, opts.asymptote);
+            }
+            if (maxVal === minVal) {
+                maxVal += 1;
+                minVal -= 1;
+            }
+            const range = maxVal - minVal;
+            minVal -= range * 0.1;
+            maxVal += range * 0.12;
+
+            const toY = (val) => padTop + plotH - ((val - minVal) / (maxVal - minVal)) * plotH;
+            const zeroY = toY(0);
+
+            // Grid & Zero Axis
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padLeft, zeroY);
+            ctx.lineTo(width - padRight, zeroY);
+            ctx.stroke();
+
+            // Asymptote line for S_inf
+            if (opts.asymptote !== null && opts.asymptote !== undefined && opts.type === 'line') {
+                const asymY = toY(opts.asymptote);
+                ctx.save();
+                ctx.strokeStyle = '#10b981';
+                ctx.lineWidth = 1.8;
+                ctx.setLineDash([6, 4]);
+                ctx.beginPath();
+                ctx.moveTo(padLeft, asymY);
+                ctx.lineTo(width - padRight, asymY);
+                ctx.stroke();
+                ctx.fillStyle = '#047857';
+                ctx.font = 'bold 10px JetBrains Mono, monospace';
+                ctx.fillText(`S∞ = ${opts.asymptote.toFixed(1)}`, width - padRight - 65, Math.max(12, asymY - 5));
+                ctx.restore();
+            }
+
+            const stepX = plotW / data.length;
+
+            if (opts.type === 'bar') {
+                data.forEach((val, idx) => {
+                    const x = padLeft + idx * stepX + stepX * 0.2;
+                    const barW = stepX * 0.6;
+                    const y = toY(val);
+                    ctx.fillStyle = val >= 0 ? opts.colorPositive : opts.colorNegative;
+                    ctx.beginPath();
+                    const topY = Math.min(y, zeroY);
+                    const barH = Math.max(2, Math.abs(zeroY - y));
+                    ctx.roundRect(x, topY, barW, barH, 4);
+                    ctx.fill();
+
+                    // X label
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = '10px Inter, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`U${idx + 1}`, x + barW / 2, height - 8);
+                });
+            } else if (opts.type === 'line') {
+                ctx.strokeStyle = '#0f766e';
+                ctx.lineWidth = 2.2;
+                ctx.beginPath();
+                data.forEach((val, idx) => {
+                    const x = padLeft + idx * stepX + stepX / 2;
+                    const y = toY(val);
+                    if (idx === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                });
+                ctx.stroke();
+
+                data.forEach((val, idx) => {
+                    const x = padLeft + idx * stepX + stepX / 2;
+                    const y = toY(val);
+                    ctx.fillStyle = '#0d9488';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = '10px Inter, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`S${idx + 1}`, x, height - 8);
+                });
+            }
+
+            // Y Axis Labels (max, 0, min)
+            ctx.fillStyle = '#64748b';
+            ctx.font = '10px JetBrains Mono, monospace';
+            ctx.textAlign = 'right';
+            ctx.fillText(maxVal.toFixed(1), padLeft - 6, padTop + 8);
+            ctx.fillText('0', padLeft - 6, zeroY + 3);
+            if (minVal < -0.5) {
+                ctx.fillText(minVal.toFixed(1), padLeft - 6, height - padBottom);
+            }
+        }
+
+        labASlider.addEventListener('input', drawLabCharts);
+        labRSlider.addEventListener('input', drawLabCharts);
+        document.querySelectorAll('.lab-preset').forEach(btn => {
+            btn.addEventListener('click', () => {
+                labRSlider.value = btn.getAttribute('data-r');
+                drawLabCharts();
+            });
+        });
+
+        /* =====================================================================
+           TAHAP 4: KALKULATOR SUKU GANJIL & SUKU GENAP
+        ===================================================================== */
+        const oeASlider = document.getElementById('oe-a-slider');
+        const oeRSlider = document.getElementById('oe-r-slider');
+
+        function updateOddEvenCalculator() {
+            const a = parseFloat(oeASlider.value);
+            let r = parseFloat(oeRSlider.value);
+            if (Math.abs(r) < 0.05) r = 0.2; // keep non-zero for clearer demo
+
+            document.getElementById('oe-a-label').textContent = `a = ${a}`;
+            document.getElementById('oe-r-label').textContent = `r = ${r.toFixed(2)}`;
+
+            const sGanjil = a / (1 - r * r);
+            const sGenap = (a * r) / (1 - r * r);
+            const sTotal = sGanjil + sGenap;
+
+            const fmt = (n) => n.toFixed(2).replace('.', ',');
+            document.getElementById('oe-sganjil').textContent = fmt(sGanjil);
+            document.getElementById('oe-sgenap').textContent = fmt(sGenap);
+            document.getElementById('oe-stotal').textContent = fmt(sTotal);
+            document.getElementById('oe-ratio-proof').textContent = `${fmt(sGenap)} / ${fmt(sGanjil)} = ${fmt(r)}`;
+        }
+        oeASlider.addEventListener('input', updateOddEvenCalculator);
+        oeRSlider.addEventListener('input', updateOddEvenCalculator);
+
+        /* =====================================================================
+           TAHAP 5: APLIKASI 1 — SIMULASI PANTULAN BOLA (CANVAS)
+        ===================================================================== */
+        const canvasBall = document.getElementById('canvas-ball');
+        const ballH0Slider = document.getElementById('ball-h0-slider');
+        const btnModeDrop = document.getElementById('mode-drop');
+        const btnModeThrow = document.getElementById('mode-throw');
+        const btnAnimateBall = document.getElementById('btn-animate-ball');
+
+        let ballMode = 'drop'; // 'drop' or 'throw'
+        let ballP = 3;
+        let ballQ = 4;
+        let ballAnimProgress = 1; // 0 to 1
+        let ballAnimFrame = null;
+
+        function updateBallCalculationAndDraw(progress = 1) {
+            const h0 = parseFloat(ballH0Slider.value);
+            const r = ballP / ballQ;
+
+            document.getElementById('ball-h0-val').textContent = `${h0} meter`;
+            document.getElementById('ball-sim-caption').textContent =
+                `Mode: ${ballMode === 'drop' ? 'Dijatuhkan' : 'Dilempar'} | h₀ = ${h0} m, r = ${ballP}/${ballQ}`;
+
+            let sDown, sUp, sTotal, shortcutStr;
+            const h1 = (h0 * r).toFixed(2).replace(/\.00$/, '');
+            const h2 = (h0 * r * r).toFixed(2).replace(/\.00$/, '');
+
+            if (ballMode === 'drop') {
+                sDown = h0 / (1 - r);
+                sUp = (h0 * r) / (1 - r);
+                sTotal = sDown + sUp;
+                document.getElementById('ball-down-detail').textContent = `${h0} + ${h1} + ${h2} + ...`;
+                document.getElementById('ball-up-detail').textContent = `${h1} + ${h2} + ...`;
+                shortcutStr = `Cara Cepat: ((${ballQ} + ${ballP}) / (${ballQ} - ${ballP})) × ${h0} = ${((ballQ + ballP) / (ballQ - ballP) * h0).toFixed(1).replace(/\.0$/, '')} m`;
+            } else {
+                sUp = h0 / (1 - r);
+                sDown = h0 / (1 - r);
+                sTotal = sUp + sDown;
+                document.getElementById('ball-up-detail').textContent = `${h0} + ${h1} + ${h2} + ...`;
+                document.getElementById('ball-down-detail').textContent = `${h0} + ${h1} + ${h2} + ...`;
+                shortcutStr = `Cara Cepat: (2 × ${ballQ} / (${ballQ} - ${ballP})) × ${h0} = ${((2 * ballQ) / (ballQ - ballP) * h0).toFixed(1).replace(/\.0$/, '')} m`;
+            }
+
+            const fmtM = (val) => `${val.toFixed(2).replace(/\.00$/, '').replace('.', ',')} m`;
+            document.getElementById('ball-down-total').textContent = fmtM(sDown);
+            document.getElementById('ball-up-total').textContent = fmtM(sUp);
+            document.getElementById('ball-grand-total').textContent = `${sTotal.toFixed(2).replace(/\.00$/, '').replace('.', ',')} meter`;
+            document.getElementById('ball-shortcut-formula').textContent = shortcutStr;
+
+            drawBallCanvas(h0, r, progress);
+        }
+
+        function drawBallCanvas(h0, r, progress) {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvasBall.parentElement.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            canvasBall.width = width * dpr;
+            canvasBall.height = height * dpr;
+            const ctx = canvasBall.getContext('2d');
+            ctx.scale(dpr, dpr);
+            ctx.clearRect(0, 0, width, height);
+
+            const groundY = height - 32;
+            const topPad = 28;
+            const maxPlotH = groundY - topPad;
+
+            // Ground floor line
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(20, groundY);
+            ctx.lineTo(width - 20, groundY);
+            ctx.stroke();
+
+            // Build bounce segments: each segment is either UP or DOWN
+            const bounces = 8;
+            const segments = [];
+            let curX = 48;
+            let stepW = (width - 90) / (bounces * 2);
+
+            for (let k = 0; k < bounces; k++) {
+                const peakH = h0 * Math.pow(r, k);
+                const peakY = groundY - (peakH / h0) * maxPlotH;
+
+                if (k === 0 && ballMode === 'drop') {
+                    // Only downward segment from peakY to groundY
+                    segments.push({
+                        type: 'down',
+                        x1: curX, y1: peakY,
+                        x2: curX + stepW * 0.8, y2: groundY,
+                        peakLabel: `${h0}m`,
+                        peakX: curX, peakY: peakY
+                    });
+                    curX += stepW * 0.8;
+                } else {
+                    // Upward segment from groundY to peakY
+                    const midX = curX + stepW * 0.85;
+                    const nextX = curX + stepW * 1.7;
+                    segments.push({
+                        type: 'up',
+                        x1: curX, y1: groundY,
+                        x2: midX, y2: peakY,
+                        peakLabel: k <= 4 ? `${(peakH).toFixed(1).replace(/\.0$/, '')}m` : '',
+                        peakX: midX, peakY: peakY
+                    });
+                    // Downward segment from peakY to groundY
+                    segments.push({
+                        type: 'down',
+                        x1: midX, y1: peakY,
+                        x2: nextX, y2: groundY
+                    });
+                    curX = nextX;
+                }
+                stepW *= 0.88;
+            }
+
+            const totalSegs = segments.length;
+            const activeFloat = progress * totalSegs;
+            const fullSegs = Math.floor(activeFloat);
+            const partial = activeFloat - fullSegs;
+
+            let ballX = segments[0].x1;
+            let ballY = segments[0].y1;
+
+            // Draw segments up to progress
+            for (let i = 0; i < totalSegs; i++) {
+                if (i > fullSegs) break;
+                const seg = segments[i];
+                const tMax = (i === fullSegs) ? partial : 1;
+                if (tMax <= 0) continue;
+
+                ctx.strokeStyle = seg.type === 'down' ? '#fb923c' : '#34d399';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+
+                const steps = 24;
+                for (let s = 0; s <= steps; s++) {
+                    const t = (s / steps) * tMax;
+                    const px = seg.x1 + (seg.x2 - seg.x1) * t;
+                    let py;
+                    if (seg.type === 'down') {
+                        // Parabolic fall from peak (y1) to ground (y2)
+                        py = seg.y1 + (seg.y2 - seg.y1) * (t * t);
+                    } else {
+                        // Parabolic rise from ground (y1) to peak (y2)
+                        py = seg.y2 + (seg.y1 - seg.y2) * Math.pow(1 - t, 2);
+                    }
+                    if (s === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                    ballX = px;
+                    ballY = py;
+                }
+                ctx.stroke();
+
+                // Peak height label
+                if (seg.peakLabel && tMax > 0.85) {
+                    ctx.fillStyle = '#e2e8f0';
+                    ctx.font = 'bold 11px JetBrains Mono, monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(seg.peakLabel, seg.peakX, seg.peakY - 8);
+                }
+            }
+
+            // Draw bouncing ball at current position
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.arc(ballX, ballY - 6, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function triggerBallAnimation() {
+            if (ballAnimFrame) cancelAnimationFrame(ballAnimFrame);
+            let start = null;
+            const duration = 2200;
+
+            function step(ts) {
+                if (!start) start = ts;
+                const elapsed = ts - start;
+                ballAnimProgress = Math.min(1, elapsed / duration);
+                updateBallCalculationAndDraw(ballAnimProgress);
+                if (ballAnimProgress < 1) {
+                    ballAnimFrame = requestAnimationFrame(step);
+                }
+            }
+            ballAnimFrame = requestAnimationFrame(step);
+        }
+
+        btnModeDrop.addEventListener('click', () => {
+            ballMode = 'drop';
+            btnModeDrop.className = 'py-2.5 px-3 rounded-xl text-xs font-bold bg-white text-slate-900 shadow-sm transition';
+            btnModeThrow.className = 'py-2.5 px-3 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition';
+            triggerBallAnimation();
+        });
+
+        btnModeThrow.addEventListener('click', () => {
+            ballMode = 'throw';
+            btnModeThrow.className = 'py-2.5 px-3 rounded-xl text-xs font-bold bg-white text-slate-900 shadow-sm transition';
+            btnModeDrop.className = 'py-2.5 px-3 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition';
+            triggerBallAnimation();
+        });
+
+        ballH0Slider.addEventListener('input', () => updateBallCalculationAndDraw(1));
+        btnAnimateBall.addEventListener('click', triggerBallAnimation);
+
+        document.querySelectorAll('.ball-r-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.ball-r-btn').forEach(b => {
+                    b.className = 'ball-r-btn py-2 rounded-xl font-mono text-xs font-bold border border-slate-300 bg-white text-slate-700 hover:bg-indigo-50';
+                });
+                btn.className = 'ball-r-btn py-2 rounded-xl font-mono text-xs font-bold border-2 border-indigo-600 bg-indigo-50 text-indigo-700';
+                ballP = parseInt(btn.getAttribute('data-p'), 10);
+                ballQ = parseInt(btn.getAttribute('data-q'), 10);
+                triggerBallAnimation();
+            });
+        });
+
+        /* =====================================================================
+           TAHAP 5: APLIKASI 2 — PECAHAN DESIMAL BERULANG
+        ===================================================================== */
+        const decimalCases = [
+            {
+                badge: 'Hasil: 1/3',
+                html: `
+                    <p><strong>1. Uraikan desimal berulang menjadi deret geometri tak hingga:</strong></p>
+                    <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                        $$0,3333\\dots = 0,3 + 0,03 + 0,003 + 0,0003 + \\dots$$
+                    </div>
+                    <p><strong>2. Tentukan suku pertama ($a$) dan rasio ($r$):</strong></p>
+                    <p>Diperoleh $a = 0,3 = \\frac{3}{10}$ dan rasio $r = \\frac{0,03}{0,3} = 0,1 = \\frac{1}{10}$.</p>
+                    <p><strong>3. Hitung jumlah tak hingga ($S_\\infty$):</strong></p>
+                    <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                        $$S_\\infty = \\frac{a}{1 - r} = \\frac{3/10}{1 - 1/10} = \\frac{3/10}{9/10} = \\frac{3}{9} = \\mathbf{\\frac{1}{3}}$$
+                    </div>
+                `
+            },
+            {
+                badge: 'Hasil: 3/11',
+                html: `
+                    <p><strong>1. Uraikan desimal berulang 2 angka menjadi deret geometri tak hingga:</strong></p>
+                    <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                        $$0,272727\\dots = 0,27 + 0,0027 + 0,000027 + \\dots$$
+                    </div>
+                    <p><strong>2. Tentukan suku pertama ($a$) dan rasio ($r$):</strong></p>
+                    <p>Diperoleh $a = 0,27 = \\frac{27}{100}$ dan rasio $r = \\frac{0,0027}{0,27} = 0,01 = \\frac{1}{100}$.</p>
+                    <p><strong>3. Hitung jumlah tak hingga ($S_\\infty$):</strong></p>
+                    <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                        $$S_\\infty = \\frac{a}{1 - r} = \\frac{27/100}{1 - 1/100} = \\frac{27/100}{99/100} = \\frac{27}{99} = \\mathbf{\\frac{3}{11}}$$
+                    </div>
+                `
+            },
+            {
+                badge: 'Hasil: 1/6',
+                html: `
+                    <p><strong>1. Pisahkan bagian yang tidak berulang ($0,1$) dengan bagian yang berulang:</strong></p>
+                    <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                        $$0,16666\\dots = 0,1 + (0,06 + 0,006 + 0,0006 + \\dots)$$
+                    </div>
+                    <p><strong>2. Hitung deret geometri pada bagian dalam kurung:</strong></p>
+                    <p>Suku pertama deret $a = 0,06 = \\frac{6}{100}$ dan rasio $r = \\frac{1}{10}$.</p>
+                    <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                        $$S_\\infty = \\frac{6/100}{1 - 1/10} = \\frac{6/100}{9/10} = \\frac{6}{90} = \\frac{1}{15}$$
+                    </div>
+                    <p><strong>3. Jumlahkan dengan bagian depan ($0,1 = \\frac{1}{10}$):</strong></p>
+                    <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                        $$0,1666\\dots = \\frac{1}{10} + \\frac{1}{15} = \\frac{3 + 2}{30} = \\frac{5}{30} = \\mathbf{\\frac{1}{6}}$$
+                    </div>
+                `
+            },
+            {
+                badge: 'Hasil: 2123/999',
+                html: `
+                    <p><strong>1. Pisahkan bilangan bulat $2$ dengan bagian desimal berulang 3 angka:</strong></p>
+                    <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                        $$2,125125\\dots = 2 + (0,125 + 0,000125 + \\dots)$$
+                    </div>
+                    <p><strong>2. Tentukan $a$ dan $r$ untuk deret berulang:</strong></p>
+                    <p>Suku pertama $a = \\frac{125}{1000}$ dan rasio $r = \\frac{1}{1000}$.</p>
+                    <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700">
+                        $$S_\\infty = 2 + \\frac{125/1000}{1 - 1/1000} = 2 + \\frac{125}{999} = \\mathbf{2\\frac{125}{999}} = \\mathbf{\\frac{2123}{999}}$$
+                    </div>
+                `
+            }
+        ];
+
+        function selectDecimalCase(idx) {
+            const data = decimalCases[idx];
+            document.getElementById('dec-badge').textContent = data.badge;
+            const container = document.getElementById('dec-solution-content');
+            container.innerHTML = data.html;
+            renderMath(container);
+        }
+
+        document.querySelectorAll('.dec-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.dec-btn').forEach(b => {
+                    b.className = 'dec-btn p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-indigo-50/40 text-left transition';
+                });
+                btn.className = 'dec-btn p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-left transition';
+                selectDecimalCase(parseInt(btn.getAttribute('data-id'), 10));
+            });
+        });
+
+        /* =====================================================================
+           TAHAP 6: TOGGLE PEMBAHASAN CONTOH SOAL
+        ===================================================================== */
+        document.querySelectorAll('.toggle-sol-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const targetEl = document.getElementById(targetId);
+                const isHidden = targetEl.classList.contains('hidden');
+
+                if (isHidden) {
+                    targetEl.classList.remove('hidden');
+                    btn.innerHTML = `<span>Sembunyikan Pembahasan</span> <i class="fa-solid fa-chevron-up"></i>`;
+                } else {
+                    targetEl.classList.add('hidden');
+                    btn.innerHTML = `<span>Lihat Pembahasan Langkah demi Langkah</span> <i class="fa-solid fa-chevron-down"></i>`;
+                }
+            });
+        });
+
+        /* =====================================================================
+           TAHAP 7: KUIS INTERAKTIF 5 SOAL
+        ===================================================================== */
+        const quizData = [
+            {
+                num: 1,
+                level: 'Konsep Konvergensi',
+                question: 'Di antara nilai rasio $r$ berikut, manakah yang menghasilkan deret geometri tak hingga yang <strong>konvergen</strong> (memiliki limit jumlah)?',
+                options: [
+                    '$r = -\\frac{4}{3}$',
+                    '$r = -\\frac{2}{5}$',
+                    '$r = 1$',
+                    '$r = \\frac{5}{4}$'
+                ],
+                correct: 1,
+                explanation: 'Syarat deret geometri tak hingga konvergen adalah $-1 < r < 1, r \\neq 0$. Nilai $r = -\\frac{2}{5} = -0,4$ berada di antara $-1$ dan $1$.'
+            },
+            {
+                num: 2,
+                level: 'Perhitungan Langsung',
+                question: 'Jumlah sampai tak hingga dari deret geometri $32 + 16 + 8 + 4 + \\dots$ adalah ....',
+                options: [
+                    '$48$',
+                    '$56$',
+                    '$64$',
+                    '$72$'
+                ],
+                correct: 2,
+                explanation: 'Diketahui suku pertama $a = 32$ dan rasio $r = \\frac{16}{32} = \\frac{1}{2}$. Maka $S_\\infty = \\frac{a}{1 - r} = \\frac{32}{1 - 1/2} = \\frac{32}{1/2} = 64$.'
+            },
+            {
+                num: 3,
+                level: 'Menentukan Syarat Variabel',
+                question: 'Agar deret geometri tak hingga dengan rasio $r = \\frac{2x - 3}{5}$ bersifat <strong>konvergen</strong>, maka batas-batas nilai $x$ yang memenuhi adalah ....',
+                options: [
+                    '$-1 < x < 4$ dan $x \\neq \\frac{3}{2}$',
+                    '$-2 < x < 4$ dan $x \\neq 0$',
+                    '$-1 < x < 3$ dan $x \\neq \\frac{3}{2}$',
+                    '$x < -1$ atau $x > 4$'
+                ],
+                correct: 0,
+                explanation: 'Syarat konvergen: $-1 < \\frac{2x - 3}{5} < 1$. Kalikan ketiga ruas dengan $5$: $-5 < 2x - 3 < 5$. Tambahkan $3$: $-2 < 2x < 8 \\implies -1 < x < 4$ dengan $r \\neq 0 \\implies x \\neq \\frac{3}{2}$.'
+            },
+            {
+                num: 4,
+                level: 'Suku Ganjil & Suku Genap',
+                question: 'Suatu deret geometri tak hingga memiliki jumlah suku-suku berindeks ganjil $S_{\\text{ganjil}} = 18$ dan jumlah suku-suku berindeks genap $S_{\\text{genap}} = 6$. Nilai suku pertama ($a$) deret tersebut adalah ....',
+                options: [
+                    '$12$',
+                    '$14$',
+                    '$16$',
+                    '$24$'
+                ],
+                correct: 2,
+                explanation: 'Pertama, cari rasio: $r = \\frac{S_{\\text{genap}}}{S_{\\text{ganjil}}} = \\frac{6}{18} = \\frac{1}{3}$. Jumlah total $S_\\infty = 18 + 6 = 24$. Maka $a = S_\\infty (1 - r) = 24 \\left(1 - \\frac{1}{3}\\right) = 24 \\times \\frac{2}{3} = 16$.'
+            },
+            {
+                num: 5,
+                level: 'Aplikasi Pantulan Bola',
+                question: 'Sebuah bola dijatuhkan vertikal dari ketinggian $10\\text{ meter}$ dan setiap kali memantul mencapai ketinggian $\\frac{2}{3}$ dari tinggi sebelumnya. Panjang seluruh lintasan bola sampai berhenti adalah ....',
+                options: [
+                    '$30\\text{ meter}$',
+                    '$40\\text{ meter}$',
+                    '$50\\text{ meter}$',
+                    '$60\\text{ meter}$'
+                ],
+                correct: 2,
+                explanation: 'Untuk bola yang dijatuhkan dari ketinggian $h_0 = 10\\text{ m}$ dengan rasio $r = \\frac{p}{q} = \\frac{2}{3}$, panjang lintasan totalnya adalah $S_{\\text{total}} = \\left(\\frac{q + p}{q - p}\\right) h_0 = \\left(\\frac{3 + 2}{3 - 2}\\right) \\times 10 = 5 \\times 10 = 50\\text{ meter}$.'
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        let userAnswers = new Array(quizData.length).fill(null);
+
+        function renderQuiz() {
+            quizContainer.innerHTML = '';
+            quizData.forEach((q, qIdx) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 space-y-4';
+
+                const optionBtnsHtml = q.options.map((opt, oIdx) => {
+                    const letter = String.fromCharCode(65 + oIdx);
+                    return `
+                        <button class="quiz-opt-btn w-full text-left p-3.5 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition flex items-center gap-3 text-sm" data-q="${qIdx}" data-o="${oIdx}">
+                            <span class="w-7 h-7 rounded-lg bg-white/10 text-indigo-200 font-bold text-xs flex items-center justify-center shrink-0 opt-badge">${letter}</span>
+                            <span class="text-slate-100">${opt}</span>
+                        </button>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="px-2.5 py-1 rounded-md bg-indigo-500/20 text-indigo-300 text-xs font-bold">Soal ${q.num} &bull; ${q.level}</span>
+                        <span id="q-status-${qIdx}" class="text-xs font-semibold text-slate-400">Belum dijawab</span>
+                    </div>
+                    <p class="text-base font-semibold text-white leading-relaxed">${q.question}</p>
+                    <div class="grid sm:grid-cols-2 gap-3" id="q-opts-${qIdx}">
+                        ${optionBtnsHtml}
+                    </div>
+                    <div id="q-exp-${qIdx}" class="hidden rounded-xl p-4 text-xs sm:text-sm leading-relaxed border"></div>
+                `;
+                quizContainer.appendChild(card);
+            });
+
+            renderMath(quizContainer);
+
+            document.querySelectorAll('.quiz-opt-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const qIdx = parseInt(btn.getAttribute('data-q'), 10);
+                    const oIdx = parseInt(btn.getAttribute('data-o'), 10);
+                    handleAnswerQuiz(qIdx, oIdx);
+                });
+            });
+        }
+
+        function handleAnswerQuiz(qIdx, selectedIdx) {
+            if (userAnswers[qIdx] !== null) return; // Lock after first answer
+            userAnswers[qIdx] = selectedIdx;
+
+            const q = quizData[qIdx];
+            const isCorrect = (selectedIdx === q.correct);
+            const optsContainer = document.getElementById(`q-opts-${qIdx}`);
+            const statusEl = document.getElementById(`q-status-${qIdx}`);
+            const expEl = document.getElementById(`q-exp-${qIdx}`);
+
+            optsContainer.querySelectorAll('.quiz-opt-btn').forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-white/10');
+                if (idx === q.correct) {
+                    btn.className = 'quiz-opt-btn w-full text-left p-3.5 rounded-xl border-2 border-emerald-400 bg-emerald-500/20 flex items-center gap-3 text-sm';
+                } else if (idx === selectedIdx && !isCorrect) {
+                    btn.className = 'quiz-opt-btn w-full text-left p-3.5 rounded-xl border-2 border-rose-400 bg-rose-500/20 flex items-center gap-3 text-sm';
+                } else {
+                    btn.classList.add('opacity-50');
+                }
+            });
+
+            if (isCorrect) {
+                statusEl.innerHTML = `<span class="text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i>Benar (+20 Poin)</span>`;
+                expEl.className = 'rounded-xl p-4 text-xs sm:text-sm leading-relaxed bg-emerald-950/60 border border-emerald-500/40 text-emerald-100';
+                expEl.innerHTML = `<strong><i class="fa-solid fa-check mr-1"></i> Tepat sekali!</strong> ${q.explanation}`;
+            } else {
+                statusEl.innerHTML = `<span class="text-rose-400"><i class="fa-solid fa-circle-xmark mr-1"></i>Kurang Tepat</span>`;
+                expEl.className = 'rounded-xl p-4 text-xs sm:text-sm leading-relaxed bg-rose-950/60 border border-rose-500/40 text-rose-100';
+                expEl.innerHTML = `<strong><i class="fa-solid fa-lightbulb mr-1"></i> Pembahasan:</strong> ${q.explanation}`;
+            }
+            expEl.classList.remove('hidden');
+            renderMath(expEl);
+
+            updateQuizScore();
+        }
+
+        function updateQuizScore() {
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            let correctCount = 0;
+            userAnswers.forEach((ans, idx) => {
+                if (ans === quizData[idx].correct) correctCount++;
+            });
+            const score = correctCount * 20;
+
+            document.getElementById('quiz-score-display').textContent = `${score} / 100`;
+            document.getElementById('quiz-progress-display').textContent = `${answeredCount} / ${quizData.length}`;
+
+            const finalMsg = document.getElementById('quiz-final-message');
+            if (answeredCount === quizData.length) {
+                if (score === 100) {
+                    finalMsg.innerHTML = `<span class="text-emerald-300 font-bold"><i class="fa-solid fa-trophy mr-1.5"></i> Luar Biasa! Skor Sempurna (100/100). Kamu telah menguasai materi Deret Geometri Tak Hingga!</span>`;
+                } else if (score >= 60) {
+                    finalMsg.innerHTML = `<span class="text-amber-300 font-bold"><i class="fa-solid fa-thumbs-up mr-1.5"></i> Bagus! Skor kamu ${score}/100. Tinjau kembali pembahasan pada nomor yang masih keliru.</span>`;
+                } else {
+                    finalMsg.innerHTML = `<span class="text-rose-300 font-bold"><i class="fa-solid fa-book-open-reader mr-1.5"></i> Skor kamu ${score}/100. Yuk, pelajari kembali simulator di atas dan coba ulangi kuis!</span>`;
+                }
+            }
+        }
+
+        document.getElementById('btn-reset-quiz').addEventListener('click', () => {
+            userAnswers = new Array(quizData.length).fill(null);
+            document.getElementById('quiz-score-display').textContent = '0 / 100';
+            document.getElementById('quiz-progress-display').textContent = '0 / 5';
+            document.getElementById('quiz-final-message').textContent = 'Pilih jawaban pada setiap nomor untuk melihat umpan balik dan pembahasan langsung.';
+            renderQuiz();
+        });
+
+        /* =====================================================================
+           INITIALIZATION ON WINDOW LOAD & RESIZE
+        ===================================================================== */
+        window.addEventListener('load', () => {
+            renderMath();
+            drawCakePartition(cakeStep);
+            updateLimitCalculator();
+            drawLabCharts();
+            updateOddEvenCalculator();
+            updateBallCalculationAndDraw(1);
+            selectDecimalCase(0);
+            renderQuiz();
+        });
+
+        window.addEventListener('resize', () => {
+            drawLabCharts();
+            updateBallCalculationAndDraw(1);
+        });
+    </script>
+</body>
+</html>
